@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:location/location.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -11,23 +10,12 @@ class Explore extends StatefulWidget {
 
 class _ExploreState extends State<Explore> {
 
-
   Completer<GoogleMapController> _controller = Completer();
 
-  static const LatLng _center = const LatLng(45.521563, -122.677433);
-  //Position position = await Geolocator
-
-  /*var location = new Location();
-  Map<String, double>userLocation;
-
-  userLocation = location.getLocation();
-
-  double latt = userLocation["latitude"];
-  double longg = userLocation["longitude"];
-   */
-
-  //static const LatLng _center = const LatLng(latt, long);
-
+  Position _pos;
+  void _getlocation() async {
+    _pos = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+  }
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
@@ -36,12 +24,13 @@ class _ExploreState extends State<Explore> {
 
   @override
   Widget build(BuildContext context) {
+    _getlocation();
     return Scaffold(
         body: SafeArea(
           child: GoogleMap(
             onMapCreated: _onMapCreated,
             initialCameraPosition: CameraPosition(
-              target: _center,
+              target: LatLng(_pos.latitude, _pos.longitude),
               zoom: 12.0,
             ),
           ),
