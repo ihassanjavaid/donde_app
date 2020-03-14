@@ -10,3 +10,9 @@ const kSubtitle = TextStyle(
   fontSize: 20,
   color: Color(0xffcfcfcf),
 );
+
+const kbottomNavIcons = TextStyle(
+  fontSize: 20,
+  //color: Color(0xffcfcfcf),
+);
+
