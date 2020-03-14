@@ -16,7 +16,7 @@ class _SettingsState extends State<Settings> {
             Center(
               child: Text(
                 'Settings',
-                style: kWelcomeText,
+                style: kWelcomeTextStyle,
               ),
             ),
             Center(
@@ -35,7 +35,7 @@ class _SettingsState extends State<Settings> {
             Center(
               child: Text(
                 'NAME',
-                style: kWelcomeText,
+                style: kWelcomeTextStyle,
               ),
             ),
           ],

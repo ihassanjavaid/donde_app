@@ -2,14 +2,18 @@ import 'package:flutter/cupertino.dart';
 
 const kButtonContainerColour = 0xFFc4c4c4;
 
-const kWelcomeText = TextStyle(
-  fontSize: 36.0,
+const kWelcomeTextStyle = TextStyle(
+  fontSize: 38.0,
   fontWeight: FontWeight.bold,
   color: Color(0xfff44336),
 );
 
+const kNormalTextStyle = TextStyle(
+  color: Color(0xffa9a9a9),
+);
+
 const kSubtitleStyle = TextStyle(
-  fontSize: 20,
+  fontSize: 22,
   color: Color(0xffcfcfcf),
 );
 
@@ -20,4 +24,5 @@ const kbottomNavIcons = TextStyle(
 
 const kButtonTextStyle = TextStyle(
   color: Color(0xffffffff),
+  fontSize: 18.0,
 );
