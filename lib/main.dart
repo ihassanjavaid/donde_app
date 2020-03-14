@@ -1,8 +1,8 @@
-import 'package:donde_app/loginpage.dart';
+import 'package:donde_app/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp( Donde() );
+void main() => runApp(Donde());
 
 class Donde extends StatelessWidget {
   @override
