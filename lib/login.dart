@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'constants.dart';
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-
+class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Hello',
+              style: kWelcomeText,
+            ),
+            Text(
+              'Get started, Enter your phone number',
+              style: kSubtitle,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
