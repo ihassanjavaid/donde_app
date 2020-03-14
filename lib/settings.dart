@@ -11,8 +11,10 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Settings', style: kWelcomeText,),
-
+        child: Text(
+          'Settings',
+          style: kWelcomeTextStyle,
+        ),
       ),
     );
   }

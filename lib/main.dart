@@ -11,8 +11,7 @@ class Donde extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.light(),
-      home: Settings() ,
+      home: Login(),
     );
   }
 }
-
