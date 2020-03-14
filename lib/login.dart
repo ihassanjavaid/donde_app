@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
+import 'reusableButton.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -10,11 +11,21 @@ class Login extends StatelessWidget {
           children: <Widget>[
             Text(
               'Hello',
-              style: kWelcomeText,
+              style: kWelcomeTextStyle,
             ),
             Text(
               'Get started, Enter your phone number',
-              style: kSubtitle,
+              style: kSubtitleStyle,
+            ),
+            Container(
+              child: Row(
+                children: <Widget>[],
+              ),
+            ),
+            Row(
+              children: <Widget>[
+                ReusableButton(),
+              ],
             ),
           ],
         ),
