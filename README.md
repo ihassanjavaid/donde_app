@@ -22,3 +22,7 @@ samples, guidance on mobile development, and a full API reference.
 - [Muhammad Hasan Malik](https://www.comsats.edu.pk/)
 
 ~~First Project~~ _Perfect Project_
+
+### Copyrights
+
+COMSATS University Islamabad © | The Punsiher Labs ™
