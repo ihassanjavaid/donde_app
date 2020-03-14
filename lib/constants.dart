@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 
 const kButtonContainerColour = 0xFFc4c4c4;
 
-
 const kWelcomeText = TextStyle(
   fontSize: 36.0,
   fontWeight: FontWeight.bold,
