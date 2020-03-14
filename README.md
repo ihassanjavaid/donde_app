@@ -1,6 +1,6 @@
-# donde_app
+# Donde
 
-Donde App for restaurants
+Donde App for restaurants. Never struggle for finding a restaurant ever again!
 
 ## Getting Started
 
@@ -20,6 +20,8 @@ samples, guidance on mobile development, and a full API reference.
 - [Muhammad Osama Saleem](https://www.comsats.edu.pk/)
 - [Muhammad Talha Bin Mansoor](https://www.comsats.edu.pk/)
 - [Muhammad Hasan Malik](https://www.comsats.edu.pk/)
+
+### Attributes
 
 ~~First Project~~ _Perfect Project_
 
