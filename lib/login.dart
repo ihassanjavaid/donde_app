@@ -11,7 +11,7 @@ class Login extends StatelessWidget {
           children: <Widget>[
             Text(
               'Hello',
-              style: kWelcomeTextStyle,
+              style: kWelcomeText,
             ),
             Text(
               'Get started, Enter your phone number',
