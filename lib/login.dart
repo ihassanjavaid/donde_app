@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
 import 'customButton.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -29,11 +30,7 @@ class Login extends StatelessWidget {
                 'Get started, Enter your phone number',
                 style: kSubtitleStyle,
               ),
-              Container(
-                child: Row(
-                  children: <Widget>[],
-                ),
-              ),
+              CountryCodePicker(),
               CustomButton(
                 buttonLabel: 'Next',
                 onTap: () {},
