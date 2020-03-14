@@ -22,7 +22,7 @@ class CustomButton extends StatelessWidget {
             style: kButtonTextStyle,
           ),
         ),
-        margin: EdgeInsets.only(top: 10.0),
+        margin: EdgeInsets.symmetric(vertical: 15.0),
         width: double.infinity,
         height: 50.0,
         decoration: BoxDecoration(

@@ -1,4 +1,4 @@
-import 'package:donde_app/registerButton.dart';
+import 'package:donde_app/customIconButton.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
@@ -17,7 +17,7 @@ class Login extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
-                height: 120.0,
+                height: 90.0,
               ),
               Text(
                 'Hello',
@@ -30,19 +30,44 @@ class Login extends StatelessWidget {
                 'Get started, Enter your phone number',
                 style: kSubtitleStyle,
               ),
-              CountryCodePicker(),
+              SizedBox(
+                height: 40.0,
+              ),
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    CountryCodePicker(),
+                    VerticalDivider(
+                      color: Colors.red,
+                      thickness: 1.0,
+                    ),
+                    Text('Enter your mobile number'),
+                  ],
+                ),
+                margin: EdgeInsets.only(bottom: 10.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+              ),
               CustomButton(
                 buttonLabel: 'Next',
                 onTap: () {},
                 colour: Color(kButtonContainerColour),
               ),
-              RegisterButton(
+              SizedBox(
+                height: 30.0,
+              ),
+              DividerWithText(),
+              SizedBox(
+                height: 15.0,
+              ),
+              CustomIconButton(
                 buttonLabel: 'LOGIN WITH FACEBOOK',
                 onTap: () {},
                 colour: Color(0xff2d3c9b),
                 icon: FontAwesomeIcons.facebook,
               ),
-              RegisterButton(
+              CustomIconButton(
                 icon: FontAwesomeIcons.google,
                 buttonLabel: 'LOGIN WITH GOOGLE',
                 onTap: () {},
@@ -52,6 +77,35 @@ class Login extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DividerWithText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Divider(
+            thickness: 1.0,
+            color: Color(0xffa9a9a9),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Or connect with',
+            style: kNormalTextStyle,
+          ),
+        ),
+        Expanded(
+          child: Divider(
+            thickness: 1.0,
+            color: Color(0xffa9a9a9),
+          ),
+        ),
+      ],
     );
   }
 }

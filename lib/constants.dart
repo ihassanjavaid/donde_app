@@ -8,6 +8,10 @@ const kWelcomeTextStyle = TextStyle(
   color: Color(0xfff44336),
 );
 
+const kNormalTextStyle = TextStyle(
+  color: Color(0xffa9a9a9),
+);
+
 const kSubtitleStyle = TextStyle(
   fontSize: 22,
   color: Color(0xffcfcfcf),

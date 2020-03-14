@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
 
-class RegisterButton extends StatelessWidget {
+class CustomIconButton extends StatelessWidget {
   final String buttonLabel;
   final Function onTap;
   final Color colour;
   final IconData icon;
 
-  RegisterButton(
+  CustomIconButton(
       {@required this.buttonLabel,
       @required this.onTap,
       @required this.colour,
-      @required this.icon});
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class RegisterButton extends StatelessWidget {
             ),
           ],
         ),
-        margin: EdgeInsets.only(top: 10.0),
+        margin: EdgeInsets.symmetric(vertical: 15.0),
 //      width: double.infinity,
         height: 60.0,
         decoration: BoxDecoration(
