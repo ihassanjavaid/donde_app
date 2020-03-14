@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
+import 'settings.dart';
 
 class Index extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class Index extends StatefulWidget {
 }
 
 class _IndexState extends State<Index> {
+
   int _selectedIndex = 0;
 
   static const Icon homeicon = Icon(Icons.home,
@@ -33,10 +35,10 @@ class _IndexState extends State<Index> {
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
+   Text(
       'Index 0: Home',
       style: optionStyle,
-    ),
+     ),
     Text(
       'Index 1: Explore',
       style: optionStyle,
@@ -63,7 +65,6 @@ class _IndexState extends State<Index> {
     return Scaffold(
       body:  Center(
         child: _widgetOptions.elementAt(_selectedIndex),
-
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem> [
