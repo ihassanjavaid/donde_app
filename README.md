@@ -27,4 +27,4 @@ samples, guidance on mobile development, and a full API reference.
 
 ### Copyrights
 
-COMSATS University Islamabad © | The Punsiher Labs ™
+COMSATS University Islamabad © | The Punisher Labs ™
