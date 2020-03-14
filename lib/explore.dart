@@ -14,7 +14,7 @@ class _ExploreState extends State<Explore> {
 
   Completer<GoogleMapController> _controller = Completer();
 
-  //static const LatLng _center = const LatLng(45.521563, -122.677433);
+  static const LatLng _center = const LatLng(45.521563, -122.677433);
   //Position position = await Geolocator
 
   /*var location = new Location();
@@ -26,7 +26,7 @@ class _ExploreState extends State<Explore> {
   double longg = userLocation["longitude"];
    */
 
-  static const LatLng _center = const LatLng(latt, long);
+  //static const LatLng _center = const LatLng(latt, long);
 
 
   void _onMapCreated(GoogleMapController controller) {
