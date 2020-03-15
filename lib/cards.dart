@@ -13,35 +13,37 @@ class _MainCardState extends State<MainCard> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Text(''),
+            Text(''), // for a little space from the top
             Center(
               child: Container(
-                height: 500.0,
+                height: 470.0,
                 width: 390,
                 child: Card(
                   // Card properties
                   borderOnForeground: true,
-                  elevation: 15.0,
+                  elevation: 18.0,
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      const ListTile(
-                        leading: Icon(Icons.fastfood),
-                        title: Text(
-                          'Restaurant Matcher', style: TextStyle(
-                          fontSize: 32.0,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xfff44336),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Icon(
+                            Icons.fastfood,
                           ),
-                        ),
-                        subtitle: Text('Donde',
-                          style: kSubtitleStyle,
-                        ),
+                          Text(
+                            'Restaurant Matcher', style: TextStyle(
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.normal,
+                            color: Color(0xff262522),
+                          ),
+                          ),
+                        ],
                       ),
                       Container(
-                        width: 280.0,
-                        height: 250.0,
+                        width: 280,
+                        height: 280,
+                        margin: EdgeInsets.all(33),
                         decoration: BoxDecoration(
                           shape: BoxShape.rectangle,
                           image: DecorationImage(
@@ -49,15 +51,36 @@ class _MainCardState extends State<MainCard> {
                             image: NetworkImage('https://www.thenews.com.pk//assets/uploads/akhbar/2019-04-22/461156_2369726_Islamabad-hotel_akhbar.jpg'),
                           ),
                         ),
-                      )
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text(
+                            'Restaurant Name',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.redAccent,
+                            ),
+                            ),
+                          Text(
+                            '0.0 kms',
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                              color: Colors.grey
+                            ),
+                          )
+                        ],
+                      ),
                   ],
+                      ),
+                ),
+              ),
+            ),
+          ],
                 ),
             ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+              );
   }
 }
