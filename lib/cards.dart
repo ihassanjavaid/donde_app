@@ -32,11 +32,12 @@ class _MainCardState extends State<MainCard> {
                             Icons.fastfood,
                           ),
                           Text(
-                            'Restaurant Matcher', style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.normal,
-                            color: Color(0xff262522),
-                          ),
+                            'Restaurant Matcher',
+                            style: TextStyle(
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.normal,
+                              color: Color(0xff262522),
+                            ),
                           ),
                         ],
                       ),
@@ -48,7 +49,8 @@ class _MainCardState extends State<MainCard> {
                           shape: BoxShape.rectangle,
                           image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: NetworkImage('https://www.thenews.com.pk//assets/uploads/akhbar/2019-04-22/461156_2369726_Islamabad-hotel_akhbar.jpg'),
+                            image: NetworkImage(
+                                'https://www.thenews.com.pk//assets/uploads/akhbar/2019-04-22/461156_2369726_Islamabad-hotel_akhbar.jpg'),
                           ),
                         ),
                       ),
@@ -63,24 +65,49 @@ class _MainCardState extends State<MainCard> {
                               fontWeight: FontWeight.normal,
                               color: Colors.redAccent,
                             ),
-                            ),
+                          ),
                           Text(
                             '0.0 kms',
                             textAlign: TextAlign.end,
-                            style: TextStyle(
-                              color: Colors.grey
-                            ),
-                          )
+                            style: TextStyle(color: Colors.grey),
+                          ),
                         ],
                       ),
-                  ],
-                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
+            Center(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    '',
+                    style: TextStyle(
+                      fontSize: 25,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image(
+                        image: AssetImage('images/crossicon.png'),
+                        height: 50,
+                        width: 50,
+                      ),
+                      Image(
+                        image: AssetImage('images/hearticon.png'),
+                        height: 50,
+                        width: 50,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
           ],
-                ),
-            ),
-              );
+        ),
+      ),
+    );
   }
 }
