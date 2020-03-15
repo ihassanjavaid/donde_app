@@ -13,6 +13,7 @@ class _ExploreState extends State<Explore> {
   Completer<GoogleMapController> _controller = Completer();
 
   Position _pos;
+
   void _getlocation() async {
     _pos = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
   }

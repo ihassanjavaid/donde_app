@@ -1,3 +1,4 @@
+import 'package:donde_app/explore.dart';
 import 'package:donde_app/index.dart';
 import 'package:donde_app/login.dart';
 import 'package:donde_app/settings.dart';
@@ -11,8 +12,7 @@ class Donde extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.light(),
-      home: Settings() ,
+      home: Explore(),
     );
   }
 }
-
