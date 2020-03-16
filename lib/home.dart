@@ -2,8 +2,6 @@
 * Dart file housing the landing page of the app
 * */
 
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
@@ -105,9 +103,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       InkWell(
-                        onTap: () {
-
-                        }, // Like
+                        onTap: () {}, // Like
                         child: Image(
                           image: AssetImage('images/hearticon.png'),
                           height: 50,
