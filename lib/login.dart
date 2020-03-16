@@ -4,8 +4,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
 import 'customButton.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Login extends StatelessWidget {
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +65,9 @@ class Login extends StatelessWidget {
               SizedBox(
                 height: 30.0,
               ),
-              DividerWithText(),
+              DividerWithText(
+                text: 'Or connect with',
+              ),
               SizedBox(
                 height: 15.0,
               ),
@@ -70,18 +80,30 @@ class Login extends StatelessWidget {
               CustomIconButton(
                 icon: FontAwesomeIcons.google,
                 buttonLabel: 'LOGIN WITH GOOGLE',
-                onTap: () {},
+                onTap: _handleGSignIn,
                 colour: Color(0xffeb4e3f),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
+  Future<void> _handleGSignIn() async {
+    try {
+      await _googleSignIn.signIn();
+    } catch (error) {
+      print(error);
+    }
+  }
 }
 
 class DividerWithText extends StatelessWidget {
+  final String text;
+
+  DividerWithText({@required this.text});
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -95,7 +117,7 @@ class DividerWithText extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Or connect with',
+            this.text,
             style: kNormalTextStyle,
           ),
         ),
