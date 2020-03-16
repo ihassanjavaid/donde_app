@@ -23,6 +23,9 @@ class _HomeState extends State<Home> {
                 height: 470.0,
                 width: 390,
                 child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   // Card properties
                   borderOnForeground: true,
                   elevation: 18.0,
