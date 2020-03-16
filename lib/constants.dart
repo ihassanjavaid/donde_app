@@ -32,3 +32,9 @@ const kSettingWidgetTextStyle = TextStyle(
   color: Color(0xffa9a9a9),
   fontSize: 18.0,
 );
+
+const kSettingsTextStyle = TextStyle(
+  color: Color(0xfff44336),
+  fontWeight: FontWeight.bold,
+  fontSize: 28.0,
+);

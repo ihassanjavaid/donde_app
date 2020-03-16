@@ -7,9 +7,14 @@ class SettingWidget extends StatelessWidget {
   final IconData icon;
   final Color colour;
   final String label;
+  final bool canToggle;
 
   SettingWidget(
-      {@required this.onTap, @required this.icon, this.colour, this.label});
+      {@required this.onTap,
+      @required this.icon,
+      @required this.colour,
+      @required this.label,
+      this.canToggle = false});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,9 @@ class SettingWidget extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Icon(
-                    FontAwesomeIcons.arrowRight,
+                    canToggle
+                        ? FontAwesomeIcons.toggleOn
+                        : FontAwesomeIcons.arrowRight,
                     color: Colors.grey,
                   ),
                 ),
