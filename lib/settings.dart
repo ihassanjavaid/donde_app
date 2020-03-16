@@ -57,6 +57,7 @@ class _SettingsState extends State<Settings> {
                 label: 'Notification',
                 colour: Color(kDefaultBackgroundColour),
                 canToggle: true,
+                toggle: true,
               ),
               SettingWidget(
                 onTap: () {},

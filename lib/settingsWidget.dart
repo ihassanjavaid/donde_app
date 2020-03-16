@@ -8,13 +8,16 @@ class SettingWidget extends StatelessWidget {
   final Color colour;
   final String label;
   final bool canToggle;
+  final bool toggle;
 
-  SettingWidget(
-      {@required this.onTap,
-      @required this.icon,
-      @required this.colour,
-      @required this.label,
-      this.canToggle = false});
+  SettingWidget({
+    @required this.onTap,
+    @required this.icon,
+    @required this.colour,
+    @required this.label,
+    this.canToggle = false,
+    this.toggle = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,7 @@ class SettingWidget extends StatelessWidget {
                     canToggle
                         ? FontAwesomeIcons.toggleOn
                         : FontAwesomeIcons.arrowRight,
-                    color: Colors.grey,
+                    color: toggle ? Colors.red : Colors.grey,
                   ),
                 ),
               ],
