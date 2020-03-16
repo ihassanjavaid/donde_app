@@ -1,12 +1,16 @@
+/*
+* Dart file housing the landing page of the app
+* */
+
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
-class MainCard extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _MainCardState createState() => _MainCardState();
+  _HomeState createState() => _HomeState();
 }
 
-class _MainCardState extends State<MainCard> {
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
