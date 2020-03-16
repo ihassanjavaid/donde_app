@@ -52,6 +52,23 @@ class Login extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: 'Enter Number',
+                          hasFloatingPlaceholder: true,
+                          labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.redAccent,
+                            )
+                          )
+                        ),
                       ),
                     ),
                   ],
