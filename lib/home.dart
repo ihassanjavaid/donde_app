@@ -2,6 +2,8 @@
 * Dart file housing the landing page of the app
 * */
 
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
@@ -94,15 +96,23 @@ class _HomeState extends State<Home> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Image(
-                        image: AssetImage('images/crossicon.png'),
-                        height: 50,
-                        width: 50,
+                      InkWell(
+                        onTap: () {}, // Dislike
+                        child: Image(
+                          image: AssetImage('images/crossicon.png'),
+                          height: 50,
+                          width: 50,
+                        ),
                       ),
-                      Image(
-                        image: AssetImage('images/hearticon.png'),
-                        height: 50,
-                        width: 50,
+                      InkWell(
+                        onTap: () {
+
+                        }, // Like
+                        child: Image(
+                          image: AssetImage('images/hearticon.png'),
+                          height: 50,
+                          width: 50,
+                        ),
                       ),
                     ],
                   ),
