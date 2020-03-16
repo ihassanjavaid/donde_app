@@ -36,7 +36,7 @@ class _SettingsState extends State<Settings> {
                 ),
               ),
               Text(
-                'NAME',
+                'AMIR JAFRI',
                 style: kSettingsTextStyle,
               ),
               SettingWidget(
