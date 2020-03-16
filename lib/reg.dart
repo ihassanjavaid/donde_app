@@ -56,7 +56,7 @@ class _RegState extends State<Reg> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            elevation: 8,
+            elevation: 18,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(
