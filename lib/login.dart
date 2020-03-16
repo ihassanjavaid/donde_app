@@ -17,7 +17,6 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff8f8f8),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -49,7 +48,11 @@ class Login extends StatelessWidget {
                       color: Colors.red,
                       thickness: 1.0,
                     ),
-                    Text('Enter your mobile number'),
+                    Expanded(
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                      ),
+                    ),
                   ],
                 ),
                 margin: EdgeInsets.only(bottom: 10.0),

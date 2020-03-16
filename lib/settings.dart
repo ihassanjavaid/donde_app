@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
+import 'customIconButton.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -11,16 +13,14 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Center(
-              child: Text(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Text(
                 'Settings',
                 style: kWelcomeTextStyle,
               ),
-            ),
-            Center(
-              child: Container(
+              Container(
                 width: 190.0,
                 height: 190.0,
                 decoration: BoxDecoration(
@@ -31,14 +31,18 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
               ),
-            ),
-            Center(
-              child: Text(
+              Text(
                 'NAME',
                 style: kWelcomeTextStyle,
               ),
-            ),
-          ],
+              CustomIconButton(
+                onTap: () {},
+                colour: Color(0xff00dd00),
+                icon: FontAwesomeIcons.filter,
+                buttonLabel: 'Filter',
+              ),
+            ],
+          ),
         ),
       ),
     );
