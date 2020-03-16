@@ -4,7 +4,7 @@ import 'constants.dart';
 
 class CustomIconButton extends StatelessWidget {
   final String buttonLabel;
-  final Function onTap;
+  final VoidCallback onTap;
   final Color colour;
   final IconData icon;
 
