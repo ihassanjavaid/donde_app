@@ -11,8 +11,10 @@ class Donde extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light(),
-      home: Explore(),
+      theme: ThemeData.light().copyWith(
+        backgroundColor: Color(0xfff8f8f8),
+      ),
+      home: Index(),
     );
   }
 }
