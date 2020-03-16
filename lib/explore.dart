@@ -9,11 +9,7 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  void initState() {
-    super.initState();
-    _getLocation();
-  }
-
+  // Attributes
   Completer<GoogleMapController> _controller = Completer();
 
   static final CameraPosition _kGooglePlex = CameraPosition(
@@ -21,10 +17,17 @@ class _ExploreState extends State<Explore> {
     zoom: 14.4746,
   );
 
+  // Methods
+  void initState() {
+    super.initState();
+    _getLocation();
+  }
+
   void _getLocation() async {
+    final GoogleMapController controller = await _controller.future;
+
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    final GoogleMapController controller = await _controller.future;
 
     CameraPosition currentPosition = CameraPosition(
         bearing: 0,
@@ -44,11 +47,12 @@ class _ExploreState extends State<Explore> {
             _controller.complete(controller);
           },
           initialCameraPosition: _kGooglePlex,
+          myLocationEnabled: true,
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _getLocation,
-        label: Text(''),
+        label: Text('Center to my location'),
         icon: Icon(Icons.my_location),
       ),
     );
