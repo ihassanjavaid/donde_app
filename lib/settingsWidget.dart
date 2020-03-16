@@ -1,4 +1,4 @@
-import 'package:donde_app/customButton.dart';
+import 'package:donde_app/customIconButton.dart';
 import 'package:flutter/material.dart';
 
-class SettingWidget extends CustomButton {}
+class SettingWidget extends CustomIconButton {}
