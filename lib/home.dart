@@ -117,16 +117,24 @@ class _HomeState extends State<Home> {
                         onTap: () {}, // Dislike
                         child: Image(
                           image: AssetImage('images/crossicon.png'),
-                          height: 32,
-                          width: 32,
+                          height: 42,
+                          width: 42,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {}, // Dislike
+                        child: Image(
+                          image: AssetImage('images/refreshicon.png'),
+                          height: 30,
+                          width: 30,
                         ),
                       ),
                       InkWell(
                         onTap: () {}, // Like
                         child: Image(
                           image: AssetImage('images/hearticon.png'),
-                          height: 32,
-                          width: 32,
+                          height: 42,
+                          width: 42,
                         ),
                       ),
                     ],
