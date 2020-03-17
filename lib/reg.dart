@@ -1,5 +1,7 @@
+import 'package:donde_app/index.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'customTextField.dart';
 
 class Reg extends StatefulWidget {
   @override
@@ -76,69 +78,20 @@ class _RegState extends State<Reg> {
                   SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
-                    cursorColor: Colors.redAccent,
-                    decoration: InputDecoration(
-                      labelText: "Your Name", hasFloatingPlaceholder: true,
-                      labelStyle: TextStyle(
-                        color: Colors.redAccent,
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.redAccent,
-                        )
-                      )
-                    ),
+                  CustomTextField(
+                    placeholder: 'Your Name',
                   ),
                   SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
-                    cursorColor: Colors.redAccent,
-                    decoration: InputDecoration(
-                        labelText: "Your E-Mail", hasFloatingPlaceholder: true,
-                        labelStyle: TextStyle(
-                          color: Colors.redAccent,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.redAccent,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                            )
-                        )
-                    ),
+                  CustomTextField(
+                    placeholder: 'Your E-Mail',
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    obscureText: true,
-                    cursorColor: Colors.redAccent,
-                    decoration: InputDecoration(
-                        labelText: "Your Password", hasFloatingPlaceholder: true,
-                        labelStyle: TextStyle(
-                          color: Colors.redAccent,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.redAccent,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                            )
-                        )
-                    ),
+                  CustomTextField(
+                    placeholder: 'Your Password',
                   ),
                   SizedBox(
                     height: 20,
@@ -157,14 +110,24 @@ class _RegState extends State<Reg> {
                         child: Container(),
                       ),
                       FlatButton(
-                        child: Text("SIGN UP", style: TextStyle(fontSize: 16),),
+                        child: Text(
+                          "SIGN UP",
+                          style: TextStyle(fontSize: 16),
+                        ),
                         color: Colors.redAccent,
                         textColor: Colors.white,
                         padding: EdgeInsets.only(
                             left: 38, right: 38, top: 15, bottom: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Index(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -192,9 +155,11 @@ class _RegState extends State<Reg> {
                 );
               },
               textColor: Colors.black87,
-              child: Text("LOGIN", style: TextStyle(
-                fontSize: 18,
-              ),
+              child: Text(
+                "LOGIN",
+                style: TextStyle(
+                  fontSize: 18,
+                ),
               ),
             )
           ],
@@ -230,7 +195,10 @@ class _RegState extends State<Reg> {
           Text(
             "Donde",
             style: TextStyle(
-                fontSize: 60, color: Colors.white, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),
+                fontSize: 60,
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+                fontStyle: FontStyle.normal),
           )
         ],
       ),
