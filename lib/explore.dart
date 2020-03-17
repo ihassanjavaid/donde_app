@@ -74,8 +74,8 @@ class _ExploreState extends State<Explore> {
                 MaterialPageRoute(
                   builder: (context) => Center(
                     child: Card(
-                      child: Icon(
-                        result['icon'],
+                      child: Text(
+                        result['name'],
                       ),
                     ),
                   ),
