@@ -11,6 +11,7 @@ class CustomTextField extends StatelessWidget {
   final Color cursorColor;
   final Color placeholderColor;
   final Color focusedOutlineBorder;
+  final bool passwordhidden = true;
 
   CustomTextField(
       {@required this.placeholder,
@@ -21,6 +22,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: passwordhidden,
       cursorColor: this.cursorColor,
       decoration: InputDecoration(
         labelText: this.placeholder,
