@@ -1,5 +1,5 @@
 import 'package:donde_app/customIconButton.dart';
-import 'package:donde_app/reg.dart';
+import 'package:donde_app/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
@@ -7,6 +7,7 @@ import 'customButton.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dividerWithText.dart';
+import 'password.dart';
 
 class Login extends StatelessWidget {
   final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -65,7 +66,7 @@ class Login extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Reg(),
+                      builder: (context) => Password(),
                     ),
                   );
                 },
