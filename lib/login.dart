@@ -1,4 +1,5 @@
 import 'package:donde_app/customIconButton.dart';
+import 'package:donde_app/reg.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
@@ -6,9 +7,10 @@ import 'customButton.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'index.dart';
+import 'dividerWithText.dart';
 
 class Login extends StatelessWidget {
-  GoogleSignIn _googleSignIn = GoogleSignIn(
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
       'https://www.googleapis.com/auth/contacts.readonly',
@@ -17,9 +19,10 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,28 +52,7 @@ class Login extends StatelessWidget {
                       color: Colors.red,
                       thickness: 1.0,
                     ),
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Enter Number',
-                          hasFloatingPlaceholder: true,
-                          labelStyle: TextStyle(
-                            color: Colors.redAccent,
-                          ),
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                            )
-                          )
-                        ),
-                      ),
-                    ),
+                    MobileNumberInputField(),
                   ],
                 ),
                 margin: EdgeInsets.only(bottom: 10.0),
@@ -80,12 +62,14 @@ class Login extends StatelessWidget {
               ),
               CustomButton(
                 buttonLabel: 'Next',
-                onTap: (
-                    ) {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => Index(),
-                  ));
-                  },
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Reg(),
+                    ),
+                  );
+                },
                 colour: Color(kButtonContainerColour),
               ),
               SizedBox(
@@ -125,35 +109,30 @@ class Login extends StatelessWidget {
   }
 }
 
-class DividerWithText extends StatelessWidget {
-  final String text;
-
-  DividerWithText({@required this.text});
-
+class MobileNumberInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Divider(
-            thickness: 1.0,
-            color: Color(0xffa9a9a9),
+    return Expanded(
+      child: TextField(
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          labelText: 'Enter Number',
+          hasFloatingPlaceholder: true,
+          labelStyle: TextStyle(
+            color: Colors.redAccent,
+          ),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.redAccent,
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.redAccent,
+            ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            this.text,
-            style: kNormalTextStyle,
-          ),
-        ),
-        Expanded(
-          child: Divider(
-            thickness: 1.0,
-            color: Color(0xffa9a9a9),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
