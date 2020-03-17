@@ -21,15 +21,22 @@ class _HomeState extends State<Home> {
             Container(
               padding: EdgeInsets.all(20.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Icon(
                     Icons.fastfood,
+                    size: 36,
                   ),
                   Text(
-                    'Restaurant Matcher',
+                    '  ',
                     style: TextStyle(
-                      fontSize: 24.0,
+                      fontSize: 30,
+                    ),
+                  ),
+                  Text(
+                    'Restaurants',
+                    style: TextStyle(
+                      fontSize: 32.0,
                       fontWeight: FontWeight.normal,
                       color: Color(0xff262522),
                     ),
@@ -50,21 +57,23 @@ class _HomeState extends State<Home> {
                   borderOnForeground: true,
                   elevation: 18.0,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Container(
-                        width: double.infinity,
-                        height: 325,
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 10.0,
-                          vertical: 5.0,
-                        ),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: NetworkImage(
-                                'https://www.thenews.com.pk//assets/uploads/akhbar/2019-04-22/461156_2369726_Islamabad-hotel_akhbar.jpg'),
+                      Card(
+                        elevation: 8.5,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6.5),
+                          child: Container(
+                            width: 330,
+                            height: 310,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: NetworkImage(
+                                    'https://www.thenews.com.pk//assets/uploads/akhbar/2019-04-22/461156_2369726_Islamabad-hotel_akhbar.jpg'),
+                              ),
+                            ),
                           ),
                         ),
                       ),
