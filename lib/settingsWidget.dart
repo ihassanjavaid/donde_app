@@ -24,6 +24,7 @@ class SettingWidget extends StatelessWidget {
     return GestureDetector(
       onTap: this.onTap,
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           children: <Widget>[
             Row(
@@ -56,12 +57,11 @@ class SettingWidget extends StatelessWidget {
             Expanded(
               child: Divider(
                 thickness: 1.0,
-                height: 0.75,
               ),
             ),
           ],
         ),
-        margin: EdgeInsets.symmetric(vertical: 15.0),
+        margin: EdgeInsets.symmetric(vertical: 6),
 //      width: double.infinity,
         height: 60.0,
         decoration: BoxDecoration(

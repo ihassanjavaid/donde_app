@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
-import 'customIconButton.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -18,12 +17,15 @@ class _SettingsState extends State<Settings> {
         child: Center(
           child: Column(
             children: <Widget>[
-              Text(
-                'Settings',
-                style: kSettingsTextStyle,
+              Container(
+                margin: EdgeInsets.only(top: 10.0),
+                child: Text(
+                  'Settings',
+                  style: kSettingsTextStyle,
+                ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 20.0),
+                margin: EdgeInsets.symmetric(vertical: 15.0),
                 width: 120.0,
                 height: 120.0,
                 decoration: BoxDecoration(
@@ -35,9 +37,12 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
               ),
-              Text(
-                'AMIR JAFRI',
-                style: kSettingsTextStyle,
+              Container(
+                margin: EdgeInsets.only(bottom: 25.0),
+                child: Text(
+                  'AMIR JAFRI',
+                  style: kSettingsTextStyle,
+                ),
               ),
               SettingWidget(
                 onTap: () {},
