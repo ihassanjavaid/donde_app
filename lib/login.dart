@@ -95,7 +95,7 @@ class _LoginState extends State<Login> {
               ),
               CustomIconButton(
                 buttonLabel: 'LOGIN WITH FACEBOOK',
-                onTap: () {},
+                onTap: _handleFbSignIn,
                 colour: Color(0xff2d3c9b),
                 icon: FontAwesomeIcons.facebook,
               ),
@@ -123,18 +123,18 @@ class _LoginState extends State<Login> {
   Future<void> _handleFbSignIn() async {
 
     final facebookLogin = FacebookLogin();
-    final result = await facebookLogin.logInWithReadPermissions(['email']);
+    final result = await facebookLogin.logIn(['email']);
 
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
-        _sendTokenToServer(result.accessToken.token);
-        _showLoggedInUI();
+        //_sendTokenToServer(result.accessToken.token);
+        //_showLoggedInUI();
         break;
       case FacebookLoginStatus.cancelledByUser:
-        _showCancelledMessage();
+        //_showCancelledMessage();
         break;
       case FacebookLoginStatus.error:
-        _showErrorOnUI(result.errorMessage);
+        //_showErrorOnUI(result.errorMessage);
         break;
     }
   }
