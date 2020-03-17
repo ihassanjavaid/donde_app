@@ -50,13 +50,15 @@ class _ExploreState extends State<Explore> {
     var lng = position.longitude;
     try {
       final response = await http.get(
-          'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&radius=5000&type=restaurant&key=AIzaSyBY3uVSwIDtVZ-V2LesfjEB5wN_tfqi_po');
+          'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&radius=10000&type=restaurant&key=AIzaSyBY3uVSwIDtVZ-V2LesfjEB5wN_tfqi_po');
 
       final int statusCode = response.statusCode;
 
       if (statusCode == 201 || statusCode == 200) {
         Map responseBody = json.decode(response.body);
         List results = responseBody["results"];
+
+        print(results);
 
         Iterable _markers = Iterable.generate(results.length, (index) {
           Map result = results[index];
@@ -66,6 +68,20 @@ class _ExploreState extends State<Explore> {
           return Marker(
             markerId: MarkerId("marker$index"),
             position: latLngMarker,
+            onTap: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Center(
+                    child: Card(
+                      child: Icon(
+                        result['icon'],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
           );
         });
 
@@ -91,6 +107,7 @@ class _ExploreState extends State<Explore> {
           },
           initialCameraPosition: _kGooglePlex,
           myLocationEnabled: true,
+          markers: Set.from(markers),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
