@@ -22,8 +22,6 @@ class _LoginState extends State<Login> {
     super.initState();
   }
 
-
-
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
