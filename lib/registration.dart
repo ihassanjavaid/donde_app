@@ -92,6 +92,7 @@ class _RegistrationState extends State<Registration> {
                   ),
                   CustomTextField(
                     placeholder: 'Your Password',
+                    isPassword: true,
                   ),
                   SizedBox(
                     height: 20,

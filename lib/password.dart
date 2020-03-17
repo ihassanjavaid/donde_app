@@ -39,6 +39,7 @@ class _PasswordState extends State<Password> {
               ),
               CustomTextField(
                 placeholder: 'Password',
+                isPassword: true,
               ),
               SizedBox(
                 height: 40.0,
