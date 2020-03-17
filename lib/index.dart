@@ -72,48 +72,48 @@ class _IndexState extends State<Index> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              size: 30,
+              size: 24,
               color: Colors.grey,
             ),
             title: Text(
               'Home',
-              style: kbottomNavIcons,
+              style: kBottomNavTextStyle,
             ),
             activeIcon: homeicon,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.explore,
-              size: 30,
+              size: 24,
               color: Colors.grey,
             ),
             title: Text(
               'Explore',
-              style: kbottomNavIcons,
+              style: kBottomNavTextStyle,
             ),
             activeIcon: exploreicon,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.chat,
-              size: 30,
+              size: 24,
               color: Colors.grey,
             ),
             title: Text(
               'Friends',
-              style: kbottomNavIcons,
+              style: kBottomNavTextStyle,
             ),
             activeIcon: friendsicon,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.settings,
-              size: 30,
+              size: 24,
               color: Colors.grey,
             ),
             title: Text(
               'Settings',
-              style: kbottomNavIcons,
+              style: kBottomNavTextStyle,
             ),
             activeIcon: settingsicon,
           ),

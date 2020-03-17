@@ -2,8 +2,9 @@
 * Dart file housing the landing page of the app
 * */
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -17,11 +18,30 @@ class _HomeState extends State<Home> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Text(''), // for a little space from the top
+            Container(
+              padding: EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Icon(
+                    Icons.fastfood,
+                  ),
+                  Text(
+                    'Restaurant Matcher',
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.normal,
+                      color: Color(0xff262522),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Center(
               child: Container(
-                height: 470.0,
-                width: 390,
+                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                height: 420.0,
+                width: double.infinity,
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -30,28 +50,15 @@ class _HomeState extends State<Home> {
                   borderOnForeground: true,
                   elevation: 18.0,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Icon(
-                            Icons.fastfood,
-                          ),
-                          Text(
-                            'Restaurant Matcher',
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.normal,
-                              color: Color(0xff262522),
-                            ),
-                          ),
-                        ],
-                      ),
                       Container(
-                        width: 280,
-                        height: 280,
-                        margin: EdgeInsets.all(33),
+                        width: double.infinity,
+                        height: 325,
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 10.0,
+                          vertical: 5.0,
+                        ),
                         decoration: BoxDecoration(
                           shape: BoxShape.rectangle,
                           image: DecorationImage(
@@ -101,16 +108,16 @@ class _HomeState extends State<Home> {
                         onTap: () {}, // Dislike
                         child: Image(
                           image: AssetImage('images/crossicon.png'),
-                          height: 50,
-                          width: 50,
+                          height: 32,
+                          width: 32,
                         ),
                       ),
                       InkWell(
                         onTap: () {}, // Like
                         child: Image(
                           image: AssetImage('images/hearticon.png'),
-                          height: 50,
-                          width: 50,
+                          height: 32,
+                          width: 32,
                         ),
                       ),
                     ],

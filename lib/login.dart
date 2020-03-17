@@ -27,7 +27,7 @@ class Login extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
-                height: 90.0,
+                height: 50.0,
               ),
               Text(
                 'Hello',

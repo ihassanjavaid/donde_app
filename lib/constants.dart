@@ -18,8 +18,8 @@ const kSubtitleStyle = TextStyle(
   color: Color(0xffcfcfcf),
 );
 
-const kbottomNavIcons = TextStyle(
-  fontSize: 20,
+const kBottomNavTextStyle = TextStyle(
+  fontSize: 16,
   //color: Color(0xffcfcfcf),
 );
 

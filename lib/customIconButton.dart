@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'constants.dart';
 
 class CustomIconButton extends StatelessWidget {
@@ -32,7 +32,7 @@ class CustomIconButton extends StatelessWidget {
             ),
           ],
         ),
-        margin: EdgeInsets.symmetric(vertical: 15.0),
+        margin: EdgeInsets.symmetric(vertical: 10.0),
 //      width: double.infinity,
         height: 60.0,
         decoration: BoxDecoration(
