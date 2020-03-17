@@ -9,7 +9,21 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'dividerWithText.dart';
 import 'password.dart';
 
-class Login extends StatelessWidget {
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+
+  void initState(){
+    super.initState();
+  }
+
+
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
@@ -107,7 +121,28 @@ class Login extends StatelessWidget {
       print(error);
     }
   }
+
+  Future<void> _handleFbSignIn() async {
+
+    final facebookLogin = FacebookLogin();
+    final result = await facebookLogin.logInWithReadPermissions(['email']);
+
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        _sendTokenToServer(result.accessToken.token);
+        _showLoggedInUI();
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        _showCancelledMessage();
+        break;
+      case FacebookLoginStatus.error:
+        _showErrorOnUI(result.errorMessage);
+        break;
+    }
+  }
+
 }
+
 
 class MobileNumberInputField extends StatelessWidget {
   @override
