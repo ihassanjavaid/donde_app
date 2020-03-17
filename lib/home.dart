@@ -4,8 +4,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_webservice/places.dart';
 
+// ignore: must_be_immutable
 class Home extends StatefulWidget {
+  PlacesSearchResult place;
+
+  Home({this.place});
+
   @override
   _HomeState createState() => _HomeState();
 }

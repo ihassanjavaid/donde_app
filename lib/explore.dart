@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:donde_app/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -70,12 +71,8 @@ class _ExploreState extends State<Explore> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Center(
-                    child: Card(
-                      child: Text(
-                        place.name,
-                      ),
-                    ),
+                  builder: (context) => Home(
+                    place: place,
                   ),
                 ),
               );
