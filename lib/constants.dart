@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 const kButtonContainerColour = 0xFFc4c4c4;
 const kDefaultBackgroundColour = 0xfff8f8f8;
 
 const kWelcomeTextStyle = TextStyle(
-  fontSize: 38.0,
+  fontSize: 48.0,
   fontWeight: FontWeight.bold,
-  color: Color(0xfff44336),
+  color: Colors.redAccent,
 );
 
 const kNormalTextStyle = TextStyle(
@@ -34,7 +35,7 @@ const kSettingWidgetTextStyle = TextStyle(
 );
 
 const kSettingsTextStyle = TextStyle(
-  color: Color(0xfff44336),
+  color: Colors.redAccent,
   fontWeight: FontWeight.bold,
   fontSize: 28.0,
 );

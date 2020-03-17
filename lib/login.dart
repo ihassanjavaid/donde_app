@@ -48,7 +48,7 @@ class Login extends StatelessWidget {
                   children: <Widget>[
                     CountryCodePicker(),
                     VerticalDivider(
-                      color: Colors.red,
+                      color: Colors.redAccent,
                       thickness: 1.0,
                     ),
                     MobileNumberInputField(),
@@ -90,7 +90,7 @@ class Login extends StatelessWidget {
                 icon: FontAwesomeIcons.google,
                 buttonLabel: 'LOGIN WITH GOOGLE',
                 onTap: _handleGSignIn,
-                colour: Color(0xffeb4e3f),
+                colour: Colors.redAccent,
               ),
             ],
           ),
