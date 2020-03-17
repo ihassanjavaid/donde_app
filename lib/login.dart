@@ -6,7 +6,6 @@ import 'constants.dart';
 import 'customButton.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'index.dart';
 import 'dividerWithText.dart';
 
 class Login extends StatelessWidget {
