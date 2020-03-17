@@ -40,7 +40,7 @@ class _ExploreState extends State<Explore> {
     CameraPosition currentPosition = CameraPosition(
         bearing: 0,
         target: LatLng(position.latitude, position.longitude),
-        zoom: 18.0);
+        zoom: 12.0);
 
     controller.animateCamera(CameraUpdate.newCameraPosition(currentPosition));
   }
@@ -50,7 +50,7 @@ class _ExploreState extends State<Explore> {
     var lng = position.longitude;
     try {
       final response = await http.get(
-          'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&radius=5000&type=restaurant&key=AIzaSyD8HBaKJrre0xJWU_vl81psl03U76rlIlI');
+          'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&radius=5000&type=restaurant&key=AIzaSyBY3uVSwIDtVZ-V2LesfjEB5wN_tfqi_po');
 
       final int statusCode = response.statusCode;
 
