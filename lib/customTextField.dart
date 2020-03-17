@@ -17,7 +17,8 @@ class CustomTextField extends StatelessWidget {
       {@required this.placeholder,
       this.cursorColor = Colors.redAccent,
       this.placeholderColor = Colors.redAccent,
-      this.focusedOutlineBorder = Colors.redAccent, this.isPassword = false});
+      this.focusedOutlineBorder = Colors.redAccent,
+      this.isPassword = false});
 
   @override
   Widget build(BuildContext context) {
