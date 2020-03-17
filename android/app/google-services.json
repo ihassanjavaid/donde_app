@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1038465106983",
+    "firebase_url": "https://donde-app-restaurants.firebaseio.com",
+    "project_id": "donde-app-restaurants",
+    "storage_bucket": "donde-app-restaurants.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038465106983:android:4ea419fc01c00fa4a53a02",
+        "android_client_info": {
+          "package_name": "cui.donde_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038465106983-ulu0716v79i84m8ivvj7sfdb66tu0tvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUgG2qUVxXK5BXKlDVvQ1L99cvtfrTQxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038465106983-ulu0716v79i84m8ivvj7sfdb66tu0tvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
