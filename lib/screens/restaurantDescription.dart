@@ -20,12 +20,23 @@ class RestaurantDescription extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(
-                    Icons.fastfood,
-                    size: 36,
+                  Tab(
+                    icon: Container(
+                      child: Image(
+                        image: AssetImage(
+                          'images/logo.png',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                      height: 45,
+                      width: 45,
+                    ),
                   ),
-                  SizedBox(
-                    width: 10.0,
+                  Text(
+                    '  ',
+                    style: TextStyle(
+                      fontSize: 30,
+                    ),
                   ),
                   Text(
                     'Restaurants',

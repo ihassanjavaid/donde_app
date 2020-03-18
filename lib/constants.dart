@@ -15,8 +15,9 @@ const kNormalTextStyle = TextStyle(
 );
 
 const kTitleTextStyle = TextStyle(
-  fontSize: 32.0,
+  fontSize: 33.0,
   fontWeight: FontWeight.normal,
+  fontStyle: FontStyle.italic,
   color: Color(0xff262522),
 );
 
