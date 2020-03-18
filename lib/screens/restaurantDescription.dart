@@ -1,18 +1,12 @@
-/*
-* Dart file housing the landing page of the app
-* */
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:google_maps_webservice/places.dart';
-import '../constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:donde_app/constants.dart';
+import 'package:google_maps_webservice/places.dart';
 
-class Home extends StatelessWidget {
+class RestaurantDescription extends StatelessWidget {
   final PlacesSearchResult place;
 
-  Home({this.place});
+  RestaurantDescription({@required this.place});
 
   @override
   Widget build(BuildContext context) {
