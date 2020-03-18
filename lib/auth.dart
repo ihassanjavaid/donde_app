@@ -37,10 +37,13 @@ class AuthService {
 
      // at this time user will be signed in google not firebase, take the token pass it to firebase to do so
 
-    FirebaseUser user = await _auth.signInWithGoogle(
+   /* FirebaseUser user = await _auth.signInWithGoogle(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken
-    );
+    );*/
+
+   AuthResult _authResult = await _auth.signInWithCustomToken(token: googleAuth.idToken);
+   FirebaseUser user = await _authResult.user;
 
     updateUserData(user);
     print("signed in " + user.displayName);
