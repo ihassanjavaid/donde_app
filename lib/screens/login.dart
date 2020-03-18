@@ -11,6 +11,8 @@ import 'password.dart';
 
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
+import 'package:donde_app/auth.dart';
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -113,7 +115,8 @@ class _LoginState extends State<Login> {
 
   Future<void> _handleGSignIn() async {
     try {
-      await _googleSignIn.signIn();
+      //await _googleSignIn.signIn();
+      authService.googleSignIn();
     } catch (error) {
       print(error);
     }
