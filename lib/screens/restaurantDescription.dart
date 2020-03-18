@@ -11,6 +11,12 @@ class RestaurantDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar( title: AutoSizeText( this.place.name, overflow: TextOverflow.clip, maxLines: 1,
+        style: kTitleTextStyle,
+      ),
+        centerTitle: true,
+      ),
+
       body: SafeArea(
         child: Column(
           children: <Widget>[
