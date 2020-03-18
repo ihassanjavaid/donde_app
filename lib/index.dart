@@ -1,10 +1,12 @@
-import 'package:donde_app/explore.dart';
-import 'package:donde_app/settings.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
-import 'home.dart';
 
 class Index extends StatefulWidget {
+  static const Tag = "Tabbar";
+  final List<Widget> screens;
+
+  Index({this.screens});
+
   @override
   _IndexState createState() => _IndexState();
 }
@@ -39,21 +41,21 @@ class _IndexState extends State<Index> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  static final List<Widget> _widgetOptions = <Widget>[
-    SafeArea(
-      child: Home(),
-    ),
-    SafeArea(
-      child: Explore(),
-    ),
-    Text(
-      'Index 2: Friends',
-      style: optionStyle,
-    ),
-    SafeArea(
-      child: Settings(),
-    ),
-  ];
+//  static final List<Widget> _widgetOptions = <Widget>[
+//    SafeArea(
+//      child: Home(),
+//    ),
+//    SafeArea(
+//      child: Explore(),
+//    ),
+//    Text(
+//      'Index 2: Friends',
+//      style: optionStyle,
+//    ),
+//    SafeArea(
+//      child: Settings(),
+//    ),
+//  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -66,8 +68,9 @@ class _IndexState extends State<Index> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       resizeToAvoidBottomPadding: true,
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: widget.screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

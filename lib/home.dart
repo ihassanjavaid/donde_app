@@ -41,44 +41,47 @@ class Home extends StatelessWidget {
 
             // Restaurant card
             Flexible(
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                borderOnForeground: true,
-                elevation: 18.0,
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: NetworkImage(
-                                'https://wpcdn.us-east-1.vip.tn-cloud.net/www.abc6.com/content/uploads/2020/03/restaurants.jpg'),
+              child: GestureDetector(
+                onTap: () {},
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  borderOnForeground: true,
+                  elevation: 18.0,
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: NetworkImage(
+                                  'https://wpcdn.us-east-1.vip.tn-cloud.net/www.abc6.com/content/uploads/2020/03/restaurants.jpg'),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Text(
-                            place != null ? place.name : 'Restaurant Name',
-                            style: kCardTitleTextStyle,
-                          ),
-                          Text(
-                            '0.0 KMs',
-                            style: kNormalTextStyle,
-                          ),
-                        ],
+                      Expanded(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text(
+                              place != null ? place.name : 'Restaurant Name',
+                              style: kCardTitleTextStyle,
+                            ),
+                            Text(
+                              '0.0 KMs',
+                              style: kNormalTextStyle,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

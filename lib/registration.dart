@@ -1,5 +1,8 @@
 import 'package:donde_app/index.dart';
+import 'package:donde_app/settings.dart';
 import 'package:flutter/material.dart';
+import 'explore.dart';
+import 'home.dart';
 import 'login.dart';
 import 'customTextField.dart';
 
@@ -121,7 +124,22 @@ class Registration extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Index(),
+                              builder: (context) => Index(
+                                screens: <Widget>[
+                                  SafeArea(
+                                    child: Home(),
+                                  ),
+                                  SafeArea(
+                                    child: Explore(),
+                                  ),
+                                  SafeArea(
+                                    child: Text('Underconstruction'),
+                                  ),
+                                  SafeArea(
+                                    child: Settings(),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },
