@@ -4,17 +4,11 @@ import 'customButton.dart';
 import 'registration.dart';
 import 'customTextField.dart';
 
-class Password extends StatefulWidget {
-  @override
-  _PasswordState createState() => _PasswordState();
-}
-
-class _PasswordState extends State<Password> {
+class Password extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomPadding: false,
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(

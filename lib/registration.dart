@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import 'customTextField.dart';
 
-class Registration extends StatefulWidget {
-  @override
-  _RegistrationState createState() => _RegistrationState();
-}
-
-class _RegistrationState extends State<Registration> {
+// ignore: must_be_immutable
+class Registration extends StatelessWidget {
   double screenHeight;
 
   @override
