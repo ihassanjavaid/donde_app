@@ -16,6 +16,12 @@ class RestaurantDescription extends StatelessWidget {
     String photoAddress = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=960&photoreference=$photoRef&key=AIzaSyA-aRQiJZfCzNgsyHfoUYNE8rwBLcu7fio";
     print(photoAddress);
     return Scaffold(
+      appBar: AppBar( title: AutoSizeText( this.place.name, overflow: TextOverflow.clip, maxLines: 1,
+        style: kTitleTextStyle,
+      ),
+        centerTitle: true,
+      ),
+
       body: SafeArea(
         child: Column(
           children: <Widget>[
