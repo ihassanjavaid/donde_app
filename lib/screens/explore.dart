@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:donde_app/screens/restaurantDescription.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:donde_app/locationBrain.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -31,26 +30,24 @@ class _ExploreState extends State<Explore> {
   // Methods
   void initState() {
     super.initState();
+    _setupMap();
   }
 
   void _setupMap() async {
     final GoogleMapController controller = await _controller.future;
 
-    // Get device current location
-    Position position = await locationBrain.getLocation();
+    LatLng position = await locationBrain.getCurrentLocation();
 
     // Set camera position at current position
     CameraPosition currentPosition = CameraPosition(
       bearing: 0,
-      target: LatLng(position.latitude, position.longitude),
+      target: position,
       zoom: 12.0,
     );
 
     controller.animateCamera(CameraUpdate.newCameraPosition(currentPosition));
 
-    /*setState(() {
-      this.placeMarkers = markers;
-    });*/
+    _setMarkers();
   }
 
   void _setMarkers() async {
@@ -174,19 +171,17 @@ class _ExploreState extends State<Explore> {
           mapType: MapType.normal,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
-            _setupMap();
-            _setMarkers();
           },
           initialCameraPosition: _kGooglePlex,
           myLocationEnabled: true,
           markers: Set.from(placeMarkers),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      /*floatingActionButton: FloatingActionButton.extended(
         onPressed: _setupMap,
         label: Text('Center to my location'),
         icon: Icon(Icons.my_location),
-      ),
+      ),*/
     );
   }
 }

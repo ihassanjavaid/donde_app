@@ -2,6 +2,7 @@
 * Dart file housing the landing page of the app
 * */
 
+import 'package:donde_app/locationBrain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -9,13 +10,19 @@ import 'package:google_maps_webservice/places.dart';
 import '../constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+// ignore: must_be_immutable
 class Home extends StatelessWidget {
-  final PlacesSearchResult place;
+  PlacesSearchResult place;
+  List<PlacesSearchResult> places;
 
-  Home({this.place});
+  void someMethod() async {
+    LocationBrain locationBrain = LocationBrain();
+    place = await locationBrain.getRandomPlace();
+  }
 
   @override
   Widget build(BuildContext context) {
+    someMethod();
     return Scaffold(
       body: SafeArea(
         child: Column(

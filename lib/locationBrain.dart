@@ -1,12 +1,15 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:math';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class LocationBrain {
   static String kGoogleApiKey = 'AIzaSyBY3uVSwIDtVZ-V2LesfjEB5wN_tfqi_po';
-  GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
+  List<PlacesSearchResult> _placesList = [];
   double searchRadius;
+  Position position;
 
   LocationBrain({this.searchRadius = 3500});
 
@@ -14,31 +17,43 @@ class LocationBrain {
     this.searchRadius = radius;
   }
 
-  Future<Position> getLocation() async {
-    // Get device current location
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//  void _setLocation() async {
+//    // Get device current location
+//    position = await Geolocator()
+//        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//  }
 
-    return position;
+  Future<LatLng> getCurrentLocation() async {
+    Position pos = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    return LatLng(pos.latitude, pos.longitude);
   }
 
   Future<List> getNearbyPlaces() async {
-    List<PlacesSearchResult> places = [];
-    Position position = await getLocation();
+    GoogleMapsPlaces places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
+    LatLng currentLocation = await getCurrentLocation();
 
-    final location = Location(position.latitude, position.longitude);
-    final result = await _places.searchNearbyWithRadius(
+    final location =
+        Location(currentLocation.latitude, currentLocation.longitude);
+    final result = await places.searchNearbyWithRadius(
         location, this.searchRadius,
         type: 'restaurant');
 
     if (result.status == "OK") {
-      places = result.results;
+      _placesList = result.results;
     }
 
-    return places;
+    return _placesList;
   }
 
-  Future<List> getNearbyPlacesMarkers() async {
+  Future<PlacesSearchResult> getRandomPlace() async {
+    final _random = new Random();
+    sleep(const Duration(seconds: 10));
+    var element = _placesList[_random.nextInt(_placesList.length)];
+    return element;
+  }
+
+  /*Future<List> getNearbyPlacesMarkers() async {
     List placeMarkers = [];
     List<PlacesSearchResult> places = await getNearbyPlaces();
 
@@ -53,5 +68,5 @@ class LocationBrain {
     }
 
     return placeMarkers;
-  }
+  }*/
 }
