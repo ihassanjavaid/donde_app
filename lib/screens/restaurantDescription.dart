@@ -47,7 +47,7 @@ class RestaurantDescription extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Expanded(
-                        flex: 3,
+                        flex: 1,
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -71,7 +71,7 @@ class RestaurantDescription extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: AutoSizeText(
                                   place != null
-                                      ? place.name
+                                      ? place.vicinity
                                       : 'Restaurant Name',
                                   style: kCardTitleTextStyle,
                                   maxLines: 2,
