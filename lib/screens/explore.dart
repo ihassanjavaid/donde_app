@@ -31,16 +31,30 @@ class _ExploreState extends State<Explore> {
   // Methods
   void initState() {
     super.initState();
-    _setupMap();
   }
 
   void _setupMap() async {
     final GoogleMapController controller = await _controller.future;
-    List markers = [];
 
     // Get device current location
     Position position = await locationBrain.getLocation();
 
+    // Set camera position at current position
+    CameraPosition currentPosition = CameraPosition(
+      bearing: 0,
+      target: LatLng(position.latitude, position.longitude),
+      zoom: 12.0,
+    );
+
+    controller.animateCamera(CameraUpdate.newCameraPosition(currentPosition));
+
+    /*setState(() {
+      this.placeMarkers = markers;
+    });*/
+  }
+
+  void _setMarkers() async {
+    List markers = [];
     // Set restaurant markers around current locations
     List<PlacesSearchResult> places = await locationBrain.getNearbyPlaces();
 
@@ -67,15 +81,6 @@ class _ExploreState extends State<Explore> {
     setState(() {
       this.placeMarkers = markers;
     });
-
-    // Set camera position at current position
-    CameraPosition currentPosition = CameraPosition(
-      bearing: 0,
-      target: LatLng(position.latitude, position.longitude),
-      zoom: 12.0,
-    );
-
-    controller.animateCamera(CameraUpdate.newCameraPosition(currentPosition));
   }
 
   /*Future<PlacesSearchResult> getNearbyPlaces(Position position) async {
@@ -169,6 +174,8 @@ class _ExploreState extends State<Explore> {
           mapType: MapType.normal,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
+            _setupMap();
+            _setMarkers();
           },
           initialCameraPosition: _kGooglePlex,
           myLocationEnabled: true,

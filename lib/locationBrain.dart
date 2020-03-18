@@ -8,7 +8,7 @@ class LocationBrain {
   GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
   double searchRadius;
 
-  LocationBrain({this.searchRadius = 2500});
+  LocationBrain({this.searchRadius = 3500});
 
   void setSearchRadius(double radius) {
     this.searchRadius = radius;

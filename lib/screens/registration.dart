@@ -1,3 +1,5 @@
+import 'package:donde_app/constants.dart';
+
 import 'index.dart';
 import 'package:donde_app/screens/settings.dart';
 import 'package:flutter/material.dart';
@@ -133,7 +135,13 @@ class Registration extends StatelessWidget {
                                     child: Explore(),
                                   ),
                                   SafeArea(
-                                    child: Text('Underconstruction'),
+                                    child: Center(
+                                      child: Text(
+                                        'Underconstruction',
+                                        textAlign: TextAlign.center,
+                                        style: kSettingsTextStyle,
+                                      ),
+                                    ),
                                   ),
                                   SafeArea(
                                     child: Settings(),
