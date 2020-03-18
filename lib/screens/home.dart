@@ -4,8 +4,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_maps_webservice/places.dart';
 import '../constants.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class Home extends StatelessWidget {
   final PlacesSearchResult place;
@@ -69,13 +71,32 @@ class Home extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text(
-                              place != null ? place.name : 'Restaurant Name',
-                              style: kCardTitleTextStyle,
+//                            AutoSizeText(
+//                              place != null ? place.name : 'Restaurant Name',
+//                              style: kCardTitleTextStyle,
+//                              maxLines: 2,
+//                              overflow: TextOverflow.ellipsis,
+//                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: AutoSizeText(
+                                  place != null
+                                      ? place.name
+                                      : 'Restaurant Name',
+                                  style: kCardTitleTextStyle,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.clip,
+                                ),
+                              ),
                             ),
-                            Text(
-                              '0.0 KMs',
-                              style: kNormalTextStyle,
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                '0.0 KMs',
+                                style: kNormalTextStyle,
+                              ),
                             ),
                           ],
                         ),

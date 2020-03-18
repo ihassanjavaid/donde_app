@@ -30,6 +30,7 @@ dependencies:
   google_sign_in: ^4.1.4
   flutter_facebook_login: ^3.0.0
   google_maps_webservice: ^0.0.16
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:
