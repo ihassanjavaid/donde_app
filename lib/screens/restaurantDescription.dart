@@ -18,7 +18,7 @@ class RestaurantDescription extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(20.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Tab(
                     icon: Container(
@@ -39,7 +39,7 @@ class RestaurantDescription extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Restaurants',
+                    place.name,
                     style: kTitleTextStyle,
                   ),
                 ],
