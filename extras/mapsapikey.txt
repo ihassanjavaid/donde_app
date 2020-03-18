@@ -1,1 +1,3 @@
-AIzaSyBY3uVSwIDtVZ-V2LesfjEB5wN_tfqi_po
+maps api key: AIzaSyBY3uVSwIDtVZ-V2LesfjEB5wN_tfqi_po
+
+server key : AIzaSyA-aRQiJZfCzNgsyHfoUYNE8rwBLcu7fio
