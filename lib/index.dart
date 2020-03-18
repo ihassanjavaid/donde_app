@@ -64,6 +64,8 @@ class _IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomPadding: true,
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

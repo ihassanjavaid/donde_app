@@ -14,6 +14,17 @@ const kNormalTextStyle = TextStyle(
   color: Color(0xffa9a9a9),
 );
 
+const kTitleTextStyle = TextStyle(
+  fontSize: 32.0,
+  fontWeight: FontWeight.normal,
+  color: Color(0xff262522),
+);
+
+const kCardTitleTextStyle = TextStyle(
+  fontSize: 28.8,
+  color: Colors.redAccent,
+);
+
 const kSubtitleStyle = TextStyle(
   fontSize: 22,
   color: Color(0xffcfcfcf),

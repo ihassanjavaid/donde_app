@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_webservice/places.dart';
-//import 'dart:convert';
-//import 'package:http/http.dart' as http;
 
 class Explore extends StatefulWidget {
   @override
@@ -60,25 +58,25 @@ class _ExploreState extends State<Explore> {
     setState(() {
       if (result.status == "OK") {
         this.places = result.results;
-      }
-      for (PlacesSearchResult place in places) {
-        placeMarkers.add(
-          Marker(
-            markerId: MarkerId(place.id),
-            position: LatLng(
-                place.geometry.location.lat, place.geometry.location.lng),
-            onTap: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Home(
-                    place: place,
+        for (PlacesSearchResult place in places) {
+          placeMarkers.add(
+            Marker(
+              markerId: MarkerId(place.id),
+              position: LatLng(
+                  place.geometry.location.lat, place.geometry.location.lng),
+              onTap: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Home(
+                      place: place,
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        );
+                );
+              },
+            ),
+          );
+        }
       }
     });
   }
