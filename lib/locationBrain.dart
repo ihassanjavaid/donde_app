@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class LocationBrain {
+  int _callCount = 0;
   static String kGoogleApiKey = 'AIzaSyBY3uVSwIDtVZ-V2LesfjEB5wN_tfqi_po';
   List<PlacesSearchResult> _placesList = [];
   double searchRadius;
@@ -48,25 +49,9 @@ class LocationBrain {
 
   Future<PlacesSearchResult> getRandomPlace() async {
     final _random = new Random();
-    sleep(const Duration(seconds: 10));
+    if (_callCount == 0) sleep(const Duration(seconds: 10));
     var element = _placesList[_random.nextInt(_placesList.length)];
+    _callCount++;
     return element;
   }
-
-  /*Future<List> getNearbyPlacesMarkers() async {
-    List placeMarkers = [];
-    List<PlacesSearchResult> places = await getNearbyPlaces();
-
-    for (PlacesSearchResult place in places) {
-      placeMarkers.add(
-        Marker(
-          markerId: MarkerId(place.id),
-          position:
-              LatLng(place.geometry.location.lat, place.geometry.location.lng),
-        ),
-      );
-    }
-
-    return placeMarkers;
-  }*/
 }
