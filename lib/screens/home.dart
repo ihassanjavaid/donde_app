@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    someMethod();
+//    someMethod();
     return Scaffold(
       body: SafeArea(
         child: Column(
