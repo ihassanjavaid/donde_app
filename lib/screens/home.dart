@@ -5,7 +5,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'constants.dart';
+import '../constants.dart';
 
 class Home extends StatelessWidget {
   final PlacesSearchResult place;

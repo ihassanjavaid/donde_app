@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'constants.dart';
-import 'customButton.dart';
+import '../constants.dart';
+import '../components/customButton.dart';
 import 'registration.dart';
-import 'customTextField.dart';
+import '../components/customTextField.dart';
 
 class Password extends StatelessWidget {
   @override

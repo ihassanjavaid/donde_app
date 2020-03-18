@@ -1,8 +1,8 @@
-import 'package:donde_app/settingsWidget.dart';
+import 'package:donde_app/components/settingsWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'constants.dart';
+import '../constants.dart';
 
 class Settings extends StatefulWidget {
   @override

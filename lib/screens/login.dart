@@ -1,12 +1,12 @@
-import 'package:donde_app/customIconButton.dart';
-import 'package:donde_app/registration.dart';
+import 'package:donde_app/components/customIconButton.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'constants.dart';
-import 'customButton.dart';
+import '../constants.dart';
+import '../components/customButton.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'dividerWithText.dart';
+import '../components/dividerWithText.dart';
 import 'password.dart';
 
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -17,8 +17,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
-  void initState(){
+  void initState() {
     super.initState();
   }
 
@@ -121,7 +120,6 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> _handleFbSignIn() async {
-
     final facebookLogin = FacebookLogin();
     final result = await facebookLogin.logIn(['email']);
 
@@ -138,9 +136,7 @@ class _LoginState extends State<Login> {
         break;
     }
   }
-
 }
-
 
 class MobileNumberInputField extends StatelessWidget {
   @override
