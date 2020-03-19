@@ -164,7 +164,7 @@ class _LoginState extends State<Login> {
                     ),
                     Expanded(
                       child: TextField(
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.phone,
                         onChanged: (value) {
                           this.phoneNo = value;
                         },
