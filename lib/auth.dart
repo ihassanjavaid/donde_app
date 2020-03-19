@@ -1,8 +1,10 @@
 /*
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:flutter/material.dart';
 
 class AuthService {
 
@@ -38,18 +40,38 @@ class AuthService {
 
      // at this time user will be signed in google not firebase, take the token pass it to firebase to do so
 
+
    */
-/* FirebaseUser user = await _auth.signInWithGoogle(
+/*FirebaseUser user = await _auth.signInWithGoogle(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken
-    );
+    );*//*
+
+
+    final AuthCredential credential =  GoogleAuthProvider.getCredential(
+        idToken: googleAuth.idToken,
+        accessToken: googleAuth.accessToken);
+
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    await _auth.signInWithCredential(credential).then((user) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Home()
+        ),
+      );
+    }).catchError((e) {
+      print(e);
+    });
 
 
    AuthResult _authResult = await _auth.signInWithCustomToken(token: googleAuth.idToken);
    FirebaseUser user = await _authResult.user;
 
     updateUserData(user);
-    print("signed in " + user.displayName);
+    for (int i = 0 ; i < 50 ; i++ )
+      print("signed in " + user.displayName);
 
     loading.add(false);
     return user;
@@ -73,4 +95,5 @@ class AuthService {
 
 }
 
-final AuthService authService = AuthService();*/
+final AuthService authService = AuthService();
+*/
