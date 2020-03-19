@@ -1,5 +1,7 @@
 import 'package:donde_app/components/customIconButton.dart';
-
+import 'package:donde_app/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../components/customTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../constants.dart';
@@ -13,12 +15,107 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 import 'package:donde_app/auth.dart';
 
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+
+  String phoneNo;
+  String smsCode;
+  String verificationId;
+
+  Future<void> verifyPhone() async {
+    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verID) {
+      this.verificationId = verID;
+    };
+
+    final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
+      this.verificationId = verId;
+      smsCodeDialog(context).then((value) {
+       for ( int i = 0 ; i < 50 ; i++)
+         print('signed in\n');
+      });
+    };
+
+    final PhoneVerificationCompleted verifiedSuccess = (AuthCredential user) {
+      print('verified');
+      print(user.toString());
+    };
+
+    final PhoneVerificationFailed verifiFailed = (AuthException authEx) {
+      print('${authEx.message}');
+    };
+
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: this.phoneNo,
+        codeAutoRetrievalTimeout: autoRetrieve,
+        codeSent: smsCodeSent,
+        timeout: const Duration(seconds: 5),
+        verificationCompleted: verifiedSuccess,
+        verificationFailed: verifiFailed
+    );
+  }
+
+    Future<bool> smsCodeDialog(BuildContext context) {
+      return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Enter SMS Code'),
+            content: TextField(
+              onChanged: (value) {
+                this.smsCode = value;
+              },
+            ),
+            contentPadding: EdgeInsets.all(10.0),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Proceed'),
+                onPressed: () {
+                  FirebaseAuth.instance.currentUser().then( (user) {
+                    if (user != null) {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+                    }
+                    else {
+                      Navigator.of(context).pop();
+                      signIn();
+                    }
+                  });
+                },
+              )
+            ],
+          );
+        }
+      );
+    }
+
+    signIn() async {
+
+      final AuthCredential credential = PhoneAuthProvider.getCredential(
+        verificationId: verificationId,
+        smsCode: smsCode,
+      );
+
+      FirebaseAuth _auth = FirebaseAuth.instance;
+
+      await _auth.signInWithCredential(credential).then((user) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Home()
+          ),
+        );
+      }).catchError((e) {
+        print(e);
+      });
+    }
+
+
   void initState() {
     super.initState();
   }
@@ -65,7 +162,31 @@ class _LoginState extends State<Login> {
                       color: Colors.redAccent,
                       thickness: 1.0,
                     ),
-                    MobileNumberInputField(),
+                    Expanded(
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          this.phoneNo = value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Enter Number',
+                          hasFloatingPlaceholder: true,
+                          labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
                 margin: EdgeInsets.only(bottom: 10.0),
@@ -75,14 +196,14 @@ class _LoginState extends State<Login> {
               ),
               CustomButton(
                 buttonLabel: 'Next',
-                onTap: () {
+                onTap: verifyPhone,/*() {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => Password(),
                     ),
                   );
-                },
+                }, */
                 colour: Color(kButtonContainerColour),
               ),
               SizedBox(
@@ -116,7 +237,7 @@ class _LoginState extends State<Login> {
   Future<void> _handleGSignIn() async {
     try {
       //await _googleSignIn.signIn();
-      authService.googleSignIn();
+      //authService.googleSignIn();
     } catch (error) {
       print(error);
     }
@@ -141,30 +262,14 @@ class _LoginState extends State<Login> {
   }
 }
 
+/*
 class MobileNumberInputField extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: TextField(
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          labelText: 'Enter Number',
-          hasFloatingPlaceholder: true,
-          labelStyle: TextStyle(
-            color: Colors.redAccent,
-          ),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.redAccent,
-            ),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.redAccent,
-            ),
-          ),
-        ),
-      ),
+
     );
   }
 }
+*/
