@@ -1,7 +1,7 @@
 import 'package:donde_app/constants.dart';
 
 import 'index.dart';
-import 'package:donde_app/screens/settings.dart';
+import 'package:donde_app/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'explore.dart';
 import 'home.dart';
@@ -10,6 +10,7 @@ import '../components/customTextField.dart';
 
 // ignore: must_be_immutable
 class Registration extends StatelessWidget {
+  static const String id = 'registration_screen';
   double screenHeight;
 
   @override
@@ -144,7 +145,7 @@ class Registration extends StatelessWidget {
                                     ),
                                   ),
                                   SafeArea(
-                                    child: Settings(),
+                                    child: SettingsScreen(),
                                   ),
                                 ],
                               ),

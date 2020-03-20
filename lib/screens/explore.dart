@@ -7,17 +7,13 @@ import 'package:donde_app/locationBrain.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class Explore extends StatefulWidget {
+  static const String id = 'explore_screen';
   @override
   _ExploreState createState() => _ExploreState();
 }
 
 class _ExploreState extends State<Explore> {
   // Attributes
-//  static String kGoogleApiKey = 'AIzaSyBY3uVSwIDtVZ-V2LesfjEB5wN_tfqi_po';
-//  GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
-//  Completer<GoogleMapController> _controller = Completer();
-////  Iterable markers = [];
-//  List<PlacesSearchResult> places = [];
   LocationBrain locationBrain = LocationBrain();
   Completer<GoogleMapController> _controller = Completer();
   List placeMarkers = [];

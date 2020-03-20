@@ -4,24 +4,27 @@ import 'package:donde_app/constants.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class RestaurantDescription extends StatelessWidget {
+  static const String id = 'restaurant_description_screen';
   final PlacesSearchResult place;
 
   RestaurantDescription({@required this.place});
 
-
   @override
   Widget build(BuildContext context) {
-
     String photoRef = place.photos[0].photoReference;
-    String photoAddress = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=960&photoreference=$photoRef&key=AIzaSyA-aRQiJZfCzNgsyHfoUYNE8rwBLcu7fio";
+    String photoAddress =
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=960&photoreference=$photoRef&key=AIzaSyA-aRQiJZfCzNgsyHfoUYNE8rwBLcu7fio";
     print(photoAddress);
     return Scaffold(
-      appBar: AppBar( title: AutoSizeText( this.place.name, overflow: TextOverflow.clip, maxLines: 1,
-        style: kTitleTextStyle,
-      ),
+      appBar: AppBar(
+        title: AutoSizeText(
+          this.place.name,
+          overflow: TextOverflow.clip,
+          maxLines: 1,
+          style: kTitleTextStyle,
+        ),
         centerTitle: true,
       ),
-
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -76,8 +79,7 @@ class RestaurantDescription extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
                               fit: BoxFit.fill,
-                              image: NetworkImage(
-                                  photoAddress),
+                              image: NetworkImage(photoAddress),
                             ),
                           ),
                         ),
@@ -92,8 +94,7 @@ class RestaurantDescription extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: AutoSizeText(
-                                  place != null
-                                      ? place.name : null,
+                                  place != null ? place.name : null,
                                   style: kCardTitleTextStyle,
                                   maxLines: 2,
                                   overflow: TextOverflow.clip,
@@ -115,64 +116,6 @@ class RestaurantDescription extends StatelessWidget {
                 ),
               ),
             ),
-//          Container(
-//            margin: EdgeInsets.symmetric(horizontal: 10.0),
-//            width: double.infinity,
-//            child: GestureDetector(
-//              //this.onHorizontalDragDown
-//              child: Card(
-//                shape: RoundedRectangleBorder(
-//                  borderRadius: BorderRadius.circular(10),
-//                ),
-//                // Card properties
-//                borderOnForeground: true,
-//                elevation: 18.0,
-//                child: Column(
-//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                  children: <Widget>[
-//                    Card(
-//                      elevation: 10,
-//                      borderOnForeground: true,
-//                      child: ClipRRect(
-//                        borderRadius: BorderRadius.circular(6.5),
-//                        child: Container(
-//                          width: 330,
-//                          height: 310,
-//                          decoration: BoxDecoration(
-//                            shape: BoxShape.rectangle,
-//                            image: DecorationImage(
-//                              fit: BoxFit.fill,
-//                              image: NetworkImage(
-//                                  'https://www.thenews.com.pk//assets/uploads/akhbar/2019-04-22/461156_2369726_Islamabad-hotel_akhbar.jpg'),
-//                            ),
-//                          ),
-//                        ),
-//                      ),
-//                    ),
-//                    Row(
-//                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                      children: <Widget>[
-//                        Text(
-//                          'Restaurant Name',
-//                          textAlign: TextAlign.left,
-//                          style: TextStyle(
-//                            fontSize: 28.0,
-//                            fontWeight: FontWeight.normal,
-//                            color: Colors.redAccent,
-//                          ),
-//                        ),
-//                        Text(
-//                          '0.0 kms',
-//                          textAlign: TextAlign.end,
-//                          style: TextStyle(color: Colors.grey),
-//                        ),
-//                      ],
-//                    ),
-//                  ],
-//                ),
-//              ),
-//            ),
-//          ),
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: Row(

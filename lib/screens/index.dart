@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class Index extends StatefulWidget {
+  static const String id = 'index_screen';
   static const Tag = "Tabbar";
   final List<Widget> screens;
 

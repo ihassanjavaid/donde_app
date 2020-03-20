@@ -5,6 +5,7 @@ import 'registration.dart';
 import '../components/customTextField.dart';
 
 class Password extends StatelessWidget {
+  static const String id = 'password_screen';
   @override
   Widget build(BuildContext context) {
     return SafeArea(

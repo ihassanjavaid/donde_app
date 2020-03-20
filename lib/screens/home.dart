@@ -12,6 +12,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 // ignore: must_be_immutable
 class Home extends StatelessWidget {
+  static const String id = 'home_screen';
   PlacesSearchResult place;
   List<PlacesSearchResult> places;
 
@@ -22,7 +23,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    someMethod();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -119,64 +119,6 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-//          Container(
-//            margin: EdgeInsets.symmetric(horizontal: 10.0),
-//            width: double.infinity,
-//            child: GestureDetector(
-//              //this.onHorizontalDragDown
-//              child: Card(
-//                shape: RoundedRectangleBorder(
-//                  borderRadius: BorderRadius.circular(10),
-//                ),
-//                // Card properties
-//                borderOnForeground: true,
-//                elevation: 18.0,
-//                child: Column(
-//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                  children: <Widget>[
-//                    Card(
-//                      elevation: 10,
-//                      borderOnForeground: true,
-//                      child: ClipRRect(
-//                        borderRadius: BorderRadius.circular(6.5),
-//                        child: Container(
-//                          width: 330,
-//                          height: 310,
-//                          decoration: BoxDecoration(
-//                            shape: BoxShape.rectangle,
-//                            image: DecorationImage(
-//                              fit: BoxFit.fill,
-//                              image: NetworkImage(
-//                                  'https://www.thenews.com.pk//assets/uploads/akhbar/2019-04-22/461156_2369726_Islamabad-hotel_akhbar.jpg'),
-//                            ),
-//                          ),
-//                        ),
-//                      ),
-//                    ),
-//                    Row(
-//                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                      children: <Widget>[
-//                        Text(
-//                          'Restaurant Name',
-//                          textAlign: TextAlign.left,
-//                          style: TextStyle(
-//                            fontSize: 28.0,
-//                            fontWeight: FontWeight.normal,
-//                            color: Colors.redAccent,
-//                          ),
-//                        ),
-//                        Text(
-//                          '0.0 kms',
-//                          textAlign: TextAlign.end,
-//                          style: TextStyle(color: Colors.grey),
-//                        ),
-//                      ],
-//                    ),
-//                  ],
-//                ),
-//              ),
-//            ),
-//          ),
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: Row(

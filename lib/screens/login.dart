@@ -9,30 +9,31 @@ import '../components/customButton.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../components/dividerWithText.dart';
+import 'index.dart';
 import 'password.dart';
 
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 import 'package:donde_app/auth.dart';
 
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:flutter/material.dart';
-
 
 class Login extends StatefulWidget {
+  static const String id = 'login_screen';
   @override
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
-
+class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   String phoneNo;
   String smsCode;
   String verificationId;
+  AnimationController controller;
+  Animation animation;
+  bool _visible = false;
 
   Future<void> verifyPhone() async {
     final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verID) {
@@ -42,8 +43,7 @@ class _LoginState extends State<Login> {
     final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
       smsCodeDialog(context).then((value) {
-       for ( int i = 0 ; i < 50 ; i++)
-         print('signed in\n');
+        for (int i = 0; i < 50; i++) print('signed in\n');
       });
     };
 
@@ -62,12 +62,11 @@ class _LoginState extends State<Login> {
         codeSent: smsCodeSent,
         timeout: const Duration(seconds: 5),
         verificationCompleted: verifiedSuccess,
-        verificationFailed: verifiFailed
-    );
+        verificationFailed: verifiFailed);
   }
 
-    Future<bool> smsCodeDialog(BuildContext context) {
-      return showDialog(
+  Future<bool> smsCodeDialog(BuildContext context) {
+    return showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
@@ -83,12 +82,12 @@ class _LoginState extends State<Login> {
               FlatButton(
                 child: Text('Proceed'),
                 onPressed: () {
-                  FirebaseAuth.instance.currentUser().then( (user) {
+                  FirebaseAuth.instance.currentUser().then((user) {
                     if (user != null) {
                       Navigator.of(context).pop();
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home()));
-                    }
-                    else {
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => Home()));
+                    } else {
                       Navigator.of(context).pop();
                       signIn();
                     }
@@ -97,34 +96,43 @@ class _LoginState extends State<Login> {
               )
             ],
           );
-        }
+        });
+  }
+
+  signIn() async {
+    final AuthCredential credential = PhoneAuthProvider.getCredential(
+      verificationId: verificationId,
+      smsCode: smsCode,
+    );
+
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    await _auth.signInWithCredential(credential).then((user) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
       );
-    }
-
-    signIn() async {
-
-      final AuthCredential credential = PhoneAuthProvider.getCredential(
-        verificationId: verificationId,
-        smsCode: smsCode,
-      );
-
-      FirebaseAuth _auth = FirebaseAuth.instance;
-
-      await _auth.signInWithCredential(credential).then((user) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Home()
-          ),
-        );
-      }).catchError((e) {
-        print(e);
-      });
-    }
-
+    }).catchError((e) {
+      print(e);
+    });
+  }
 
   void initState() {
     super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+    animation =
+        CurvedAnimation(parent: this.controller, curve: Curves.bounceOut);
+    controller.forward();
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    setState(() {
+      _visible = true;
+    });
   }
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -142,97 +150,107 @@ class _LoginState extends State<Login> {
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(
                 height: 50.0,
               ),
               Text(
-                'Hello',
-                style: kWelcomeTextStyle,
+                'Hello!',
+                style:
+                    kWelcomeTextStyle.copyWith(fontSize: animation.value * 48),
               ),
-              SizedBox(
-                height: 8.0,
-              ),
-              Text(
-                'Get started, Enter your phone number',
-                style: kSubtitleStyle,
-              ),
-              SizedBox(
-                height: 40.0,
-              ),
-              Container(
-                child: Row(
+              AnimatedOpacity(
+                opacity: controller.value,
+                duration: Duration(milliseconds: 500),
+                child: Column(
                   children: <Widget>[
-                    CountryCodePicker(),
-                    VerticalDivider(
-                      color: Colors.redAccent,
-                      thickness: 1.0,
+                    SizedBox(
+                      height: 8.0,
                     ),
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.phone,
-                        onChanged: (value) {
-                          this.phoneNo = value;
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Enter Number',
-                          hasFloatingPlaceholder: true,
-                          labelStyle: TextStyle(
-                            color: Colors.redAccent,
-                          ),
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                            ),
-                          ),
-                        ),
+                    Container(
+                      width: double.infinity,
+                      child: Text(
+                        'Get started, Enter your phone number',
+                        style: kSubtitleStyle,
+                        textAlign: TextAlign.left,
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                    Container(
+                      child: Row(
+                        children: <Widget>[
+                          CountryCodePicker(),
+                          VerticalDivider(
+                            color: Colors.redAccent,
+                            thickness: 1.0,
+                          ),
+                          Expanded(
+                            child: TextField(
+                              keyboardType: TextInputType.phone,
+                              onChanged: (value) {
+                                this.phoneNo = value;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Enter Number',
+                                hasFloatingPlaceholder: true,
+                                labelStyle: TextStyle(
+                                  color: Colors.redAccent,
+                                ),
+                                border: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      margin: EdgeInsets.only(bottom: 10.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                    ),
+                    CustomButton(
+                      buttonLabel: 'Next',
+//                onTap: verifyPhone,
+                      onTap: () {
+                        Navigator.pushNamed(context, Index.id);
+                      },
+                      colour: Color(kButtonContainerColour),
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    DividerWithText(
+                      text: 'Or connect with',
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    CustomIconButton(
+                      buttonLabel: 'LOGIN WITH FACEBOOK',
+                      onTap: _handleFbSignIn,
+                      colour: Color(0xff2d3c9b),
+                      icon: FontAwesomeIcons.facebook,
+                    ),
+                    CustomIconButton(
+                      icon: FontAwesomeIcons.google,
+                      buttonLabel: 'LOGIN WITH GOOGLE',
+                      onTap: _handleGSignIn,
+                      colour: Colors.redAccent,
+                    ),
                   ],
                 ),
-                margin: EdgeInsets.only(bottom: 10.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-              ),
-              CustomButton(
-                buttonLabel: 'Next',
-                onTap: verifyPhone,/*() {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Password(),
-                    ),
-                  );
-                }, */
-                colour: Color(kButtonContainerColour),
-              ),
-              SizedBox(
-                height: 30.0,
-              ),
-              DividerWithText(
-                text: 'Or connect with',
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              CustomIconButton(
-                buttonLabel: 'LOGIN WITH FACEBOOK',
-                onTap: _handleFbSignIn,
-                colour: Color(0xff2d3c9b),
-                icon: FontAwesomeIcons.facebook,
-              ),
-              CustomIconButton(
-                icon: FontAwesomeIcons.google,
-                buttonLabel: 'LOGIN WITH GOOGLE',
-                onTap: _handleGSignIn,
-                colour: Colors.redAccent,
               ),
             ],
           ),
@@ -282,28 +300,31 @@ class MobileNumberInputField extends StatelessWidget {
 */
 
 class AuthService {
-
-  final GoogleSignIn _googleSignIn  = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _db = Firestore.instance;
 
   Observable<FirebaseUser> user; // firebase user
   Observable<Map<String, dynamic>> profile; // custom user data in Firestore
 
-  PublishSubject loading = PublishSubject(); //observable that we can push new values to
+  PublishSubject loading =
+      PublishSubject(); //observable that we can push new values to
 
-  AuthService(){
-    user = Observable(_auth.onAuthStateChanged); // from firebase as a stream by default - changes every time a user signs in or out
+  AuthService() {
+    user = Observable(_auth
+        .onAuthStateChanged); // from firebase as a stream by default - changes every time a user signs in or out
 
     profile = user.switchMap((FirebaseUser u) {
-      if (u != null){
-        return _db.collection('users').document(u.uid).snapshots().map((snap) => snap.data);
-      }
-      else {
+      if (u != null) {
+        return _db
+            .collection('users')
+            .document(u.uid)
+            .snapshots()
+            .map((snap) => snap.data);
+      } else {
         return Observable.just({});
       }
     });
-
   }
 
   Future<FirebaseUser> googleSignIn() async {
@@ -315,38 +336,35 @@ class AuthService {
 
     // at this time user will be signed in google not firebase, take the token pass it to firebase to do so
 
-
     /*FirebaseUser user = await _auth.signInWithGoogle(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken
     );*/
 
-    final AuthCredential credential =  GoogleAuthProvider.getCredential(
-        idToken: googleAuth.idToken,
-        accessToken: googleAuth.accessToken);
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+        idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
 
     FirebaseAuth _auth = FirebaseAuth.instance;
 
     await _auth.signInWithCredential(credential).then((user) {
-      for (int i = 0 ; i < 10 ; i++ )
-      print('singned in');
+      for (int i = 0; i < 10; i++) print('singned in');
     }).catchError((e) {
       print(e);
     });
 
-
-    AuthResult _authResult = await _auth.signInWithCustomToken(token: googleAuth.idToken);
+    AuthResult _authResult =
+        await _auth.signInWithCustomToken(token: googleAuth.idToken);
     FirebaseUser user = await _authResult.user;
 
     updateUserData(user);
-    for (int i = 0 ; i < 50 ; i++ )
-      print("signed in " + user.displayName);
+    for (int i = 0; i < 50; i++) print("signed in " + user.displayName);
 
     loading.add(false);
     return user;
   }
 
-  void updateUserData(FirebaseUser user) async { // update userdata in firestore
+  void updateUserData(FirebaseUser user) async {
+    // update userdata in firestore
     DocumentReference ref = _db.collection('users').document(user.uid);
 
     return ref.setData({
@@ -358,11 +376,9 @@ class AuthService {
     }, merge: true);
   }
 
-  void signOut(){
+  void signOut() {
     _auth.signOut();
   }
-
 }
 
 final AuthService authService = AuthService();
-
