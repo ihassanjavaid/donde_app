@@ -78,7 +78,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
               FlatButton(
                 child: Text('Proceed'),
                 onPressed: () {
-                  FirebaseAuth.instance.currentUser().then((user) {
+                  signIn();
+                /*  FirebaseAuth.instance.currentUser().then((user) {
                     if (user != null) {
                       Navigator.of(context).pop();
                       Navigator.of(context).pushReplacementNamed(Password.id);
@@ -88,7 +89,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                       Navigator.of(context).pop();
                       signIn();
                     }
-                  });
+                  });*/
                 },
               )
             ],
@@ -106,10 +107,10 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
     final user = await _auth.signInWithCredential(credential);
 
-    if (user != null) {
-      print(user.toString());
+    if (user != null && user.user.email != null) {
       Navigator.pushReplacementNamed(context, Password.id);
-    } else {
+    }
+    else {
       Navigator.pushReplacementNamed(context, Registration.id);
     }
   }
