@@ -103,15 +103,20 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       smsCode: smsCode,
     );
 
+
+
     FirebaseAuth _auth = FirebaseAuth.instance;
 
     final user = await _auth.signInWithCredential(credential);
+
+    user.user.linkWithCredential(credential);
 
     if (user != null && user.user.email != null) {
       Navigator.pushReplacementNamed(context, Password.id);
     }
     else {
-      Navigator.pushReplacementNamed(context, Registration.id);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (value) => Registration(usercred: credential)
+      ));
     }
   }
 
@@ -259,6 +264,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       ),
     );
   }
+
+
+
 
   Future<void> _handleGSignIn() async {
     try {
