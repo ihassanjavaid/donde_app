@@ -1,7 +1,6 @@
 import 'package:donde_app/components/customIconButton.dart';
 import 'package:donde_app/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../components/customTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../constants.dart';
@@ -10,16 +9,8 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../components/dividerWithText.dart';
 import 'index.dart';
-import 'password.dart';
-
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-
-import 'package:donde_app/auth.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rxdart/rxdart.dart';
 
 class Login extends StatefulWidget {
   static const String id = 'login_screen';
@@ -28,12 +19,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
+  String countryCode;
   String phoneNo;
+  String completePhoneNo;
   String smsCode;
   String verificationId;
+
   AnimationController controller;
   Animation animation;
-  bool _visible = false;
+  final _auth = FirebaseAuth.instance;
 
   Future<void> verifyPhone() async {
     final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verID) {
@@ -57,7 +51,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     };
 
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: this.phoneNo,
+        phoneNumber: this.completePhoneNo,
         codeAutoRetrievalTimeout: autoRetrieve,
         codeSent: smsCodeSent,
         timeout: const Duration(seconds: 5),
@@ -129,10 +123,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     controller.addListener(() {
       setState(() {});
     });
-
-    setState(() {
-      _visible = true;
-    });
   }
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -183,7 +173,11 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     Container(
                       child: Row(
                         children: <Widget>[
-                          CountryCodePicker(),
+                          CountryCodePicker(
+                            onChanged: (countryCode) {
+                              this.countryCode = countryCode.toString();
+                            },
+                          ),
                           VerticalDivider(
                             color: Colors.redAccent,
                             thickness: 1.0,
@@ -222,10 +216,13 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     ),
                     CustomButton(
                       buttonLabel: 'Next',
-//                onTap: verifyPhone,
                       onTap: () {
-                        Navigator.pushNamed(context, Index.id);
+                        this.completePhoneNo = this.countryCode + this.phoneNo;
+                        verifyPhone();
                       },
+                      /*onTap: () {
+                        Navigator.pushNamed(context, Index.id);
+                      },*/
                       colour: Color(kButtonContainerColour),
                     ),
                     SizedBox(
@@ -261,8 +258,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
   Future<void> _handleGSignIn() async {
     try {
-      //await _googleSignIn.signIn();
-      await authService.googleSignIn();
+      await _googleSignIn.signIn();
+//      await authService.googleSignIn();
     } catch (error) {
       print(error);
     }
@@ -299,7 +296,7 @@ class MobileNumberInputField extends StatelessWidget {
 }
 */
 
-class AuthService {
+/*class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _db = Firestore.instance;
@@ -336,10 +333,10 @@ class AuthService {
 
     // at this time user will be signed in google not firebase, take the token pass it to firebase to do so
 
-    /*FirebaseUser user = await _auth.signInWithGoogle(
+    */ /*FirebaseUser user = await _auth.signInWithGoogle(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken
-    );*/
+    );*/ /*
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
         idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
@@ -381,4 +378,4 @@ class AuthService {
   }
 }
 
-final AuthService authService = AuthService();
+final AuthService authService = AuthService();*/

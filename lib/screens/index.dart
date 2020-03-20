@@ -1,6 +1,8 @@
+import 'package:donde_app/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
-
 import '../constants.dart';
+import 'explore.dart';
+import 'home.dart';
 
 class Index extends StatefulWidget {
   static const String id = 'index_screen';
@@ -15,25 +17,30 @@ class Index extends StatefulWidget {
 
 class _IndexState extends State<Index> {
   int _selectedIndex = 0;
+  static Explore _explore;
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static Widget acquireExploreWidget() {
+    if (_explore == null) {
+      _explore = Explore();
+    }
+    return _explore;
+  }
 
-/*  static final List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     SafeArea(
       child: Home(),
     ),
     SafeArea(
-      child: Explore(),
+      child: acquireExploreWidget(),
     ),
     Text(
       'Index 2: Friends',
-      style: optionStyle,
+      style: kOptionStyle,
     ),
     SafeArea(
-      child: Settings(),
+      child: SettingsScreen(),
     ),
-  ];*/
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -55,10 +62,16 @@ class _IndexState extends State<Index> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: true,
-        body: IndexedStack(
+        //bottomNavigationBar: _bottomNavigationBar(_selectedPage),
+        body: _widgetOptions[_selectedIndex],
+        /*body: PageStorage(
+          child: pages[_selectedPage],
+          bucket: this.bucket,
+        ),*/
+        /*body: IndexedStack(
           index: _selectedIndex,
           children: widget.screens,
-        ),
+        ),*/
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(

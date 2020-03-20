@@ -51,3 +51,30 @@ const kSettingsTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 28.0,
 );
+
+const TextStyle kOptionStyle =
+    TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+const Icon kHomeIcon = Icon(
+  Icons.home,
+  size: 30,
+  color: Colors.redAccent,
+);
+
+const Icon kExploreIcon = Icon(
+  Icons.explore,
+  size: 30,
+  color: Colors.redAccent,
+);
+
+const Icon kFriendsIcon = Icon(
+  Icons.chat,
+  size: 30,
+  color: Colors.redAccent,
+);
+
+const Icon kSettingsIcon = Icon(
+  Icons.settings,
+  size: 30,
+  color: Colors.redAccent,
+);

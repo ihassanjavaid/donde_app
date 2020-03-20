@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:donde_app/screens/restaurantDescription.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -43,7 +42,7 @@ class _ExploreState extends State<Explore> {
 
     controller.animateCamera(CameraUpdate.newCameraPosition(currentPosition));
 
-    _setMarkers();
+//    _setMarkers();
   }
 
   void _setMarkers() async {
@@ -76,89 +75,6 @@ class _ExploreState extends State<Explore> {
     });
   }
 
-  /*Future<PlacesSearchResult> getNearbyPlaces(Position position) async {
-    final location = Location(position.latitude, position.longitude);
-    final result = await _places.searchNearbyWithRadius(location, 2500,
-        type: 'restaurant');
-
-    setState(() {
-      if (result.status == "OK") {
-        this.places = result.results;
-        for (PlacesSearchResult place in places) {
-          placeMarkers.add(
-            Marker(
-              markerId: MarkerId(place.id),
-              position: LatLng(
-                  place.geometry.location.lat, place.geometry.location.lng),
-              onTap: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Home(
-                      place: place,
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        }
-      }
-    });
-    return places[Random().nextInt(places.length)];
-  }*/
-
-/*  void getPlaces(Position position) async {
-    var lat = position.latitude;
-    var lng = position.longitude;
-    try {
-      final response = await http.get(
-          'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&radius=10000&type=restaurant&key=AIzaSyBY3uVSwIDtVZ-V2LesfjEB5wN_tfqi_po');
-
-      final int statusCode = response.statusCode;
-
-      if (statusCode == 201 || statusCode == 200) {
-        Map responseBody = json.decode(response.body);
-        List results = responseBody["results"];
-
-        print(results);
-
-        Iterable _markers = Iterable.generate(results.length, (index) {
-          Map result = results[index];
-          Map location = result["geometry"]["location"];
-          LatLng latLngMarker = LatLng(location["lat"], location["lng"]);
-
-          return Marker(
-            markerId: MarkerId("marker$index"),
-            position: latLngMarker,
-            onTap: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Center(
-                    child: Card(
-                      child: Text(
-                        result['name'],
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          );
-        });
-
-        setState(() {
-          markers = _markers;
-        });
-      } else {
-        throw Exception('Error');
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -167,6 +83,8 @@ class _ExploreState extends State<Explore> {
           mapType: MapType.normal,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
+            /*PageStorage.of(context).writeState(context, this,
+                identifier: ValueKey(this.widget.key));*/
           },
           initialCameraPosition: _kGooglePlex,
           myLocationEnabled: true,

@@ -16,11 +16,6 @@ class Home extends StatelessWidget {
   PlacesSearchResult place;
   List<PlacesSearchResult> places;
 
-  void someMethod() async {
-    LocationBrain locationBrain = LocationBrain();
-    place = await locationBrain.getRandomPlace();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

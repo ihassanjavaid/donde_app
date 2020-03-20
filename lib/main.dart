@@ -26,18 +26,12 @@ class Donde extends StatelessWidget {
         Registration.id: (context) => Registration(),
         Index.id: (context) {
           return Index(
-            screens: <Widget>[
+              /*screens: <Widget>[
               SafeArea(
                 child: Home(),
               ),
               SafeArea(
-                child: Center(
-                  child: Text(
-                    'Coming soon...',
-                    textAlign: TextAlign.center,
-                    style: kSettingsTextStyle,
-                  ),
-                ),
+                child: Explore(),
               ),
               SafeArea(
                 child: Center(
@@ -51,8 +45,8 @@ class Donde extends StatelessWidget {
               SafeArea(
                 child: SettingsScreen(),
               ),
-            ],
-          );
+            ],*/
+              );
         },
         Home.id: (context) => Home(),
         Explore.id: (context) => Explore(),
