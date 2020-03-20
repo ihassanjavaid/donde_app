@@ -12,12 +12,14 @@ class CustomTextField extends StatelessWidget {
   final Color placeholderColor;
   final Color focusedOutlineBorder;
   final bool isPassword;
+  final ValueChanged<String> onChanged;
 
   CustomTextField(
       {@required this.placeholder,
       this.cursorColor = Colors.redAccent,
       this.placeholderColor = Colors.redAccent,
       this.focusedOutlineBorder = Colors.redAccent,
+      this.onChanged,
       this.isPassword = false});
 
   @override
@@ -42,6 +44,7 @@ class CustomTextField extends StatelessWidget {
           ),
         ),
       ),
+      onChanged: this.onChanged,
     );
   }
 }

@@ -1,11 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../components/customButton.dart';
+import 'home.dart';
 import 'registration.dart';
 import '../components/customTextField.dart';
 
+// ignore: must_be_immutable
 class Password extends StatelessWidget {
   static const String id = 'password_screen';
+  String email;
+  String password;
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -35,6 +42,9 @@ class Password extends StatelessWidget {
               CustomTextField(
                 placeholder: 'Password',
                 isPassword: true,
+                onChanged: (value) {
+                  this.password = value;
+                },
               ),
               SizedBox(
                 height: 40.0,
@@ -42,12 +52,13 @@ class Password extends StatelessWidget {
               CustomButton(
                 buttonLabel: 'Next',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Registration(),
-                    ),
-                  );
+                  _auth.currentUser().then((user) {
+                    this.email = user.email;
+                    _auth.signInWithEmailAndPassword(
+                        email: null, password: this.password);
+                  });
+                  Navigator.pop(context);
+                  Navigator.pushReplacementNamed(context, Home.id);
                 },
                 colour: Color(kButtonContainerColour),
               ),

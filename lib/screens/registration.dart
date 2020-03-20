@@ -1,4 +1,5 @@
 import 'package:donde_app/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'index.dart';
 import 'package:donde_app/screens/settings_screen.dart';
@@ -12,6 +13,9 @@ import '../components/customTextField.dart';
 class Registration extends StatelessWidget {
   static const String id = 'registration_screen';
   double screenHeight;
+  String email;
+  String password;
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +92,9 @@ class Registration extends StatelessWidget {
                   ),
                   CustomTextField(
                     placeholder: 'Your E-Mail',
+                    onChanged: (value) {
+                      this.email = value;
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -95,6 +102,9 @@ class Registration extends StatelessWidget {
                   CustomTextField(
                     placeholder: 'Your Password',
                     isPassword: true,
+                    onChanged: (value) {
+                      this.password = value;
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -123,34 +133,18 @@ class Registration extends StatelessWidget {
                             left: 38, right: 38, top: 15, bottom: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Index(
-                                  /*screens: <Widget>[
-                                  SafeArea(
-                                    child: Home(),
-                                  ),
-                                  SafeArea(
-                                    child: Explore(),
-                                  ),
-                                  SafeArea(
-                                    child: Center(
-                                      child: Text(
-                                        'Underconstruction',
-                                        textAlign: TextAlign.center,
-                                        style: kSettingsTextStyle,
-                                      ),
-                                    ),
-                                  ),
-                                  SafeArea(
-                                    child: SettingsScreen(),
-                                  ),
-                                ],*/
-                                  ),
-                            ),
-                          );
+                        onPressed: () async {
+                          try {
+                            final newUser =
+                                await _auth.createUserWithEmailAndPassword(
+                                    email: this.email, password: this.password);
+                            if (newUser != null) {
+                              Navigator.pop(context);
+                              Navigator.pushReplacementNamed(context, Home.id);
+                            }
+                          } catch (e) {
+                            print(e);
+                          }
                         },
                       ),
                     ],
