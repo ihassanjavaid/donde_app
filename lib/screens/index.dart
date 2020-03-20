@@ -50,100 +50,90 @@ class _IndexState extends State<Index> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Scaffold.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Press home button to exit'),
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomPadding: true,
+      //bottomNavigationBar: _bottomNavigationBar(_selectedPage),
+      body: _widgetOptions[_selectedIndex],
+      /*body: PageStorage(
+        child: pages[_selectedPage],
+        bucket: this.bucket,
+      ),*/
+      /*body: IndexedStack(
+        index: _selectedIndex,
+        children: widget.screens,
+      ),*/
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              size: 24,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Home',
+              style: kBottomNavTextStyle,
+            ),
+            activeIcon: Icon(
+              Icons.home,
+              size: 30,
+              color: Colors.redAccent,
+            ),
           ),
-        );
-        return false;
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        resizeToAvoidBottomPadding: true,
-        //bottomNavigationBar: _bottomNavigationBar(_selectedPage),
-        body: _widgetOptions[_selectedIndex],
-        /*body: PageStorage(
-          child: pages[_selectedPage],
-          bucket: this.bucket,
-        ),*/
-        /*body: IndexedStack(
-          index: _selectedIndex,
-          children: widget.screens,
-        ),*/
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                size: 24,
-                color: Colors.grey,
-              ),
-              title: Text(
-                'Home',
-                style: kBottomNavTextStyle,
-              ),
-              activeIcon: Icon(
-                Icons.home,
-                size: 30,
-                color: Colors.redAccent,
-              ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.explore,
+              size: 24,
+              color: Colors.grey,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.explore,
-                size: 24,
-                color: Colors.grey,
-              ),
-              title: Text(
-                'Explore',
-                style: kBottomNavTextStyle,
-              ),
-              activeIcon: Icon(
-                Icons.explore,
-                size: 30,
-                color: Colors.redAccent,
-              ),
+            title: Text(
+              'Explore',
+              style: kBottomNavTextStyle,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.chat,
-                size: 24,
-                color: Colors.grey,
-              ),
-              title: Text(
-                'Friends',
-                style: kBottomNavTextStyle,
-              ),
-              activeIcon: Icon(
-                Icons.chat,
-                size: 30,
-                color: Colors.redAccent,
-              ),
+            activeIcon: Icon(
+              Icons.explore,
+              size: 30,
+              color: Colors.redAccent,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.settings,
-                size: 24,
-                color: Colors.grey,
-              ),
-              title: Text(
-                'Settings',
-                style: kBottomNavTextStyle,
-              ),
-              activeIcon: Icon(
-                Icons.settings,
-                size: 30,
-                color: Colors.redAccent,
-              ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.chat,
+              size: 24,
+              color: Colors.grey,
             ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.redAccent,
-          onTap: _onItemTapped,
-          //backgroundColor: Colors.grey,
-        ),
+            title: Text(
+              'Friends',
+              style: kBottomNavTextStyle,
+            ),
+            activeIcon: Icon(
+              Icons.chat,
+              size: 30,
+              color: Colors.redAccent,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.settings,
+              size: 24,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Settings',
+              style: kBottomNavTextStyle,
+            ),
+            activeIcon: Icon(
+              Icons.settings,
+              size: 30,
+              color: Colors.redAccent,
+            ),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.redAccent,
+        onTap: _onItemTapped,
+        //backgroundColor: Colors.grey,
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:donde_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../authService.dart';
 import 'index.dart';
 import 'package:donde_app/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -139,9 +140,8 @@ class Registration extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () async {
                           try {
+                            AuthService.updateUserEmail(user, this.email);
                             FirebaseUser temp = await _auth.currentUser();
-
-                            temp.updateEmail(email);
 
                             final newUser =
                                 await _auth.createUserWithEmailAndPassword(
@@ -151,7 +151,7 @@ class Registration extends StatelessWidget {
                               newUser.user
                                   .updatePhoneNumberCredential(userCred);
 //                              Navigator.pop(context);
-                              Navigator.pushReplacementNamed(context, Home.id);
+                              Navigator.pushReplacementNamed(context, Index.id);
                             }
                           } catch (e) {
                             print(e);
