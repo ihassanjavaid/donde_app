@@ -22,7 +22,7 @@ class Donde extends StatelessWidget {
       initialRoute: Login.id,
       routes: {
         Login.id: (context) => Login(),
-        Password.id: (context) => Password(),
+        //Password.id: (context) => Password(),
         Registration.id: (context) => Registration(),
         Index.id: (context) {
           return Index(

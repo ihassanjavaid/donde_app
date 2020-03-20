@@ -9,6 +9,7 @@ import 'explore.dart';
 import 'home.dart';
 import 'login.dart';
 import '../components/customTextField.dart';
+import 'package:donde_app/store.dart';
 
 // ignore: must_be_immutable
 class Registration extends StatelessWidget {
@@ -17,10 +18,12 @@ class Registration extends StatelessWidget {
   static const String id = 'registration_screen';
   double screenHeight;
   String email;
+  String name;
   String password;
   final _auth = FirebaseAuth.instance;
+  final phoneNo;
 
-  Registration({this.userCred, this.user});
+  Registration({this.userCred, this.user, this.phoneNo});
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +94,9 @@ class Registration extends StatelessWidget {
                   ),
                   CustomTextField(
                     placeholder: 'Your Name',
+                    onChanged: (value) {
+                      this.name = value;
+                    },
                   ),
                   SizedBox(
                     height: 15,
@@ -139,7 +145,14 @@ class Registration extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () async {
-                          try {
+                          print('pressed register button');
+                          StoreRetrieve().registerNewUser(
+                            name: this.name,
+                            email: this.email,
+                            phoneNo: this.phoneNo,
+                            password: this.password
+                          );
+                          /*try {
                             AuthService.updateUserEmail(user, this.email);
                             FirebaseUser temp = await _auth.currentUser();
 
@@ -155,7 +168,7 @@ class Registration extends StatelessWidget {
                             }
                           } catch (e) {
                             print(e);
-                          }
+                          }*/
                         },
                       ),
                     ],

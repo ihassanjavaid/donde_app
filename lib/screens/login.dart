@@ -12,6 +12,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../components/dividerWithText.dart';
 import 'index.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:donde_app/store.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Login extends StatefulWidget {
   static const String id = 'login_screen';
@@ -29,6 +31,27 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
   final _auth = FirebaseAuth.instance;
+
+  bool phoneFlag = false;
+
+  var phoneNums;
+
+  Future<void> verifyPhoneFromFirestore() async {
+    StoreRetrieve().getUserPhoneNo(this.completePhoneNo)
+        .then((QuerySnapshot docs) {
+          if (docs.documents.isNotEmpty){
+            print('phone number found in firestore');
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>
+                Password(phoneNumber: this.completePhoneNo)));
+          }
+          else {
+            print('phone number NOT NOT NOT found in firestore');
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>
+                Registration(phoneNo: this.completePhoneNo)));
+          }
+    });
+
+  }
 
   Future<void> verifyPhone() async {
     final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verID) {
@@ -109,7 +132,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       print(user.user.hashCode);
       print(user);
       if (user != null && user.user.email != null) {
-        Navigator.pushReplacementNamed(context, Password.id);
+        //Navigator.pushReplacementNamed(context, Password.id);
       } else {
         Navigator.pushReplacement(
             context,
@@ -124,6 +147,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     controller = AnimationController(
@@ -136,6 +160,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     controller.addListener(() {
       setState(() {});
     });
+    //StoreRetrieve().getUserPhoneNo(this.phoneNo);
   }
 
   @override
@@ -168,7 +193,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     Container(
                       width: double.infinity,
                       child: Text(
-                        'Get started, Enter your email',
+                        'Get started, Enter your phone number',
                         style: kSubtitleStyle,
                         textAlign: TextAlign.left,
                       ),
@@ -224,7 +249,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                       buttonLabel: 'Next',
                       onTap: () {
                         this.completePhoneNo = this.countryCode + this.phoneNo;
-                        verifyPhone();
+                        verifyPhoneFromFirestore();
+                        //verifyPhone();
                       },
                       /*onTap: () {
                         Navigator.pushNamed(context, Index.id);

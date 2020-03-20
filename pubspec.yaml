@@ -33,6 +33,7 @@ dependencies:
   google_maps_webservice: ^0.0.16
   auto_size_text: ^2.1.0
   double_back_to_close_app: ^0.1.2
+  rflutter_alert: ^1.0.2
 #  firebase_analytics: ^1.0.4
 #  firebase_auth: ^0.15.5+2
   rxdart: 0.20.0
