@@ -79,12 +79,9 @@ class _IndexState extends State<Index> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: true,
-        body: DoubleBackToCloseApp(
-          child: IndexedStack(
-            index: _selectedIndex,
-            children: widget.screens,
-          ),
-          snackBar: SnackBar(content: Text('Tap again to close the app')),
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: widget.screens,
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
