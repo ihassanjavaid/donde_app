@@ -1,5 +1,6 @@
 import 'package:donde_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../authService.dart';
 import 'index.dart';
@@ -145,13 +146,39 @@ class Registration extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () async {
+
                           print('pressed register button');
+
                           StoreRetrieve().registerNewUser(
                             name: this.name,
                             email: this.email,
                             phoneNo: this.phoneNo,
                             password: this.password
                           );
+
+                          Alert(
+                            context: context,
+                            type: AlertType.success,
+                            title: "Congtratulations!",
+                            desc: "You are now registered for Donde!\nHappy hoteling.",
+                            buttons: [
+                              DialogButton(
+                                color: Colors.redAccent,
+                                child: Text(
+                                  "Go to Home!",
+                                  style: TextStyle(color: Colors.white, fontSize: 20),
+                                ),
+                                onPressed: () {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(
+                                      builder: (value) => Home(
+                                      )
+                                  ));
+                                },
+                                width: 150,
+                              )
+                            ],
+                          ).show();
+
                           /*try {
                             AuthService.updateUserEmail(user, this.email);
                             FirebaseUser temp = await _auth.currentUser();
