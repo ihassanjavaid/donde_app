@@ -5,6 +5,7 @@ import 'package:donde_app/screens/registration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rxdart/rxdart.dart';
 import '../constants.dart';
 import '../components/customButton.dart';
 import 'package:country_code_picker/country_code_picker.dart';
@@ -79,7 +80,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                 child: Text('Proceed'),
                 onPressed: () {
                   signIn();
-                /*  FirebaseAuth.instance.currentUser().then((user) {
+                  /*  FirebaseAuth.instance.currentUser().then((user) {
                     if (user != null) {
                       Navigator.of(context).pop();
                       Navigator.of(context).pushReplacementNamed(Password.id);
@@ -103,20 +104,25 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       smsCode: smsCode,
     );
 
+    try {
+      FirebaseAuth _auth = FirebaseAuth.instance;
 
-
-    FirebaseAuth _auth = FirebaseAuth.instance;
-
-    final user = await _auth.signInWithCredential(credential);
-
-    user.user.linkWithCredential(credential);
-
-    if (user != null && user.user.email != null) {
-      Navigator.pushReplacementNamed(context, Password.id);
-    }
-    else {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (value) => Registration(usercred: credential)
-      ));
+      final AuthResult user = await _auth.signInWithCredential(credential);
+      print(user.user.hashCode);
+      print(user);
+      if (user != null && user.user.email != null) {
+        Navigator.pushReplacementNamed(context, Password.id);
+      } else {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (value) => Registration(
+                      userCred: credential,
+                      user: user,
+                    )));
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -171,7 +177,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     Container(
                       width: double.infinity,
                       child: Text(
-                        'Get started, Enter your phone number',
+                        'Get started, Enter your email',
                         style: kSubtitleStyle,
                         textAlign: TextAlign.left,
                       ),
@@ -265,13 +271,12 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     );
   }
 
-
-
-
   Future<void> _handleGSignIn() async {
     try {
-      await _googleSignIn.signIn();
-//      await authService.googleSignIn();
+//      await _googleSignIn.signIn();
+      await AuthService().googleSignIn();
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, Index.id);
     } catch (error) {
       print(error);
     }
@@ -308,7 +313,11 @@ class MobileNumberInputField extends StatelessWidget {
 }
 */
 
-/*class AuthService {
+class AuthService {
+  String name;
+  String email;
+  String imageUrl;
+
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _db = Firestore.instance;
@@ -345,28 +354,43 @@ class MobileNumberInputField extends StatelessWidget {
 
     // at this time user will be signed in google not firebase, take the token pass it to firebase to do so
 
-    */ /*FirebaseUser user = await _auth.signInWithGoogle(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken
-    );*/ /*
+//     FirebaseUser user = await this._auth.signInWithGoogle(
+//      accessToken: googleAuth.accessToken,
+//      idToken: googleAuth.idToken
+//    );
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
         idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
 
     FirebaseAuth _auth = FirebaseAuth.instance;
 
-    await _auth.signInWithCredential(credential).then((user) {
-      for (int i = 0; i < 10; i++) print('singned in');
-    }).catchError((e) {
-      print(e);
-    });
+    final authResult = await _auth.signInWithCredential(credential);
+    final FirebaseUser user = authResult.user;
 
-    AuthResult _authResult =
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
+
+    /*AuthResult _authResult =
         await _auth.signInWithCustomToken(token: googleAuth.idToken);
-    FirebaseUser user = await _authResult.user;
+    FirebaseUser firebaseUser = _authResult.user;
 
-    updateUserData(user);
-    for (int i = 0; i < 50; i++) print("signed in " + user.displayName);
+    updateUserData(firebaseUser);
+    for (int i = 0; i < 50; i++) print("signed in " + user.displayName);*/
+    AuthResult _authResult = await _auth.signInWithCredential(credential);
+    final FirebaseUser firebaseUser = _authResult.user;
+
+    assert(firebaseUser.email != null);
+    assert(firebaseUser.displayName != null);
+    assert(firebaseUser.photoUrl != null);
+
+    name = firebaseUser.displayName;
+    email = firebaseUser.email;
+    imageUrl = firebaseUser.photoUrl;
+
+    updateUserData(firebaseUser);
 
     loading.add(false);
     return user;
@@ -390,4 +414,4 @@ class MobileNumberInputField extends StatelessWidget {
   }
 }
 
-final AuthService authService = AuthService();*/
+final AuthService authService = AuthService();

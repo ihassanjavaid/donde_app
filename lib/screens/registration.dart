@@ -11,14 +11,15 @@ import '../components/customTextField.dart';
 
 // ignore: must_be_immutable
 class Registration extends StatelessWidget {
-  AuthCredential usercred;
+  AuthCredential userCred;
+  AuthResult user;
   static const String id = 'registration_screen';
   double screenHeight;
   String email;
   String password;
   final _auth = FirebaseAuth.instance;
 
-  Registration({this.usercred});
+  Registration({this.userCred, this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -138,12 +139,18 @@ class Registration extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () async {
                           try {
+                            FirebaseUser temp = await _auth.currentUser();
+
+                            temp.updateEmail(email);
+
                             final newUser =
                                 await _auth.createUserWithEmailAndPassword(
                                     email: this.email, password: this.password);
+
                             if (newUser != null) {
-                              newUser.user.updatePhoneNumberCredential(usercred);
-                              Navigator.pop(context);
+                              newUser.user
+                                  .updatePhoneNumberCredential(userCred);
+//                              Navigator.pop(context);
                               Navigator.pushReplacementNamed(context, Home.id);
                             }
                           } catch (e) {
