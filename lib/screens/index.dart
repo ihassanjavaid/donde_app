@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../constants.dart';
 
 class Index extends StatefulWidget {
@@ -14,30 +15,6 @@ class Index extends StatefulWidget {
 
 class _IndexState extends State<Index> {
   int _selectedIndex = 0;
-
-  static const Icon homeicon = Icon(
-    Icons.home,
-    size: 30,
-    color: Colors.redAccent,
-  );
-
-  static const Icon exploreicon = Icon(
-    Icons.explore,
-    size: 30,
-    color: Colors.redAccent,
-  );
-
-  static const Icon friendsicon = Icon(
-    Icons.chat,
-    size: 30,
-    color: Colors.redAccent,
-  );
-
-  static const Icon settingsicon = Icon(
-    Icons.settings,
-    size: 30,
-    color: Colors.redAccent,
-  );
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -94,7 +71,11 @@ class _IndexState extends State<Index> {
                 'Home',
                 style: kBottomNavTextStyle,
               ),
-              activeIcon: homeicon,
+              activeIcon: Icon(
+                Icons.home,
+                size: 30,
+                color: Colors.redAccent,
+              ),
             ),
             BottomNavigationBarItem(
               icon: Icon(
@@ -106,7 +87,11 @@ class _IndexState extends State<Index> {
                 'Explore',
                 style: kBottomNavTextStyle,
               ),
-              activeIcon: exploreicon,
+              activeIcon: Icon(
+                Icons.explore,
+                size: 30,
+                color: Colors.redAccent,
+              ),
             ),
             BottomNavigationBarItem(
               icon: Icon(
@@ -118,7 +103,11 @@ class _IndexState extends State<Index> {
                 'Friends',
                 style: kBottomNavTextStyle,
               ),
-              activeIcon: friendsicon,
+              activeIcon: Icon(
+                Icons.chat,
+                size: 30,
+                color: Colors.redAccent,
+              ),
             ),
             BottomNavigationBarItem(
               icon: Icon(
@@ -130,7 +119,11 @@ class _IndexState extends State<Index> {
                 'Settings',
                 style: kBottomNavTextStyle,
               ),
-              activeIcon: settingsicon,
+              activeIcon: Icon(
+                Icons.settings,
+                size: 30,
+                color: Colors.redAccent,
+              ),
             ),
           ],
           currentIndex: _selectedIndex,
