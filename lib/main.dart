@@ -3,7 +3,6 @@ import 'package:donde_app/screens/home.dart';
 import 'package:donde_app/screens/index.dart';
 import 'package:donde_app/screens/password.dart';
 import 'package:donde_app/screens/registration.dart';
-import 'package:donde_app/screens/restaurantDescription.dart';
 import 'package:donde_app/screens/settings_screen.dart';
 
 import 'constants.dart';
