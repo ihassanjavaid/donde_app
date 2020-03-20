@@ -1,3 +1,4 @@
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
@@ -42,21 +43,21 @@ class _IndexState extends State<Index> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-//  static final List<Widget> _widgetOptions = <Widget>[
-//    SafeArea(
-//      child: Home(),
-//    ),
-//    SafeArea(
-//      child: Explore(),
-//    ),
-//    Text(
-//      'Index 2: Friends',
-//      style: optionStyle,
-//    ),
-//    SafeArea(
-//      child: Settings(),
-//    ),
-//  ];
+/*  static final List<Widget> _widgetOptions = <Widget>[
+    SafeArea(
+      child: Home(),
+    ),
+    SafeArea(
+      child: Explore(),
+    ),
+    Text(
+      'Index 2: Friends',
+      style: optionStyle,
+    ),
+    SafeArea(
+      child: Settings(),
+    ),
+  ];*/
 
   void _onItemTapped(int index) {
     setState(() {
@@ -66,68 +67,81 @@ class _IndexState extends State<Index> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: true,
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: widget.screens,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              size: 24,
-              color: Colors.grey,
-            ),
-            title: Text(
-              'Home',
-              style: kBottomNavTextStyle,
-            ),
-            activeIcon: homeicon,
+    return WillPopScope(
+      onWillPop: () async {
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Press home button to exit'),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.explore,
-              size: 24,
-              color: Colors.grey,
-            ),
-            title: Text(
-              'Explore',
-              style: kBottomNavTextStyle,
-            ),
-            activeIcon: exploreicon,
+        );
+        return false;
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomPadding: true,
+        body: DoubleBackToCloseApp(
+          child: IndexedStack(
+            index: _selectedIndex,
+            children: widget.screens,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.chat,
-              size: 24,
-              color: Colors.grey,
+          snackBar: SnackBar(content: Text('Tap again to close the app')),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+                size: 24,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Home',
+                style: kBottomNavTextStyle,
+              ),
+              activeIcon: homeicon,
             ),
-            title: Text(
-              'Friends',
-              style: kBottomNavTextStyle,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.explore,
+                size: 24,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Explore',
+                style: kBottomNavTextStyle,
+              ),
+              activeIcon: exploreicon,
             ),
-            activeIcon: friendsicon,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings,
-              size: 24,
-              color: Colors.grey,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.chat,
+                size: 24,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Friends',
+                style: kBottomNavTextStyle,
+              ),
+              activeIcon: friendsicon,
             ),
-            title: Text(
-              'Settings',
-              style: kBottomNavTextStyle,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.settings,
+                size: 24,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Settings',
+                style: kBottomNavTextStyle,
+              ),
+              activeIcon: settingsicon,
             ),
-            activeIcon: settingsicon,
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.redAccent,
-        onTap: _onItemTapped,
-        //backgroundColor: Colors.grey,
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.redAccent,
+          onTap: _onItemTapped,
+          //backgroundColor: Colors.grey,
+        ),
       ),
     );
   }
