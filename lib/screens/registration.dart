@@ -128,7 +128,7 @@ class Registration extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => Index(
-                                screens: <Widget>[
+                                  /*screens: <Widget>[
                                   SafeArea(
                                     child: Home(),
                                   ),
@@ -147,8 +147,8 @@ class Registration extends StatelessWidget {
                                   SafeArea(
                                     child: SettingsScreen(),
                                   ),
-                                ],
-                              ),
+                                ],*/
+                                  ),
                             ),
                           );
                         },

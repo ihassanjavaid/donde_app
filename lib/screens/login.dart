@@ -1,6 +1,7 @@
 import 'package:donde_app/components/customIconButton.dart';
 import 'package:donde_app/screens/home.dart';
 import 'package:donde_app/screens/password.dart';
+import 'package:donde_app/screens/registration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -80,12 +81,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                   FirebaseAuth.instance.currentUser().then((user) {
                     if (user != null) {
                       Navigator.of(context).pop();
-                      Navigator.of(context).pushReplacementNamed(
+                      Navigator.of(context).pushReplacementNamed(Password.id);
 
-                        Password.id
-                      );
-
-                          //MaterialPageRoute(builder: (context) => Home()));
+                      //MaterialPageRoute(builder: (context) => Home()));
                     } else {
                       Navigator.of(context).pop();
                       signIn();
@@ -106,14 +104,14 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
     FirebaseAuth _auth = FirebaseAuth.instance;
 
-    await _auth.signInWithCredential(credential).then((user) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Home()),
-      );
-    }).catchError((e) {
-      print(e);
-    });
+    final user = await _auth.signInWithCredential(credential);
+
+    if (user != null) {
+      print(user.toString());
+      Navigator.pushReplacementNamed(context, Password.id);
+    } else {
+      Navigator.pushReplacementNamed(context, Registration.id);
+    }
   }
 
   void initState() {
