@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
   final Color focusedOutlineBorder;
   final bool isPassword;
   final ValueChanged<String> onChanged;
+  final TextInputType keyboardType;
 
   CustomTextField(
       {@required this.placeholder,
@@ -20,7 +21,8 @@ class CustomTextField extends StatelessWidget {
       this.placeholderColor = Colors.redAccent,
       this.focusedOutlineBorder = Colors.redAccent,
       this.onChanged,
-      this.isPassword = false});
+      this.isPassword = false,
+      this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
