@@ -7,7 +7,7 @@ import 'package:rxdart/rxdart.dart';
 import '../constants.dart';
 import 'package:donde_app/services/user.dart';
 import 'package:donde_app/screens/resetPassword.dart';
-// setting file 
+// setting file
 class SettingsScreen extends StatefulWidget {
   static const String id = 'settings_screen';
 
