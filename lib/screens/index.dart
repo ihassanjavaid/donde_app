@@ -5,12 +5,14 @@ import 'explore.dart';
 import 'home.dart';
 import 'friends.dart';
 
+
+
 class Index extends StatefulWidget {
   static const String id = 'index_screen';
   static const Tag = "Tabbar";
-  final List<Widget> screens;
+  final String phoneNumber;
 
-  Index({this.screens});
+  Index({this.phoneNumber});
 
   @override
   _IndexState createState() => _IndexState();
@@ -19,6 +21,12 @@ class Index extends StatefulWidget {
 class _IndexState extends State<Index> {
   int _selectedIndex = 0;
   static Explore _explore;
+  final String phoneNumber;
+  static String phoneNo;
+
+  _IndexState({this.phoneNumber}) {
+    phoneNo = this.phoneNumber;
+  }
 
   static Widget acquireExploreWidget() {
     if (_explore == null) {
@@ -38,7 +46,7 @@ class _IndexState extends State<Index> {
       child: Friends(),
     ),
     SafeArea(
-      child: SettingsScreen(),
+      child: SettingsScreen(phoneNumber: phoneNo),
     ),
   ];
 

@@ -1,27 +1,40 @@
 import 'package:donde_app/components/settingsWidget.dart';
 import 'package:donde_app/screens/resetPassword.dart';
+import 'package:donde_app/services/userData.dart';
+import 'package:donde_app/store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rxdart/rxdart.dart';
 import '../constants.dart';
-import 'package:donde_app/services/user.dart';
-import 'package:donde_app/screens/resetPassword.dart';
+
 // setting file
 class SettingsScreen extends StatefulWidget {
   static const String id = 'settings_screen';
+  final String phoneNumber;
+
+  SettingsScreen({this.phoneNumber});
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  //List data = User.getCurrentUserData();
+  UserData userData;
+  final String phoneNumber;
 
+  _SettingsScreenState({this.phoneNumber});
 
+  void acquireUserData() async {
+    print('Entering Test');
+    userData = await StoreRetrieve.getCurrentUserData(this.phoneNumber);
+    print(userData);
+  }
 
-
-
+  @override
+  void initState() {
+    super.initState();
+    acquireUserData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +65,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Container(
               margin: EdgeInsets.only(bottom: 25.0),
               child: Text(
-                'AMIR JAFRI',
+                userData != null ? userData.displayName : 'Anonymous',
                 style: kSettingsTextStyle,
               ),
             ),
             SettingWidget(
-              onTap: () {
-
-              },
+              onTap: () {},
               icon: FontAwesomeIcons.filter,
               label: 'Filter',
               colour: Color(kDefaultBackgroundColour),
@@ -73,9 +84,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               colour: Color(kDefaultBackgroundColour),
             ),
             SettingWidget(
-              onTap: () {
-
-              },
+              onTap: () {},
               icon: FontAwesomeIcons.solidBell,
               label: 'Notification',
               colour: Color(kDefaultBackgroundColour),

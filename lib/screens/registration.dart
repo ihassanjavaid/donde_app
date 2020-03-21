@@ -1,14 +1,11 @@
-import 'package:donde_app/constants.dart';
+import 'package:donde_app/store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:donde_app/services/user.dart';
-import '../authService.dart';
 import 'index.dart';
-import 'package:donde_app/screens/settings_screen.dart';
+
 import 'package:flutter/material.dart';
-import 'explore.dart';
-import 'home.dart';
+
 import 'login.dart';
 import '../components/customTextField.dart';
 import 'package:donde_app/store.dart';
@@ -22,7 +19,6 @@ class Registration extends StatelessWidget {
   String email;
   String name;
   String password;
-  final _auth = FirebaseAuth.instance;
   final phoneNo;
 
   Registration({this.userCred, this.user, this.phoneNo});
@@ -156,10 +152,7 @@ class Registration extends StatelessWidget {
                             email: this.email,
                             phoneNo: this.phoneNo,
                             password: this.password
-                          );
-
-                          // Set user sesssion
-                          User.phoneNumber = this.phoneNo;
+                          );                        
 
                           Alert(
                             context: context,
@@ -174,6 +167,9 @@ class Registration extends StatelessWidget {
                                   style: TextStyle(color: Colors.white, fontSize: 20),
                                 ),
                                 onPressed: () {
+                                  /** TODO
+                                   * Added phone number to index page navigator
+                                   */
                                   Navigator.pushReplacementNamed(context, Index.id);
                                 },
                                 width: 150,

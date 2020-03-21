@@ -1,25 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:donde_app/services/userData.dart';
 
-class StoreRetrieve{
-
+class StoreRetrieve {
 
   getUserPhoneNo(String phoneNo) {
-    return Firestore
-        .instance
+    return Firestore.instance
         .collection('users')
-        .where('phoneNo', isEqualTo: phoneNo).getDocuments();
+        .where('phoneNo', isEqualTo: phoneNo)
+        .getDocuments();
   }
 
   authenticatePhoneWithPassword(String phoneNo, String password) {
-    return Firestore
-        .instance
+    return Firestore.instance
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
         .where('password', isEqualTo: password)
         .getDocuments();
   }
 
-  registerNewUser({String name, String phoneNo, String email, String password}) {
+  registerNewUser(
+      {String name, String phoneNo, String email, String password}) {
     DocumentReference ref = Firestore.instance.collection('users').document();
     ref.setData({
       'displayName': name,
@@ -29,11 +29,26 @@ class StoreRetrieve{
     }, merge: true);
   }
 
-  getUserData(String phoneNo) {
-    return Firestore
-        .instance
+  static Future<UserData> getCurrentUserData(String phoneNo) async {
+    String phoneNumber;
+    String displayName;
+    String email;
+    UserData userData;
+  
+    // final documents = store.getUserData(phoneNumber);
+    final documents = await Firestore()
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
         .getDocuments();
+
+    for (var document in documents.documents) {
+      phoneNumber = document.data['phoneNo'];
+      displayName = document.data['displayName'];
+      email = document.data['email'];
+      userData = UserData(
+          phoneNumber: phoneNumber, displayName: displayName, email: email);
+    }
+
+    return userData;
   }
 }

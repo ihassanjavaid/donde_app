@@ -11,13 +11,13 @@ class _State extends State<ResetPassword> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.all(10),
-            child: ListView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
                     alignment: Alignment.center,
@@ -29,22 +29,17 @@ class _State extends State<ResetPassword> {
                           fontWeight: FontWeight.w500,
                           fontSize: 30),
                     )),
-
-                  SizedBox(
-                    height: 30,
-                  ),
-                  CustomTextField(placeholder:'new password'),
-
+                SizedBox(
+                  height: 30,
+                ),
+                CustomTextField(placeholder: 'New password'),
                 SizedBox(
                   height: 25,
                 ),
-                CustomTextField(
-                    placeholder: 'confirm new password'),
-
+                CustomTextField(placeholder: 'Confirm new password'),
                 SizedBox(
                   height: 25,
                 ),
-
                 Container(
                     height: 60,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -53,10 +48,9 @@ class _State extends State<ResetPassword> {
                       color: Colors.redAccent,
                       child: Text('Reset'),
                       onPressed: () {
-
+                        
                       },
                     )),
-
               ],
             )));
   }

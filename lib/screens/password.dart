@@ -7,7 +7,6 @@ import '../components/customButton.dart';
 import '../components/customTextField.dart';
 import 'package:donde_app/store.dart';
 import 'index.dart';
-import 'package:donde_app/services/user.dart';
 
 class Password extends StatefulWidget {
   final phoneNumber;
@@ -38,10 +37,9 @@ class _PasswordState extends State<Password> {
             this.showSpinner = false;
           });
       if (docs.documents.isNotEmpty) {
-        // Set user session
-        User.phoneNumber = this.phoneNumber;
         print('authenticated from firestore');
-        Navigator.popAndPushNamed(context, Index.id);
+        Navigator.pop(context);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Index(phoneNumber: this.phoneNumber,)));
         return true;
       } else {
         Alert(
