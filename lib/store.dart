@@ -27,4 +27,12 @@ class StoreRetrieve{
       'phoneNo': phoneNo
     }, merge: true);
   }
+
+  getUserData(String phoneNo) {
+    return Firestore
+        .instance
+        .collection('users')
+        .where('phoneNo', isEqualTo: phoneNo)
+        .getDocuments();
+  }
 }

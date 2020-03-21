@@ -2,7 +2,7 @@ import 'package:donde_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-
+import 'package:donde_app/services/user.dart';
 import '../authService.dart';
 import 'index.dart';
 import 'package:donde_app/screens/settings_screen.dart';
@@ -157,6 +157,9 @@ class Registration extends StatelessWidget {
                             phoneNo: this.phoneNo,
                             password: this.password
                           );
+
+                          // Set user sesssion
+                          User.phoneNumber = this.phoneNo;
 
                           Alert(
                             context: context,

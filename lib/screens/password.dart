@@ -6,6 +6,7 @@ import '../components/customButton.dart';
 import '../components/customTextField.dart';
 import 'package:donde_app/store.dart';
 import 'index.dart';
+import 'package:donde_app/services/user.dart';
 
 class Password extends StatefulWidget {
 
@@ -32,6 +33,8 @@ class _PasswordState extends State<Password> {
     // ignore: missing_return
         .then((QuerySnapshot docs) {
       if (docs.documents.isNotEmpty){
+        // Set user session
+        User.phoneNumber = this.phoneNumber;
         print('authenticated from firestore');
         Navigator.pop(context);
         Navigator.popAndPushNamed(context, Index.id);
