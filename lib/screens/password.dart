@@ -33,6 +33,7 @@ class _PasswordState extends State<Password> {
         .then((QuerySnapshot docs) {
       if (docs.documents.isNotEmpty){
         print('authenticated from firestore');
+        Navigator.pop(context);
         Navigator.popAndPushNamed(context, Index.id);
         return true;
       }
