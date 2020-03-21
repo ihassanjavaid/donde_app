@@ -1,11 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donde_app/components/settingsWidget.dart';
+import 'package:donde_app/screens/resetPassword.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rxdart/rxdart.dart';
 import '../constants.dart';
 import 'package:donde_app/services/user.dart';
-
+import 'package:donde_app/screens/resetPassword.dart';
+// setting file 
 class SettingsScreen extends StatefulWidget {
   static const String id = 'settings_screen';
 
@@ -14,7 +16,12 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  QuerySnapshot data = User.getCurrentUserData();
+  //List data = User.getCurrentUserData();
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,19 +57,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             SettingWidget(
-              onTap: () {},
+              onTap: () {
+
+              },
               icon: FontAwesomeIcons.filter,
               label: 'Filter',
               colour: Color(kDefaultBackgroundColour),
             ),
             SettingWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, ResetPassword.id);
+              },
               icon: FontAwesomeIcons.lock,
               label: 'Security',
               colour: Color(kDefaultBackgroundColour),
             ),
             SettingWidget(
-              onTap: () {},
+              onTap: () {
+
+              },
               icon: FontAwesomeIcons.solidBell,
               label: 'Notification',
               colour: Color(kDefaultBackgroundColour),
