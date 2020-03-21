@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
     super.initState();
     this.showSpinner = true;
     this._locationBrain = LocationBrain();
-    _getPlaces();
+    // _getPlaces();
     this.showSpinner = false;
   }
 

@@ -4,6 +4,7 @@ import 'package:donde_app/screens/registration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../authService.dart';
 import '../constants.dart';
 import '../components/customButton.dart';
@@ -27,30 +28,39 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   String completePhoneNo;
   String smsCode;
   String verificationId;
-
   AnimationController controller;
   Animation animation;
-  final _auth = FirebaseAuth.instance;
-
   bool phoneFlag = false;
+  bool showSpinner = false;
 
   var phoneNums;
 
   Future<void> verifyPhoneFromFirestore() async {
-    StoreRetrieve().getUserPhoneNo(this.completePhoneNo)
-        .then((QuerySnapshot docs) {
-          if (docs.documents.isNotEmpty){
-            print('phone number found in firestore');
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>
-                Password(phoneNumber: this.completePhoneNo)));
-          }
-          else {
-            print('phone number NOT NOT NOT found in firestore');
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>
-                Registration(phoneNo: this.completePhoneNo)));
-          }
+    setState(() {
+      this.showSpinner = true;
     });
-
+    StoreRetrieve()
+        .getUserPhoneNo(this.completePhoneNo)
+        .then((QuerySnapshot docs) {
+      setState(() {
+        this.showSpinner = false;
+      });
+      if (docs.documents.isNotEmpty) {
+        print('phone number found in firestore');
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    Password(phoneNumber: this.completePhoneNo)));
+      } else {
+        print('phone number NOT NOT NOT found in firestore');
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    Registration(phoneNo: this.completePhoneNo)));
+      }
+    });
   }
 
   Future<void> verifyPhone() async {
@@ -166,122 +176,127 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                height: 50.0,
-              ),
-              Text(
-                'Hello!',
-                style:
-                    kWelcomeTextStyle.copyWith(fontSize: animation.value * 48),
-              ),
-              AnimatedOpacity(
-                opacity: controller.value,
-                duration: Duration(milliseconds: 500),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      child: Text(
-                        'Get started, Enter your phone number',
-                        style: kSubtitleStyle,
-                        textAlign: TextAlign.left,
+      child: ModalProgressHUD(
+        inAsyncCall: this.showSpinner,
+        child: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          body: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 50.0,
+                ),
+                Text(
+                  'Hello!',
+                  style: kWelcomeTextStyle.copyWith(
+                      fontSize: animation.value * 48),
+                ),
+                AnimatedOpacity(
+                  opacity: controller.value,
+                  duration: Duration(milliseconds: 500),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 8.0,
                       ),
-                    ),
-                    SizedBox(
-                      height: 40.0,
-                    ),
-                    Container(
-                      child: Row(
-                        children: <Widget>[
-                          CountryCodePicker(
-                            onChanged: (countryCode) {
-                              this.countryCode = countryCode.toString();
-                            },
-                          ),
-                          VerticalDivider(
-                            color: Colors.redAccent,
-                            thickness: 1.0,
-                          ),
-                          Expanded(
-                            child: TextField(
-                              keyboardType: TextInputType.phone,
-                              onChanged: (value) {
-                                this.phoneNo = value;
+                      Container(
+                        width: double.infinity,
+                        child: Text(
+                          'Get started, Enter your phone number',
+                          style: kSubtitleStyle,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40.0,
+                      ),
+                      Container(
+                        child: Row(
+                          children: <Widget>[
+                            CountryCodePicker(
+                              onChanged: (countryCode) {
+                                this.countryCode = countryCode.toString();
                               },
-                              decoration: InputDecoration(
-                                labelText: 'Enter Number',
-                                hasFloatingPlaceholder: true,
-                                labelStyle: TextStyle(
-                                  color: Colors.redAccent,
-                                ),
-                                border: UnderlineInputBorder(
-                                  borderSide: BorderSide(
+                            ),
+                            VerticalDivider(
+                              color: Colors.redAccent,
+                              thickness: 1.0,
+                            ),
+                            Expanded(
+                              child: TextField(
+                                keyboardType: TextInputType.phone,
+                                onChanged: (value) {
+                                  this.phoneNo = value;
+                                },
+                                decoration: InputDecoration(
+                                  labelText: 'Enter Number',
+                                  hasFloatingPlaceholder: true,
+                                  labelStyle: TextStyle(
                                     color: Colors.redAccent,
                                   ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.redAccent,
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.redAccent,
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.redAccent,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
+                        margin: EdgeInsets.only(bottom: 10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
                       ),
-                      margin: EdgeInsets.only(bottom: 10.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
+                      CustomButton(
+                        buttonLabel: 'Next',
+                        onTap: () async {
+                          this.completePhoneNo =
+                              this.countryCode + this.phoneNo;
+
+                          await verifyPhoneFromFirestore();
+                          //verifyPhone();
+                        },
+                        /*onTap: () {
+                          Navigator.pushNamed(context, Index.id);
+                        },*/
+                        colour: Color(kButtonContainerColour),
                       ),
-                    ),
-                    CustomButton(
-                      buttonLabel: 'Next',
-                      onTap: () {
-                        this.completePhoneNo = this.countryCode + this.phoneNo;
-                        verifyPhoneFromFirestore();
-                        //verifyPhone();
-                      },
-                      /*onTap: () {
-                        Navigator.pushNamed(context, Index.id);
-                      },*/
-                      colour: Color(kButtonContainerColour),
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    DividerWithText(
-                      text: 'Or connect with',
-                    ),
-                    SizedBox(
-                      height: 15.0,
-                    ),
-                    CustomIconButton(
-                      buttonLabel: 'LOGIN WITH FACEBOOK',
-                      onTap: _handleFbSignIn,
-                      colour: Color(0xff2d3c9b),
-                      icon: FontAwesomeIcons.facebook,
-                    ),
-                    CustomIconButton(
-                      icon: FontAwesomeIcons.google,
-                      buttonLabel: 'LOGIN WITH GOOGLE',
-                      onTap: _handleGSignIn,
-                      colour: Colors.redAccent,
-                    ),
-                  ],
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      DividerWithText(
+                        text: 'Or connect with',
+                      ),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      CustomIconButton(
+                        buttonLabel: 'LOGIN WITH FACEBOOK',
+                        onTap: _handleFbSignIn,
+                        colour: Color(0xff2d3c9b),
+                        icon: FontAwesomeIcons.facebook,
+                      ),
+                      CustomIconButton(
+                        icon: FontAwesomeIcons.google,
+                        buttonLabel: 'LOGIN WITH GOOGLE',
+                        onTap: _handleGSignIn,
+                        colour: Colors.redAccent,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

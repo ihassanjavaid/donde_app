@@ -1,6 +1,7 @@
 import 'package:donde_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:donde_app/services/user.dart';
 import '../authService.dart';
@@ -15,6 +16,7 @@ import 'package:donde_app/store.dart';
 
 // ignore: must_be_immutable
 class Registration extends StatelessWidget {
+  bool showSpinner = false;
   AuthCredential userCred;
   AuthResult user;
   static const String id = 'registration_screen';
@@ -22,7 +24,6 @@ class Registration extends StatelessWidget {
   String email;
   String name;
   String password;
-  final _auth = FirebaseAuth.instance;
   final phoneNo;
 
   Registration({this.userCred, this.user, this.phoneNo});
@@ -65,189 +66,194 @@ class Registration extends StatelessWidget {
   }
 
   Widget signUpCard(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(top: screenHeight / 5),
-          padding: EdgeInsets.only(left: 10, right: 10),
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            elevation: 18,
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "CREATE ACCOUNT",
-                      style: TextStyle(
-                        color: Colors.redAccent,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w600,
+    return ModalProgressHUD(
+      inAsyncCall: this.showSpinner,
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: screenHeight / 5),
+            padding: EdgeInsets.only(left: 10, right: 10),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              elevation: 18,
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "CREATE ACCOUNT",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  CustomTextField(
-                    placeholder: 'Your Name',
-                    onChanged: (value) {
-                      this.name = value;
-                    },
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  CustomTextField(
-                    placeholder: 'Your E-Mail',
-                    onChanged: (value) {
-                      this.email = value;
-                    },
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  CustomTextField(
-                    placeholder: 'Your Password',
-                    isPassword: true,
-                    onChanged: (value) {
-                      this.password = value;
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Password must be at least 8 characters and include a special character and number",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(),
-                      ),
-                      FlatButton(
-                        child: Text(
-                          "SIGN UP",
-                          style: TextStyle(fontSize: 16),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    CustomTextField(
+                      placeholder: 'Your Name',
+                      onChanged: (value) {
+                        this.name = value;
+                      },
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    CustomTextField(
+                      placeholder: 'Your E-Mail',
+                      onChanged: (value) {
+                        this.email = value;
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    CustomTextField(
+                      placeholder: 'Your Password',
+                      isPassword: true,
+                      onChanged: (value) {
+                        this.password = value;
+                      },
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Password must be at least 8 characters and include a special character and number",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(),
                         ),
-                        color: Colors.redAccent,
-                        textColor: Colors.white,
-                        padding: EdgeInsets.only(
-                            left: 38, right: 38, top: 15, bottom: 15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: () async {
+                        FlatButton(
+                          child: Text(
+                            "SIGN UP",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          color: Colors.redAccent,
+                          textColor: Colors.white,
+                          padding: EdgeInsets.only(
+                              left: 38, right: 38, top: 15, bottom: 15),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () async {
+                            this.showSpinner = true;
+                            print('pressed register button');
 
-                          print('pressed register button');
+                            StoreRetrieve().registerNewUser(
+                                name: this.name,
+                                email: this.email,
+                                phoneNo: this.phoneNo,
+                                password: this.password);
 
-                          StoreRetrieve().registerNewUser(
-                            name: this.name,
-                            email: this.email,
-                            phoneNo: this.phoneNo,
-                            password: this.password
-                          );
+                            // Set user sesssion
+                            User.phoneNumber = this.phoneNo;
+                            this.showSpinner = false;
+                            Alert(
+                              context: context,
+                              type: AlertType.success,
+                              title: "Congtratulations!",
+                              desc:
+                                  "You are now registered for Donde!\nHappy hoteling.",
+                              buttons: [
+                                DialogButton(
+                                  color: Colors.redAccent,
+                                  child: Text(
+                                    "Go to Home!",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushReplacementNamed(
+                                        context, Index.id);
+                                  },
+                                  width: 150,
+                                )
+                              ],
+                            ).show();
 
-                          // Set user sesssion
-                          User.phoneNumber = this.phoneNo;
+                            /*try {
+                              AuthService.updateUserEmail(user, this.email);
+                              FirebaseUser temp = await _auth.currentUser();
 
-                          Alert(
-                            context: context,
-                            type: AlertType.success,
-                            title: "Congtratulations!",
-                            desc: "You are now registered for Donde!\nHappy hoteling.",
-                            buttons: [
-                              DialogButton(
-                                color: Colors.redAccent,
-                                child: Text(
-                                  "Go to Home!",
-                                  style: TextStyle(color: Colors.white, fontSize: 20),
-                                ),
-                                onPressed: () {
-                                  Navigator.pushReplacementNamed(context, Index.id);
-                                },
-                                width: 150,
-                              )
-                            ],
-                          ).show();
+                              final newUser =
+                                  await _auth.createUserWithEmailAndPassword(
+                                      email: this.email, password: this.password);
 
-                          /*try {
-                            AuthService.updateUserEmail(user, this.email);
-                            FirebaseUser temp = await _auth.currentUser();
-
-                            final newUser =
-                                await _auth.createUserWithEmailAndPassword(
-                                    email: this.email, password: this.password);
-
-                            if (newUser != null) {
-                              newUser.user
-                                  .updatePhoneNumberCredential(userCred);
+                              if (newUser != null) {
+                                newUser.user
+                                    .updatePhoneNumberCredential(userCred);
 //                              Navigator.pop(context);
-                              Navigator.pushReplacementNamed(context, Index.id);
-                            }
-                          } catch (e) {
-                            print(e);
-                          }*/
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Already have an account?",
-              style: TextStyle(color: Colors.grey, fontSize: 15),
-            ),
-            FlatButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                );
-              },
-              textColor: Colors.black87,
-              child: Text(
-                "LOGIN",
-                style: TextStyle(
-                  fontSize: 18,
+                                Navigator.pushReplacementNamed(context, Index.id);
+                              }
+                            } catch (e) {
+                              print(e);
+                            }*/
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            )
-          ],
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: FlatButton(
-            child: Text(
-              "Terms & Conditions",
-              style: TextStyle(
-                color: Colors.grey,
-              ),
             ),
-            onPressed: () {},
           ),
-        ),
-      ],
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: 40,
+              ),
+              Text(
+                "Already have an account?",
+                style: TextStyle(color: Colors.grey, fontSize: 15),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()),
+                  );
+                },
+                textColor: Colors.black87,
+                child: Text(
+                  "LOGIN",
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              )
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: FlatButton(
+              child: Text(
+                "Terms & Conditions",
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ],
+      ),
     );
   }
 
