@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../constants.dart';
 import '../components/customButton.dart';
-import 'home.dart';
-import 'registration.dart';
 import '../components/customTextField.dart';
 import 'package:donde_app/store.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'index.dart';
 
 class Password extends StatefulWidget {
 
@@ -25,7 +22,6 @@ class _PasswordState extends State<Password> {
   static const String id = 'password_screen';
   String email;
   String password;
-  final _auth = FirebaseAuth.instance;
 
   final phoneNumber;
   _PasswordState({this.phoneNumber});
@@ -37,8 +33,7 @@ class _PasswordState extends State<Password> {
         .then((QuerySnapshot docs) {
       if (docs.documents.isNotEmpty){
         print('authenticated from firestore');
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (value) => Home()
-        ));
+        Navigator.popAndPushNamed(context, Index.id);
         return true;
       }
       else {

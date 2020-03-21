@@ -1,5 +1,6 @@
 import 'package:donde_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../authService.dart';
@@ -107,6 +108,7 @@ class Registration extends StatelessWidget {
                     onChanged: (value) {
                       this.email = value;
                     },
+                    keyboardType: TextInputType.emailAddress,
                   ),
                   SizedBox(
                     height: 20,
@@ -169,10 +171,7 @@ class Registration extends StatelessWidget {
                                   style: TextStyle(color: Colors.white, fontSize: 20),
                                 ),
                                 onPressed: () {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(
-                                      builder: (value) => Home(
-                                      )
-                                  ));
+                                  Navigator.pushReplacementNamed(context, Index.id);
                                 },
                                 width: 150,
                               )
