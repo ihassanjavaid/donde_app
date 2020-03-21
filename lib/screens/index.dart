@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'explore.dart';
 import 'home.dart';
+import 'friends.dart';
 
 class Index extends StatefulWidget {
   static const String id = 'index_screen';
@@ -33,9 +34,8 @@ class _IndexState extends State<Index> {
     SafeArea(
       child: acquireExploreWidget(),
     ),
-    Text(
-      'Index 2: Friends',
-      style: kOptionStyle,
+    SafeArea(
+      child: Friends(),
     ),
     SafeArea(
       child: SettingsScreen(),
