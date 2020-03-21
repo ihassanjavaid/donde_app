@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donde_app/components/settingsWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  List data = User.getCurrentUserData();
+  QuerySnapshot data = User.getCurrentUserData();
 
   @override
   Widget build(BuildContext context) {

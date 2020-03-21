@@ -36,7 +36,6 @@ class _PasswordState extends State<Password> {
         // Set user session
         User.phoneNumber = this.phoneNumber;
         print('authenticated from firestore');
-        Navigator.pop(context);
         Navigator.popAndPushNamed(context, Index.id);
         return true;
       }

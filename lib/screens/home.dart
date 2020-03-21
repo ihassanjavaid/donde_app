@@ -31,9 +31,10 @@ class _HomeState extends State<Home> {
   @override
   initState() {
     super.initState();
-
+    this.showSpinner = true;
     this._locationBrain = LocationBrain();
     _getPlaces();
+    this.showSpinner = false;
   }
 
   void _getPlaces() async {
