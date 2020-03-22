@@ -1,4 +1,3 @@
-
 /// The page housing the restaurant card and associated controls
 
 import 'dart:math';
@@ -9,6 +8,8 @@ import 'package:google_maps_webservice/places.dart';
 import '../constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+
+import '../locationBrain.dart';
 
 // ignore: must_be_immutable
 class Home extends StatefulWidget {
@@ -25,12 +26,14 @@ class _HomeState extends State<Home> {
   // Attributes
   bool showSpinner = false;
   PlacesSearchResult place;
-  List<PlacesSearchResult> places;
+  List<PlacesSearchResult> places = [];
   String restaurantName;
+  LocationBrain _locationBrain;
 
   // Methods
-  void setRestaurantData() {
-    if (widget.places.length != 0) {
+  void setRestaurantData() async {
+    await _getPlaces();
+    if (places.length != 0) {
       print('Found Restaurants');
       // Get one of the indexes
       final int randomIndex = Random().nextInt(widget.places.length);
@@ -45,11 +48,18 @@ class _HomeState extends State<Home> {
     }
   }
 
-
   @override
   initState() {
     super.initState();
-//    setRestaurantData();
+    _locationBrain = LocationBrain();
+    setRestaurantData();
+  }
+
+  Future<void> _getPlaces() async {
+    final temp = await this._locationBrain.getNearbyPlaces();
+    setState(() {
+      this.places = temp;
+    });
   }
 
   @override
@@ -129,7 +139,9 @@ class _HomeState extends State<Home> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: AutoSizeText(
-                                    this.restaurantName != null ? this.restaurantName : 'Restaurant Name',
+                                    this.restaurantName != null
+                                        ? this.restaurantName
+                                        : 'Restaurant Name',
                                     style: kCardTitleTextStyle,
                                     maxLines: 2,
                                     overflow: TextOverflow.clip,
