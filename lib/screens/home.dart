@@ -218,8 +218,12 @@ class _HomeState extends State<Home> {
                         if (this.restaurantName != null) {
                           this.places.forEach((place) {
                             if (place.name != this.restaurantName) {
-                              this.restaurantName = place.name;
-                              this.place = place;
+                              setState(() {
+                                this.restaurantName = place.name;
+                                this.place = place;
+                              });
+
+
                               return;
                             }
                           });

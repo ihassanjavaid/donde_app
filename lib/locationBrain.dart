@@ -7,7 +7,7 @@ import 'package:google_maps_webservice/places.dart';
 
 class LocationBrain {
   int _callCount = 0;
-  static String kGoogleApiKey = 'AIzaSyBY3uVSwIDtVZ-V2LesfjEB5wN_tfqi_po';
+  static String kGoogleApiKey = 'AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U';
   List<PlacesSearchResult> _placesList = [];
   double searchRadius;
   Position position;
