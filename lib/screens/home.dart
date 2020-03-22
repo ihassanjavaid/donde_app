@@ -1,6 +1,7 @@
 /// The page housing the restaurant card and associated controls
 
 import 'dart:math';
+import 'package:donde_app/screens/restaurantDescription.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -29,6 +30,8 @@ class _HomeState extends State<Home> {
   List<PlacesSearchResult> places = [];
   String restaurantName;
   LocationBrain _locationBrain;
+  int counter = 1;
+  String genericRestaurantName = 'Restaurant Name';
 
   // Methods
   void setRestaurantData() async {
@@ -106,7 +109,13 @@ class _HomeState extends State<Home> {
               Flexible(
                 child: GestureDetector(
                   onTap: () {
-                    // TODO Open restaurant description
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Center(
+                            child: RestaurantDescription(place: place),
+                          ),
+                        ));
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -141,7 +150,7 @@ class _HomeState extends State<Home> {
                                   child: AutoSizeText(
                                     this.restaurantName != null
                                         ? this.restaurantName
-                                        : 'Restaurant Name',
+                                        : this.genericRestaurantName,
                                     style: kCardTitleTextStyle,
                                     maxLines: 2,
                                     overflow: TextOverflow.clip,
@@ -171,7 +180,11 @@ class _HomeState extends State<Home> {
                     InkWell(
                       onTap: () {
                         // TODO Add the current restaurant in the disliked list
-                        // TODO Show a new card
+                        setState(() {
+                          this.counter++;
+                          String temp = 'Restaurant Name $counter';
+                          this.genericRestaurantName = temp;
+                        });
                       }, // Dislike
                       child: Image(
                         image: AssetImage('images/crossicon.png'),
@@ -181,7 +194,11 @@ class _HomeState extends State<Home> {
                     ),
                     InkWell(
                       onTap: () {
-                        // TODO Show a new card
+                        setState(() {
+                          this.counter++;
+                          String temp = 'Restaurant Name $counter';
+                          this.genericRestaurantName = temp;
+                        });
                       }, // Referesh
                       child: Image(
                         image: AssetImage('images/refreshicon.png'),
@@ -192,7 +209,11 @@ class _HomeState extends State<Home> {
                     InkWell(
                       onTap: () {
                         // TODO Add the current restaurant in the liked list
-                        // TODO Show a new card
+                        setState(() {
+                          this.counter++;
+                          String temp = 'Restaurant Name $counter';
+                          this.genericRestaurantName = temp;
+                        });
                       }, // Like
                       child: Image(
                         image: AssetImage('images/hearticon.png'),
