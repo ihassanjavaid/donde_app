@@ -37,7 +37,32 @@ class AuthService {
   }
 
   Future<FirebaseUser> googleSignIn() async {
-    loading.add(true);
+    final GoogleSignInAccount googleSignInAccount =
+        await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final AuthResult authResult = await _auth.signInWithCredential(credential);
+    final FirebaseUser user = authResult.user;
+
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
+
+    assert(currentUser.email != null);
+    assert(currentUser.displayName != null);
+    assert(currentUser.photoUrl != null);
+
+    updateUserData(currentUser);
+    return user;
+    /*loading.add(true);
     // follow steps required to get the user signed in
     GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     // trigger process which will give id token
@@ -64,12 +89,12 @@ class AuthService {
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
 
-    /*AuthResult _authResult =
+    */ /*AuthResult _authResult =
         await _auth.signInWithCustomToken(token: googleAuth.idToken);
     FirebaseUser firebaseUser = _authResult.user;
 
     updateUserData(firebaseUser);
-    for (int i = 0; i < 50; i++) print("signed in " + user.displayName);*/
+    for (int i = 0; i < 50; i++) print("signed in " + user.displayName);*/ /*
     AuthResult _authResult = await _auth.signInWithCredential(credential);
     final FirebaseUser firebaseUser = _authResult.user;
 
@@ -84,7 +109,7 @@ class AuthService {
     updateUserData(firebaseUser);
 
     loading.add(false);
-    return user;
+    return user;*/
   }
 
   static void updateUserEmail(AuthResult authResult, String email) async {

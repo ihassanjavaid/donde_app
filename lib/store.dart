@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donde_app/services/userData.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StoreFunc {
@@ -56,4 +57,20 @@ class StoreFunc {
 
     return userData;
   }
+
+  static void addRestaurantToLike(PlacesSearchResult place) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final String phoneNo = pref.getString('phoneNumber');
+
+    final documents = await Firestore()
+        .collection('users')
+        .where('phoneNo', isEqualTo: phoneNo)
+        .getDocuments();
+
+    for (var document in documents.documents) {
+      print(document.data);
+    }
+
+  }
+
 }

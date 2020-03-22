@@ -2,6 +2,7 @@
 
 import 'dart:math';
 import 'package:donde_app/screens/restaurantDescription.dart';
+import 'package:donde_app/store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -41,15 +42,15 @@ class _HomeState extends State<Home> {
       print('Found Restaurants');
       // Get one of the indexes
       try {
-        final int randomIndex = Random().nextInt(widget.places.length - 1);
-        print(randomIndex);
+        /*final int randomIndex = Random().nextInt(widget.places.length - 1);
+        print(randomIndex);*/
         for (var place in places) {
           setState(() {
             this.restaurantName = place.name;
           });
         }
       } catch (e) {
-        print('Error set restaurant information');
+        print(e);
       }
 
     } else {
@@ -163,13 +164,13 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
-                              Expanded(
+                              /*Expanded(
                                 flex: 1,
                                 child: Text(
                                   '0.0 KMs',
                                   style: kNormalTextStyle,
                                 ),
-                              ),
+                              ),*/
                             ],
                           ),
                         ),
@@ -186,6 +187,9 @@ class _HomeState extends State<Home> {
                     InkWell(
                       onTap: () {
                         // TODO Add the current restaurant in the disliked list
+                        if (this.restaurantName != null) {
+                          StoreFunc.addRestaurantToLike(place);
+                        }
                         setState(() {
                           this.counter++;
                           String temp = 'Restaurant Name $counter';

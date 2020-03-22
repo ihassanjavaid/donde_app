@@ -24,25 +24,20 @@ class _IndexState extends State<Index> {
   initState() {
     super.initState();
     this._locationBrain = LocationBrain();
-    // _getPlaces();
   }
 
-  void _getPlaces() async {
-    places = await this._locationBrain.getNearbyPlaces();
-  }
+
 
   static Widget acquireExploreWidget() {
     if (_explore == null) {
-      _explore = Explore(places: places);
+      _explore = Explore();
     }
     return _explore;
   }
 
   final List<Widget> _widgetOptions = <Widget>[
     SafeArea(
-      child: Home(
-        places: places,
-      ),
+      child: Home(),
     ),
     SafeArea(
       child: acquireExploreWidget(),
