@@ -1,5 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donde_app/components/customTextField.dart';
+import 'package:donde_app/services/userData.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../store.dart';
 
 class ResetPassword extends StatefulWidget {
   @override
@@ -10,6 +16,8 @@ class ResetPassword extends StatefulWidget {
 class _State extends State<ResetPassword> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool showSpinner = false;
+  UserData userData;
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +30,22 @@ class _State extends State<ResetPassword> {
                 Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(10),
-                    child: Text(
+                    child: AutoSizeText(
                       'Reset your password',
+                      maxLines: 1,
                       style: TextStyle(
                           color: Colors.redAccent,
                           fontWeight: FontWeight.w500,
-                          fontSize: 30),
-                    )),
+                          fontStyle: FontStyle.italic,
+                          fontSize: 40),
+                    ),
+                ),
                 SizedBox(
                   height: 30,
+                ),
+                CustomTextField(placeholder: 'Old password  '),
+                SizedBox(
+                  height: 25,
                 ),
                 CustomTextField(placeholder: 'New password'),
                 SizedBox(
@@ -46,7 +61,7 @@ class _State extends State<ResetPassword> {
                     child: RaisedButton(
                       textColor: Colors.white,
                       color: Colors.redAccent,
-                      child: Text('Reset'),
+                      child: Text(' Reset '),
                       onPressed: () {
                         // TODO Add reset functionality
                       },
@@ -54,4 +69,48 @@ class _State extends State<ResetPassword> {
               ],
             )));
   }
+
+  void _acquireUserData() async {
+    final data = await StoreFunc.getCurrentUserData();
+    setState(() {
+      userData = data;
+    });
+  }
+
+  /*Future<void> authenticatePassword() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      this.showSpinner = true;
+    });
+    QuerySnapshot docs = await StoreFunc()
+        .authenticatePhoneWithPassword(widget.phoneNumber, password);
+    setState(() {
+      this.showSpinner = false;
+    });
+    if (docs.documents.isNotEmpty) {
+      await prefs.setString('phoneNumber', widget.phoneNumber);
+      print('authenticated from firestore');
+
+      Navigator.popAndPushNamed(context, Index.id);
+      return true;
+    } else {
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "Invalid Password!",
+        desc: "You have written an invalid password! Please try again.",
+        buttons: [
+          DialogButton(
+            color: Colors.redAccent,
+            child: Text(
+              "Retry",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+    }
+  }*/
 }

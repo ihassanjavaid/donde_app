@@ -12,6 +12,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 
 // setting file
 class SettingsScreen extends StatefulWidget {
@@ -61,13 +62,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
               margin: EdgeInsets.symmetric(vertical: 15.0),
               width: 120.0,
               height: 120.0,
-              decoration: BoxDecoration(
+              /*decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.fill,
                   image: NetworkImage(
                       "https://i.ya-webdesign.com/images/funny-png-avatar-2.png"),
                 ),
+              ),*/
+              child: CircularProfileAvatar(
+                "",
+                backgroundColor: Colors.grey,
+                initialsText: Text(
+                  userData.displayName[0],
+                  style: TextStyle(
+                    fontSize: 55,
+                    color: Colors.white,
+                  ),
+                ),
+                elevation: 8.0,
+//                borderColor: Colors.redAccent,
+//                borderWidth: 3,
               ),
             ),
             Container(
