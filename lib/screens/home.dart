@@ -43,15 +43,15 @@ class _HomeState extends State<Home> {
       try {
         final int randomIndex = Random().nextInt(widget.places.length - 1);
         print(randomIndex);
-        place = widget.places[randomIndex];
+        for (var place in places) {
+          setState(() {
+            this.restaurantName = place.name;
+          });
+        }
       } catch (e) {
-        print(e);
-        place = widget.places[0];
+        print('Error set restaurant information');
       }
-      // Use the restaurant data to populate the restaurant card
-      setState(() {
-        this.restaurantName = place.name;
-      });
+
     } else {
       print('Restaurants not found');
     }
