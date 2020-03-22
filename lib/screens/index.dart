@@ -26,6 +26,7 @@ class _IndexState extends State<Index> {
   initState() {
     super.initState();
     this._locationBrain = LocationBrain();
+    getSharedRestaurants();
   }
 
   void getSharedRestaurants() async {

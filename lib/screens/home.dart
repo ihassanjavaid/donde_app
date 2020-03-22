@@ -1,6 +1,5 @@
 /// The page housing the restaurant card and associated controls
 
-import 'dart:math';
 import 'package:donde_app/screens/restaurantDescription.dart';
 import 'package:donde_app/store.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,7 +37,7 @@ class _HomeState extends State<Home> {
   // Methods
   void setRestaurantData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    PlacesSearchResult place;
+
     await _getPlaces();
     await prefs.setString('restaurant', 'Tehzeeb');
     if (places.length != 0) {
@@ -52,6 +51,7 @@ class _HomeState extends State<Home> {
           setState(() {
             this.restaurantName = place.name;
           });
+          break;
         }
       } catch (e) {
         print(e);
@@ -120,13 +120,13 @@ class _HomeState extends State<Home> {
               Flexible(
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
+                    /*Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => Center(
                             child: RestaurantDescription(place: place),
                           ),
-                        ));
+                        ));*/
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -191,7 +191,15 @@ class _HomeState extends State<Home> {
                     InkWell(
                       onTap: () {
                         if (this.restaurantName != null) {
+
                           StoreFunc.addRestaurantToPreference(this.place, 'disliked_restaurants');
+                          this.places.forEach((place){
+                            if (place.name != this.restaurantName) {
+                              this.restaurantName = place.name;
+                              this.place = place;
+                              return;
+                            }
+                          });
                         }
                         setState(() {
                           this.counter++;
@@ -207,6 +215,15 @@ class _HomeState extends State<Home> {
                     ),
                     InkWell(
                       onTap: () {
+                        if (this.restaurantName != null) {
+                          this.places.forEach((place) {
+                            if (place.name != this.restaurantName) {
+                              this.restaurantName = place.name;
+                              this.place = place;
+                              return;
+                            }
+                          });
+                        }
                         setState(() {
                           this.counter++;
                           String temp = 'Restaurant Name $counter';
@@ -221,9 +238,16 @@ class _HomeState extends State<Home> {
                     ),
                     InkWell(
                       onTap: () {
-                        //if (this.restaurantName != null) {
+                        if (this.restaurantName != null) {
                           StoreFunc.addRestaurantToPreference(this.place, 'liked_restaurants');
-                        //}
+                          this.places.forEach((place) {
+                            if (place.name != this.restaurantName) {
+                              this.restaurantName = place.name;
+                              this.place = place;
+                              return;
+                            }
+                          });
+                        }
                         setState(() {
                           this.counter++;
                           String temp = 'Restaurant Name $counter';

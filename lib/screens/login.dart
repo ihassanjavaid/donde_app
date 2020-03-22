@@ -277,7 +277,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                       SizedBox(
                         height: 30.0,
                       ),
-                      DividerWithText(
+                      /*DividerWithText(
                         text: 'Or connect with',
                       ),
                       SizedBox(
@@ -296,7 +296,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                         // TODO Add Google login
                         onTap: _handleGSignIn,
                         colour: Colors.redAccent,
-                      ),
+                      ),*/
                     ],
                   ),
                 ),

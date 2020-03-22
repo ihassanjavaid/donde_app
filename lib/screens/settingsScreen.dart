@@ -28,6 +28,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   UserData userData;
   String phoneNumber;
+  bool toggleNotification = true;
 
   _SettingsScreenState({this.phoneNumber});
 
@@ -48,122 +49,128 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 10.0),
-              child: Text(
-                'Settings',
-                style: kSettingsTextStyle,
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomPadding: true,
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(top: 10.0),
+                child: Text(
+                  'Settings',
+                  style: kSettingsTextStyle,
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 15.0),
-              width: 120.0,
-              height: 120.0,
-              /*decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(
-                      "https://i.ya-webdesign.com/images/funny-png-avatar-2.png"),
-                ),
-              ),*/
-              child: CircularProfileAvatar(
-                "",
-                backgroundColor: Colors.grey,
-                initialsText: Text(
-                  userData != null ? userData.displayName[0] : "A",
-                  style: TextStyle(
-                    fontSize: 55,
-                    color: Colors.white,
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 15.0),
+                width: 120.0,
+                height: 120.0,
+                /*decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(
+                        "https://i.ya-webdesign.com/images/funny-png-avatar-2.png"),
                   ),
-                ),
-                elevation: 8.0,
+                ),*/
+                child: CircularProfileAvatar(
+                  "",
+                  backgroundColor: Colors.grey,
+                  initialsText: Text(
+                    userData != null ? userData.displayName[0] : "A",
+                    style: TextStyle(
+                      fontSize: 55,
+                      color: Colors.white,
+                    ),
+                  ),
+                  elevation: 8.0,
 //                borderColor: Colors.redAccent,
 //                borderWidth: 3,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 5, right: 10.0, left: 10.0/*, top: 25.0*/),
-              child: AutoSizeText(
-                userData != null ? userData.displayName : 'Anonymous',
-                style: kSettingsTextStyle,
-                maxLines: 1,
-                overflow: TextOverflow.clip,
-              ),
-            ),
-            /*SettingWidget(
-              onTap: () {},
-              icon: FontAwesomeIcons.filter,
-              label: 'Filter',
-              colour: Color(kDefaultBackgroundColour),
-            ),*/
-            Container(
-              margin: EdgeInsets.only(bottom: 35.0, right: 10.0, left: 10.0/*, top: 25.0*/),
-              child: AutoSizeText(
-                userData != null ? userData.phoneNumber : '+-- -- -------',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.8,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.clip,
               ),
-            ),
-            SettingWidget(
-              onTap: () {
-                Navigator.pushNamed(context, ResetPassword.id);
-              },
-              icon: FontAwesomeIcons.lock,
-              label: 'Security',
-              colour: Color(kDefaultBackgroundColour),
-            ),
-            SettingWidget(
-              onTap: () {
-                // TODO Add notification toggle
-              },
-              icon: FontAwesomeIcons.solidBell,
-              label: 'Notification',
-              colour: Color(kDefaultBackgroundColour),
-              canToggle: true,
-              toggle: true,
-            ),
-            SettingWidget(
-              onTap: () {
-                logOutUser();
-                //Navigator.pushNamed();
-              },
-              icon: FontAwesomeIcons.doorOpen,
-              label: 'Logout',
-              colour: Color(kDefaultBackgroundColour),
-            ),
-            /*SettingWidget(
-              onTap: () {
-              },
-              icon: FontAwesomeIcons.language,
-              label: 'Language',
-              colour: Color(kDefaultBackgroundColour),
-            ),*/
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.bottomCenter,
-                  height: 120,
-                  width: double.infinity,
-                  child: Text('Made with love in Pakistan', style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                    fontSize: 14,
-                    color: Colors.grey
-                  ),
-                  ),
+              Container(
+                margin: EdgeInsets.only(bottom: 5, right: 10.0, left: 10.0/*, top: 25.0*/),
+                child: AutoSizeText(
+                  userData != null ? userData.displayName : 'Anonymous',
+                  style: kSettingsTextStyle,
+                  maxLines: 1,
+                  overflow: TextOverflow.clip,
                 ),
-              ],
-            ),
-          ],
+              ),
+              /*SettingWidget(
+                onTap: () {},
+                icon: FontAwesomeIcons.filter,
+                label: 'Filter',
+                colour: Color(kDefaultBackgroundColour),
+              ),*/
+              Container(
+                margin: EdgeInsets.only(bottom: 35.0, right: 10.0, left: 10.0/*, top: 25.0*/),
+                child: AutoSizeText(
+                  userData != null ? userData.phoneNumber : '+-- -- -------',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.8,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.clip,
+                ),
+              ),
+              SettingWidget(
+                onTap: () {
+                  Navigator.pushNamed(context, ResetPassword.id);
+                },
+                icon: FontAwesomeIcons.lock,
+                label: 'Security',
+                colour: Color(kDefaultBackgroundColour),
+              ),
+              SettingWidget(
+                onTap: () {
+                  setState(() {
+                    this.toggleNotification = !this.toggleNotification;
+                  });
+                },
+                icon: FontAwesomeIcons.solidBell,
+                label: 'Notification',
+                colour: Color(kDefaultBackgroundColour),
+                canToggle: true,
+                toggle: this.toggleNotification,
+              ),
+              SettingWidget(
+                onTap: () {
+                  logOutUser();
+                  //Navigator.pushNamed();
+                },
+                icon: FontAwesomeIcons.doorOpen,
+                label: 'Logout',
+                colour: Color(kDefaultBackgroundColour),
+              ),
+              /*SettingWidget(
+                onTap: () {
+                },
+                icon: FontAwesomeIcons.language,
+                label: 'Language',
+                colour: Color(kDefaultBackgroundColour),
+              ),*/
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.bottomCenter,
+                    height: 80,
+                    width: double.infinity,
+                    child: Text('Made with love in Pakistan', style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: 14,
+                      color: Colors.grey
+                    ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

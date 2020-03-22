@@ -71,6 +71,8 @@ class StoreFunc {
         .where('phoneNo', isEqualTo: phoneNo)
         .getDocuments();
 
+
+
     for (var document in documents.documents) {
       print(document.data);
       CollectionReference restaurants = fireStore

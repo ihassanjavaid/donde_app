@@ -12,21 +12,23 @@ class RestaurantDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String photoRef = place.photos[0].photoReference;
-    print(place.photos[0].photoReference);
-    String photoAddress =
-        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=960&photoreference=$photoRef&key=AIzaSyA-aRQiJZfCzNgsyHfoUYNE8rwBLcu7fio";
-    print(photoAddress);
-
+    if (place != null) {
+      String photoRef = place.photos[0].photoReference;
+      print(place.photos[0].photoReference);
+      String photoAddress =
+          "https://maps.googleapis.com/maps/api/place/photo?maxwidth=960&photoreference=$photoRef&key=AIzaSyA-aRQiJZfCzNgsyHfoUYNE8rwBLcu7fio";
+      print(photoAddress);
+    }
     return Scaffold(
       appBar: AppBar(
         title: AutoSizeText(
-          this.place.name,
+          'Donde',
           overflow: TextOverflow.clip,
           maxLines: 1,
-          style: kTitleTextStyle,
+          style: kTitleTextStyle.copyWith(color: Colors.white),
         ),
         centerTitle: true,
+        backgroundColor: Colors.redAccent,
       ),
       body: SafeArea(
         child: Column(
@@ -56,7 +58,7 @@ class RestaurantDescription extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    place.name,
+                    place != null ?this.place.name: "Restaurant Name",
                     style: kTitleTextStyle,
                   ),
                 ],
@@ -75,46 +77,46 @@ class RestaurantDescription extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Expanded(
-                        flex: 1,
+                        flex: 3,
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
                               fit: BoxFit.fill,
-                              image: NetworkImage(photoAddress),/*NetworkImage(
-                                  'https://wpcdn.us-east-1.vip.tn-clou`d.net/www.abc6.com/content/uploads/2020/03/restaurants.jpg'),*/
+                              image: NetworkImage(
+                                  'https://wpcdn.us-east-1.vip.tn-cloud.net/www.abc6.com/content/uploads/2020/03/restaurants.jpg'),
                             ),
                           ),
                         ),
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Expanded(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: AutoSizeText(
-                                  place != null ? place.name : null,
-                                  style: kCardTitleTextStyle,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.clip,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Text(
-                                '0.0 KMs',
-                                style: kNormalTextStyle,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+//                      Expanded(
+//                        flex: 1,
+//                        child: Row(
+//                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                          children: <Widget>[
+//                            Expanded(
+//                              flex: 3,
+//                              child: Padding(
+//                                padding: const EdgeInsets.only(left: 8.0),
+//                                child: AutoSizeText(
+//                                  place != null ? place.name : 'Restaurant Name',
+//                                  style: kCardTitleTextStyle,
+//                                  maxLines: 2,
+//                                  overflow: TextOverflow.clip,
+//                                ),
+//                              ),
+//                            ),
+//                            Expanded(
+//                              flex: 1,
+//                              child: Text(
+//                                '0.0 KMs',
+//                                style: kNormalTextStyle,
+//                              ),
+//                            ),
+//                          ],
+//                        ),
+//                      ),
                     ],
                   ),
                 ),
@@ -131,14 +133,6 @@ class RestaurantDescription extends StatelessWidget {
                       image: AssetImage('images/crossicon.png'),
                       height: 36,
                       width: 36,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {}, // Dislike
-                    child: Image(
-                      image: AssetImage('images/refreshicon.png'),
-                      height: 30,
-                      width: 30,
                     ),
                   ),
                   InkWell(

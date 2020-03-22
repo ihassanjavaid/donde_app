@@ -100,6 +100,7 @@ class _PasswordState extends State<Password> {
       child: ModalProgressHUD(
         inAsyncCall: this.showSpinner,
         child: Scaffold(
+          resizeToAvoidBottomPadding: false,
           body: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(

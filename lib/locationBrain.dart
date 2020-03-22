@@ -12,7 +12,7 @@ class LocationBrain {
   double searchRadius;
   Position position;
 
-  LocationBrain({this.searchRadius = 2500});
+  LocationBrain({this.searchRadius = 5000});
 
   void setSearchRadius(double radius) {
     this.searchRadius = radius;
