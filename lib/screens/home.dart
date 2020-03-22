@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -36,8 +37,10 @@ class _HomeState extends State<Home> {
 
   // Methods
   void setRestaurantData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     PlacesSearchResult place;
     await _getPlaces();
+    await prefs.setString('restaurant', 'Tehzeeb');
     if (places.length != 0) {
       print('Found Restaurants');
       // Get one of the indexes
@@ -45,6 +48,7 @@ class _HomeState extends State<Home> {
         /*final int randomIndex = Random().nextInt(widget.places.length - 1);
         print(randomIndex);*/
         for (var place in places) {
+          await prefs.setString('restaurant', place.name);
           setState(() {
             this.restaurantName = place.name;
           });
@@ -186,9 +190,8 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        // TODO Add the current restaurant in the disliked list
                         if (this.restaurantName != null) {
-                          StoreFunc.addRestaurantToLike(place);
+                          StoreFunc.addRestaurantToPreference(this.place, 'disliked_restaurants');
                         }
                         setState(() {
                           this.counter++;
@@ -218,7 +221,9 @@ class _HomeState extends State<Home> {
                     ),
                     InkWell(
                       onTap: () {
-                        // TODO Add the current restaurant in the liked list
+                        //if (this.restaurantName != null) {
+                          StoreFunc.addRestaurantToPreference(this.place, 'liked_restaurants');
+                        //}
                         setState(() {
                           this.counter++;
                           String temp = 'Restaurant Name $counter';
