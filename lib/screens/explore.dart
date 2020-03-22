@@ -7,6 +7,10 @@ import 'package:google_maps_webservice/places.dart';
 
 class Explore extends StatefulWidget {
   static const String id = 'explore_screen';
+  final List<PlacesSearchResult> places;
+
+  Explore({this.places});
+
   @override
   _ExploreState createState() => _ExploreState();
 }
@@ -42,15 +46,13 @@ class _ExploreState extends State<Explore> {
 
     controller.animateCamera(CameraUpdate.newCameraPosition(currentPosition));
 
-//    _setMarkers();
+    _setMarkers();
   }
 
   void _setMarkers() async {
     List markers = [];
-    // Set restaurant markers around current locations
-    List<PlacesSearchResult> places = await locationBrain.getNearbyPlaces();
 
-    for (PlacesSearchResult place in places) {
+    for (PlacesSearchResult place in widget.places) {
       markers.add(
         Marker(
           markerId: MarkerId(place.id),
@@ -77,25 +79,18 @@ class _ExploreState extends State<Explore> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: GoogleMap(
-          mapType: MapType.normal,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-            /*PageStorage.of(context).writeState(context, this,
+    return SafeArea(
+      child: GoogleMap(
+        mapType: MapType.normal,
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+          /*PageStorage.of(context).writeState(context, this,
                 identifier: ValueKey(this.widget.key));*/
-          },
-          initialCameraPosition: _kGooglePlex,
-          myLocationEnabled: true,
-          markers: Set.from(placeMarkers),
-        ),
+        },
+        initialCameraPosition: _kGooglePlex,
+        myLocationEnabled: true,
+        markers: Set.from(placeMarkers),
       ),
-      /*floatingActionButton: FloatingActionButton.extended(
-        onPressed: _setupMap,
-        label: Text('Center to my location'),
-        icon: Icon(Icons.my_location),
-      ),*/
     );
   }
 }

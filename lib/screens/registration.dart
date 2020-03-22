@@ -2,13 +2,12 @@ import 'package:donde_app/store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'index.dart';
-
 import 'package:flutter/material.dart';
-
 import 'login.dart';
 import '../components/customTextField.dart';
-import 'package:donde_app/store.dart';
+
 
 // ignore: must_be_immutable
 class Registration extends StatelessWidget {
@@ -152,7 +151,11 @@ class Registration extends StatelessWidget {
                             email: this.email,
                             phoneNo: this.phoneNo,
                             password: this.password
-                          );                        
+                          );
+
+                          await SharedPreferences.getInstance().then((prefs) async {
+                            await prefs.setString('phoneNumber', this.phoneNo);
+                          },);
 
                           Alert(
                             context: context,
