@@ -32,7 +32,7 @@ class _PasswordState extends State<Password> {
     setState(() {
       this.showSpinner = true;
     });
-    QuerySnapshot docs = await StoreRetrieve()
+    QuerySnapshot docs = await StoreFunc()
         .authenticatePhoneWithPassword(phoneNumber, password);
     setState(() {
       this.showSpinner = false;

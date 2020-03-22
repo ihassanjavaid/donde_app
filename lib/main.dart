@@ -3,7 +3,7 @@ import 'package:donde_app/screens/home.dart';
 import 'package:donde_app/screens/index.dart';
 import 'package:donde_app/screens/registration.dart';
 import 'package:donde_app/screens/resetPassword.dart';
-import 'package:donde_app/screens/settings_screen.dart';
+import 'package:donde_app/screens/settingsScreen.dart';
 import 'screens/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

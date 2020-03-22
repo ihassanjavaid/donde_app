@@ -1,4 +1,4 @@
-import 'package:donde_app/screens/settings_screen.dart';
+import 'package:donde_app/screens/settingsScreen.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'explore.dart';

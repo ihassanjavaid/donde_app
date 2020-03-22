@@ -15,27 +15,27 @@ class SettingsScreen extends StatefulWidget {
 
   SettingsScreen({this.phoneNumber});
 
-  
-
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
+  _SettingsScreenState createState() => _SettingsScreenState(phoneNumber: this.phoneNumber);
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
   UserData userData;
   String phoneNumber;
 
-  
+  _SettingsScreenState({this.phoneNumber});
 
   Future<void> _acquireUserData() async {
     print('Entering Test area');
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final phoneNo = prefs.getString('phoneNumber');  
-    final data = await StoreRetrieve.getCurrentUserData(widget.phoneNumber);
+    /*SharedPreferences prefs = await SharedPreferences.getInstance();
+    final phoneNo = prefs.getString('phoneNumber'); */
+    final data = await StoreFunc.getCurrentUserData(this.phoneNumber);
+
     setState(() {
       userData = data;
     });
-    print(phoneNo);
+
+    print(phoneNumber);
     print(userData);
   }
 

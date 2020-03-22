@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donde_app/services/userData.dart';
 
-class StoreRetrieve {
+class StoreFunc {
 
   getUserPhoneNo(String phoneNo) {
     return Firestore.instance

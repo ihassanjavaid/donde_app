@@ -147,7 +147,7 @@ class Registration extends StatelessWidget {
 
                           print('pressed register button');
 
-                          StoreRetrieve().registerNewUser(
+                          StoreFunc().registerNewUser(
                             name: this.name,
                             email: this.email,
                             phoneNo: this.phoneNo,
