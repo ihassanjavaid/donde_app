@@ -122,6 +122,36 @@ class _State extends State<ResetPassword> {
       if (docs.documents.isNotEmpty) {
         // firebase query to change password
 
+        QuerySnapshot query = await Firestore.instance.collection('users').where('phoneNo', isEqualTo: phoneNumber).getDocuments();
+        DocumentReference ref;
+
+        for ( var document in query.documents) {
+          ref = Firestore.instance.collection('users')
+              .document(document.data['uid']);
+        }
+
+        ref.setData({
+          'password': newPassword1,
+        }, merge: true);
+
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Success!",
+          desc: "Your password has been changed successfully.",
+          buttons: [
+            DialogButton(
+              color: Colors.redAccent,
+              child: Text(
+                "Retry",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+
       } else {
       Alert(
         context: context,
