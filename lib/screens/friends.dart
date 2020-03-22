@@ -98,17 +98,22 @@ class ListItemWidget extends State<SwipeList> {
                                 child: Container(
                                   width: 50,
                                   decoration: BoxDecoration(
+                                    color: Colors.green,
                                       border: Border.all(color: Colors.green),
                                       borderRadius: BorderRadius.all(Radius.circular(10))
                                   ),
-                                  child: Text("Online",textAlign: TextAlign.center,),
+                                  child: Text("Online",textAlign: TextAlign.center, style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14
+                                  ),
+                                  ),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 5, 0, 2),
                                 child: Container(
                                   width: 260,
-                                  child: Text("Is is the awesome",style: TextStyle(
+                                  child: Text("It is the tasty",style: TextStyle(
                                       fontSize: 19,
                                       fontStyle: FontStyle.italic,
                                       //color: Colors.redAccent,
