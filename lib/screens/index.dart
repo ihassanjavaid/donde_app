@@ -24,7 +24,7 @@ class _IndexState extends State<Index> {
   initState() {
     super.initState();
     this._locationBrain = LocationBrain();
-    _getPlaces();
+    // _getPlaces();
   }
 
   void _getPlaces() async {

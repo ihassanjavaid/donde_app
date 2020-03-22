@@ -51,8 +51,9 @@ class _ExploreState extends State<Explore> {
 
   void _setMarkers() async {
     List markers = [];
+    //final places = await this.locationBrain.getNearbyPlaces();
 
-    for (PlacesSearchResult place in widget.places) {
+    for (PlacesSearchResult place in widget.places.length > 0 ? widget.places : await this.locationBrain.getNearbyPlaces()) {
       markers.add(
         Marker(
           markerId: MarkerId(place.id),
