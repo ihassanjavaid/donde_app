@@ -28,31 +28,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   _SettingsScreenState({this.phoneNumber});
 
-  Future<void> _acquireUserData() async {
-    print('Entering Test area');
-    /*SharedPreferences prefs = await SharedPreferences.getInstance();
-    final phoneNo = prefs.getString('phoneNumber'); */
-    final data = await StoreFunc.getCurrentUserData(this.phoneNumber);
-
+  void _acquireUserData() async {
+    final data = await StoreFunc.getCurrentUserData();
     setState(() {
       userData = data;
     });
-
-    print("Phonephonephone ");
-    print("Phonephonephone ");
-    print("Phonephonephone ");
-    print(this.phoneNumber);
-    print(userData);
   }
 
-  void acquireUserData() {
-    _acquireUserData();
-  }
 
   @override
   void initState() {
     super.initState();
-    acquireUserData();
+    _acquireUserData();
   }
 
   @override

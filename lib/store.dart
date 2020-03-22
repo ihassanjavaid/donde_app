@@ -30,14 +30,15 @@ class StoreFunc {
     }, merge: true);
   }
 
-  static Future<UserData> getCurrentUserData(String phoneNo) async {
+  static Future<UserData> getCurrentUserData() async {
     String phoneNumber;
     String displayName;
     String email;
     UserData userData;
 
+
     SharedPreferences pref = await SharedPreferences.getInstance();
-    phoneNo = pref.getString('phoneNumber');
+    final String phoneNo = pref.getString('phoneNumber');
   
     // final documents = store.getUserData(phoneNumber);
     final documents = await Firestore()
