@@ -9,12 +9,15 @@ class RestaurantDescription extends StatelessWidget {
 
   RestaurantDescription({@required this.place});
 
+
   @override
   Widget build(BuildContext context) {
     String photoRef = place.photos[0].photoReference;
+    print(place.photos[0].photoReference);
     String photoAddress =
         "https://maps.googleapis.com/maps/api/place/photo?maxwidth=960&photoreference=$photoRef&key=AIzaSyA-aRQiJZfCzNgsyHfoUYNE8rwBLcu7fio";
     print(photoAddress);
+
     return Scaffold(
       appBar: AppBar(
         title: AutoSizeText(
@@ -79,7 +82,8 @@ class RestaurantDescription extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
                               fit: BoxFit.fill,
-                              image: NetworkImage(photoAddress),
+                              image: NetworkImage(photoAddress),/*NetworkImage(
+                                  'https://wpcdn.us-east-1.vip.tn-clou`d.net/www.abc6.com/content/uploads/2020/03/restaurants.jpg'),*/
                             ),
                           ),
                         ),

@@ -35,13 +35,19 @@ class _HomeState extends State<Home> {
 
   // Methods
   void setRestaurantData() async {
+    PlacesSearchResult place;
     await _getPlaces();
     if (places.length != 0) {
       print('Found Restaurants');
       // Get one of the indexes
-      final int randomIndex = Random().nextInt(widget.places.length);
-      final place = widget.places[randomIndex];
-
+      try {
+        final int randomIndex = Random().nextInt(widget.places.length - 1);
+        print(randomIndex);
+        place = widget.places[randomIndex];
+      } catch (e) {
+        print(e);
+        place = widget.places[0];
+      }
       // Use the restaurant data to populate the restaurant card
       setState(() {
         this.restaurantName = place.name;

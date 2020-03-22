@@ -18,7 +18,6 @@ class _State extends State<ResetPassword> {
   TextEditingController passwordController = TextEditingController();
   bool showSpinner = false;
   UserData userData;
-  String phoneNumber;
   String oldPassword;
   String newPassword1;
   String newPassword2;
@@ -102,7 +101,7 @@ class _State extends State<ResetPassword> {
 
   Future<void> _authenticatePassword() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    phoneNumber = prefs.getString('phoneNmber');
+    final String phoneNumber = prefs.getString('phoneNumber');
 
     setState(() {
       this.showSpinner = true;
@@ -121,18 +120,17 @@ class _State extends State<ResetPassword> {
 
       if (docs.documents.isNotEmpty) {
         // firebase query to change password
-
+        print(phoneNumber);
         QuerySnapshot query = await Firestore.instance.collection('users').where('phoneNo', isEqualTo: phoneNumber).getDocuments();
-        DocumentReference ref;
+        CollectionReference ref = Firestore.instance.collection('users');
 
         for ( var document in query.documents) {
-          ref = Firestore.instance.collection('users')
-              .document(document.data['uid']);
+          print(document.documentID);
+          print(document.data);
+          ref.document(document.documentID).updateData({'password' : newPassword1});
         }
 
-        ref.setData({
-          'password': newPassword1,
-        }, merge: true);
+
 
         Alert(
           context: context,
