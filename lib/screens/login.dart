@@ -6,13 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../authService.dart';
 import '../constants.dart';
 import '../components/customButton.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import '../components/dividerWithText.dart';
 import 'index.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:donde_app/store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -308,7 +306,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     );
   }
 
-  Future<void> _handleGSignIn() async {
+  /*Future<void> _handleGSignIn() async {
     try {
 //      await _googleSignIn.signIn();
       await AuthService().googleSignIn();
@@ -317,9 +315,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     } catch (error) {
       print(error);
     }
-  }
+  }*/
 
-  Future<void> _handleFbSignIn() async {
+  /*Future<void> _handleFbSignIn() async {
     final facebookLogin = FacebookLogin();
     final result = await facebookLogin.logIn(['email']);
 
@@ -335,7 +333,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
         //_showErrorOnUI(result.errorMessage);
         break;
     }
-  }
+  }*/
 }
 
 /*
