@@ -3,11 +3,12 @@ import 'package:donde_app/screens/home.dart';
 import 'package:donde_app/screens/index.dart';
 import 'package:donde_app/screens/registration.dart';
 import 'package:donde_app/screens/resetPassword.dart';
-import 'package:donde_app/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/settingsScreen.dart';
 
 void main() => runApp(Donde());
 
@@ -30,7 +31,7 @@ class Donde extends StatelessWidget {
         SettingsScreen.id: (context) => SettingsScreen(),
         ResetPassword.id:(context)=> ResetPassword(),
       },
-    );;
+    );
   }
 }
 
