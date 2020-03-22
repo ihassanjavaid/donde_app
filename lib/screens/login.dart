@@ -9,7 +9,6 @@ import '../authService.dart';
 import '../constants.dart';
 import '../components/customButton.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import '../components/dividerWithText.dart';
 import 'index.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -139,8 +138,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       FirebaseAuth _auth = FirebaseAuth.instance;
 
       final AuthResult user = await _auth.signInWithCredential(credential);
-      print(user.user.hashCode);
-      print(user);
+
       if (user != null && user.user.email != null) {
         //Navigator.pushReplacementNamed(context, Password.id);
       } else {
