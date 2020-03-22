@@ -11,6 +11,7 @@ import '../constants.dart';
 import '../store.dart';
 
 class Friends extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,15 +172,15 @@ class ListItemWidget extends State<SwipeList> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(0, 5, 0, 2),
+                            padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
                             child: Container(
                               width: 260,
                               child: Text(
-                                "It is the tasty",
+                                "Swipe to delete ←",
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 15,
                                   fontStyle: FontStyle.italic,
-                                  //color: Colors.redAccent,
+                                  color: Colors.grey,
                                 ),
                               ),
                             ),

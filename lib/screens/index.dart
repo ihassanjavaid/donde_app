@@ -4,6 +4,7 @@ import 'package:donde_app/screens/settingsScreen.dart';
 import 'package:donde_app/store.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import '../constants.dart';
 import 'explore.dart';
 import 'home.dart';
@@ -44,6 +45,23 @@ class _IndexState extends State<Index> {
                 final sharedFriend = await firestore.collection('users').document(friend).get();
                 var sharedFriendName = sharedFriend['displayName'];
                 print('$sharedFriendName + just liked a restaurant on your like list\n $like');
+                Alert(
+                  context: context,
+                  type: AlertType.success,
+                  title: "It's a Match! ♥",
+                  desc: "$sharedFriendName just liked a restaurant on your like list\n $like",
+                  buttons: [
+                    DialogButton(
+                      color: Colors.redAccent,
+                      child: Text(
+                        "Yayy!",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                      width: 120,
+                    )
+                  ],
+                ).show();
               }
             }
           }
