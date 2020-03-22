@@ -1,16 +1,23 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:donde_app/contactsClass.dart';
+import 'package:donde_app/services/userData.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:donde_app/contactsClass.dart';
 import '../constants.dart';
+import '../store.dart';
 
 class Friends extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.redAccent,
+          ),
           backgroundColor: Colors.white,
           title: AutoSizeText(
             'Friends',
@@ -37,6 +44,7 @@ class SwipeList extends StatefulWidget {
 
 class ListItemWidget extends State<SwipeList> {
   List items = [];
+  UserData userData;
 
   @override
   void initState() {
@@ -70,6 +78,7 @@ class ListItemWidget extends State<SwipeList> {
 
   @override
   Widget build(BuildContext context) {
+    _acquireUserData();
     return Container(
         child: ListView.builder(
       itemCount: items.length,
@@ -78,7 +87,8 @@ class ListItemWidget extends State<SwipeList> {
           key: Key(items[index]),
           background: Container(
             alignment: AlignmentDirectional.centerEnd,
-            color: Colors.red,
+            color: Colors.redAccent,
+            padding: EdgeInsets.all(10),
             child: Icon(
               Icons.delete,
               color: Colors.white,
@@ -99,26 +109,46 @@ class ListItemWidget extends State<SwipeList> {
                   Container(
                     height: 70.0,
                     width: 70.0,
-                    decoration: BoxDecoration(
+                    child: CircularProfileAvatar(
+                      "",
+                      backgroundColor: Colors.grey,
+                      initialsText: Text(
+                        items[index] != null ? items[index][0] : "",
+                        style: TextStyle(
+                          fontSize: 42,
+                          color: Colors.white,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      elevation: 10.0,
+//                borderColor: Colors.redAccent,
+//                borderWidth: 3,
+                    ),
+                    /*decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(20),
                             topLeft: Radius.circular(20)),
                         image: DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                                "https://i.ya-webdesign.com/images/funny-png-avatar-2.png"))),
+                                "https://i.ya-webdesign.com/images/funny-png-avatar-2.png")
+                        ),
+                    ),*/
                   ),
                   Container(
+                    //width: double.infinity,
                     height: 100,
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
+                          AutoSizeText(
                             items[index],
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
                             style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 22,
                               fontStyle: FontStyle.italic,
                               color: Colors.redAccent,
                             ),
@@ -145,7 +175,7 @@ class ListItemWidget extends State<SwipeList> {
                             child: Container(
                               width: 260,
                               child: Text(
-                                "It is tasty",
+                                "It is the tasty",
                                 style: TextStyle(
                                   fontSize: 19,
                                   fontStyle: FontStyle.italic,
@@ -165,5 +195,12 @@ class ListItemWidget extends State<SwipeList> {
         );
       },
     ));
+  }
+
+  void _acquireUserData() async {
+    final data = await StoreFunc.getCurrentUserData();
+    setState(() {
+      userData = data;
+    });
   }
 }

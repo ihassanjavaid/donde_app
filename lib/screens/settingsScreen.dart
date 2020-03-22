@@ -86,7 +86,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 35.0, right: 10.0, left: 10.0/*, top: 25.0*/),
+              margin: EdgeInsets.only(bottom: 5, right: 10.0, left: 10.0/*, top: 25.0*/),
               child: AutoSizeText(
                 userData != null ? userData.displayName : 'Anonymous',
                 style: kSettingsTextStyle,
@@ -100,6 +100,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
               label: 'Filter',
               colour: Color(kDefaultBackgroundColour),
             ),*/
+            Container(
+              margin: EdgeInsets.only(bottom: 35.0, right: 10.0, left: 10.0/*, top: 25.0*/),
+              child: AutoSizeText(
+                userData != null ? userData.phoneNumber : '+-- -- -------',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.8,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.clip,
+              ),
+            ),
             SettingWidget(
               onTap: () {
                 Navigator.pushNamed(context, ResetPassword.id);
