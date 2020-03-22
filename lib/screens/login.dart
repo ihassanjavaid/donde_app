@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../authService.dart';
 import '../constants.dart';
 import '../components/customButton.dart';
@@ -32,7 +33,10 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   bool phoneFlag = false;
   bool showSpinner = false;
 
+
   var phoneNums;
+
+
 
   Future<void> verifyPhoneFromFirestore() async {
     setState(() {

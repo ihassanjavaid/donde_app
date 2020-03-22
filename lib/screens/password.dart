@@ -24,8 +24,6 @@ class _PasswordState extends State<Password> {
   String email;
   String password;
 
-  final phoneNumber;
-  _PasswordState({this.phoneNumber});
 
   Future<void> authenticatePassword() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -33,12 +31,12 @@ class _PasswordState extends State<Password> {
       this.showSpinner = true;
     });
     QuerySnapshot docs = await StoreRetrieve()
-        .authenticatePhoneWithPassword(phoneNumber, password);
+        .authenticatePhoneWithPassword(widget.phoneNumber, password);
     setState(() {
       this.showSpinner = false;
     });
     if (docs.documents.isNotEmpty) {
-      await prefs.setString('phoneNumber', this.phoneNumber);
+      await prefs.setString('phoneNumber', widget.phoneNumber);
       print('authenticated from firestore');
 
       Navigator.popAndPushNamed(context, Index.id);
