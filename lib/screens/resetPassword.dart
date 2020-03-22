@@ -20,7 +20,6 @@ class _State extends State<ResetPassword> {
   UserData userData;
   String phoneNumber;
   String oldPassword;
-
   String newPassword1;
   String newPassword2;
 
@@ -49,24 +48,27 @@ class _State extends State<ResetPassword> {
                   height: 30,
                 ),
                 CustomTextField(placeholder: 'Old password',
+                    isPassword: true,
                     onChanged: (value) {
-                      this.oldPassword;
+                      this.oldPassword = value;
                     }
                     ),
                 SizedBox(
                   height: 25,
                 ),
                 CustomTextField(placeholder: 'New password',
+                    isPassword: true,
                     onChanged: (value) {
-                      this.newPassword1;
+                      this.newPassword1 = value;
                     }
                     ),
                 SizedBox(
                   height: 25,
                 ),
                 CustomTextField(placeholder: 'Confirm new password',
+                    isPassword: true,
                     onChanged: (value) {
-                      this.newPassword2;
+                      this.newPassword2 = value;
                     }
                     ),
                 SizedBox(
@@ -91,12 +93,12 @@ class _State extends State<ResetPassword> {
     return this.newPassword1 == this.newPassword2;
   }
 
-  void _acquireUserData() async {
+  /*void _acquireUserData() async {
     final data = await StoreFunc.getCurrentUserData();
     setState(() {
       userData = data;
     });
-  }
+  }*/
 
   Future<void> _authenticatePassword() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -107,11 +109,16 @@ class _State extends State<ResetPassword> {
     });
 
     if (_ifPasswordsMatch()) {
+
+      print("passwords match yay!");
+      print(this.newPassword2);
+
       QuerySnapshot docs = await StoreFunc()
-          .authenticatePhoneWithPassword(phoneNumber, this.newPassword1);
+          .authenticatePhoneWithPassword(phoneNumber, this.oldPassword);
       setState(() {
         this.showSpinner = false;
       });
+
       if (docs.documents.isNotEmpty) {
         // firebase query to change password
 
