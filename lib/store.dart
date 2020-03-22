@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donde_app/services/userData.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StoreFunc {
 
@@ -34,6 +35,9 @@ class StoreFunc {
     String displayName;
     String email;
     UserData userData;
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    phoneNo = pref.getString('phoneNumber');
   
     // final documents = store.getUserData(phoneNumber);
     final documents = await Firestore()
