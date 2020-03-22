@@ -59,7 +59,7 @@ class _ExploreState extends State<Explore> {
           markerId: MarkerId(place.id),
           position:
               LatLng(place.geometry.location.lat, place.geometry.location.lng),
-          onTap: () async {
+          onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
