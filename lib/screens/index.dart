@@ -7,13 +7,8 @@ import 'explore.dart';
 import 'home.dart';
 import 'friends.dart';
 
-
-
 class Index extends StatefulWidget {
   static const String id = 'index_screen';
-  static const Tag = "Tabbar";
-
-
 
   @override
   _IndexState createState() => _IndexState();
@@ -24,29 +19,30 @@ class _IndexState extends State<Index> {
   static Explore _explore;
   static String phoneNo;
   LocationBrain _locationBrain;
-  List<PlacesSearchResult> places;
+  static List<PlacesSearchResult> places = [];
 
-  initState(){
+  initState() {
     super.initState();
     this._locationBrain = LocationBrain();
     _getPlaces();
   }
 
   void _getPlaces() async {
-    this.places = await this._locationBrain.getNearbyPlaces();
+    places = await this._locationBrain.getNearbyPlaces();
   }
-
 
   static Widget acquireExploreWidget() {
     if (_explore == null) {
-      _explore = Explore();
+      _explore = Explore(places: places);
     }
     return _explore;
   }
 
   final List<Widget> _widgetOptions = <Widget>[
     SafeArea(
-      child: Home(),
+      child: Home(
+        places: places,
+      ),
     ),
     SafeArea(
       child: acquireExploreWidget(),

@@ -1,8 +1,7 @@
-/*
-* Dart file housing the landing page of the app
-* */
 
-import 'package:donde_app/locationBrain.dart';
+/// The page housing the restaurant card and associated controls
+
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -14,6 +13,9 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 // ignore: must_be_immutable
 class Home extends StatefulWidget {
   static const String id = 'home_screen';
+  final List<PlacesSearchResult> places;
+
+  Home({this.places});
 
   @override
   _HomeState createState() => _HomeState();
@@ -23,23 +25,31 @@ class _HomeState extends State<Home> {
   // Attributes
   bool showSpinner = false;
   PlacesSearchResult place;
-  LocationBrain _locationBrain;
   List<PlacesSearchResult> places;
+  String restaurantName;
 
   // Methods
-  // TODO Acquire restaurants and show one of them in the card
+  void setRestaurantData() {
+    if (widget.places.length != 0) {
+      print('Found Restaurants');
+      // Get one of the indexes
+      final int randomIndex = Random().nextInt(widget.places.length);
+      final place = widget.places[randomIndex];
+
+      // Use the restaurant data to populate the restaurant card
+      setState(() {
+        this.restaurantName = place.name;
+      });
+    } else {
+      print('Restaurants not found');
+    }
+  }
+
 
   @override
   initState() {
     super.initState();
-    this.showSpinner = true;
-    this._locationBrain = LocationBrain();
-    // _getPlaces();
-    this.showSpinner = false;
-  }
-
-  void _getPlaces() async {
-    this.places = await this._locationBrain.getNearbyPlaces();
+//    setRestaurantData();
   }
 
   @override
@@ -119,9 +129,7 @@ class _HomeState extends State<Home> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: AutoSizeText(
-                                    place != null
-                                        ? place.name
-                                        : 'Restaurant Name',
+                                    this.restaurantName != null ? this.restaurantName : 'Restaurant Name',
                                     style: kCardTitleTextStyle,
                                     maxLines: 2,
                                     overflow: TextOverflow.clip,
