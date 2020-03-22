@@ -71,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 35.0, right: 10.0, left: 10.0, top: 25.0),
+              margin: EdgeInsets.only(bottom: 35.0, right: 10.0, left: 10.0/*, top: 25.0*/),
               child: AutoSizeText(
                 userData != null ? userData.displayName : 'Anonymous',
                 style: kSettingsTextStyle,
