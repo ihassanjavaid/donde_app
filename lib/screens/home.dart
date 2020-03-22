@@ -1,3 +1,5 @@
+import 'dart:math';
+
 /// The page housing the restaurant card and associated controls
 
 import 'package:donde_app/screens/restaurantDescription.dart';
@@ -33,6 +35,31 @@ class _HomeState extends State<Home> {
   LocationBrain _locationBrain;
   int counter = 1;
   String genericRestaurantName = 'Restaurant Name';
+
+  // for pictures
+  static final img1 = AssetImage('images/resImages/01.jpg');
+  static final img2 = AssetImage('images/resImages/02.jpg');
+  static final img3 = AssetImage('images/resImages/03.jpg');
+  static final img4 = AssetImage('images/resImages/04.jpg');
+  static final img5 = AssetImage('images/resImages/05.jpg');
+
+  static final img6 = AssetImage('images/resImages/06.jpg');
+  static final img7 = AssetImage('images/resImages/07.jpg');
+  static final img8 = AssetImage('images/resImages/08.jpg');
+  static final img9 = AssetImage('images/resImages/09.jpg');
+  static final img10 = AssetImage('images/resImages/10.jpg');
+
+  static final img11 = AssetImage('images/resImages/11.jpg');
+  static final img12 = AssetImage('images/resImages/12.jpg');
+  static final img13 = AssetImage('images/resImages/13.jpg');
+  static final img14 = AssetImage('images/resImages/14.jpg');
+  static final img15 = AssetImage('images/resImages/15.jpg');
+
+
+  final List<AssetImage> resImages = [
+    img1, img2, img3, img4, img5,
+    img6, img7, img8, img9, img10,
+    img11, img12, img13, img14, img15];
 
   // Methods
   void setRestaurantData() async {
@@ -143,8 +170,7 @@ class _HomeState extends State<Home> {
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 fit: BoxFit.fill,
-                                image: NetworkImage(
-                                    'https://wpcdn.us-east-1.vip.tn-cloud.net/www.abc6.com/content/uploads/2020/03/restaurants.jpg'),
+                                image: resImages[Random().nextInt(14)],
                               ),
                             ),
                           ),
