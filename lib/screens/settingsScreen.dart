@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:donde_app/components/settingsWidget.dart';
+import 'package:donde_app/screens/login.dart';
 import 'package:donde_app/screens/resetPassword.dart';
 import 'package:donde_app/services/userData.dart';
 import 'package:donde_app/store.dart';
@@ -10,6 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 // setting file
 class SettingsScreen extends StatefulWidget {
@@ -69,10 +71,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 25.0),
-              child: Text(
+              margin: EdgeInsets.only(bottom: 35.0, right: 10.0, left: 10.0, top: 25.0),
+              child: AutoSizeText(
                 userData != null ? userData.displayName : 'Anonymous',
                 style: kSettingsTextStyle,
+                maxLines: 1,
+                overflow: TextOverflow.clip,
               ),
             ),
             /*SettingWidget(
@@ -134,11 +138,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
             "Logout",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          onPressed: () => exit(0),
+          onPressed : () {
+            _logOutAndRemoveUser();
+          },
           width: 120,
         )
       ],
     ).show();
+  }
+
+  void _logOutAndRemoveUser() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.remove('phoneNumber');
+    Navigator.pop(context);
+    Navigator.popAndPushNamed(context, Login.id);
   }
 
 }
