@@ -1,5 +1,7 @@
+import 'package:donde_app/locationBrain.dart';
 import 'package:donde_app/screens/settingsScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_webservice/places.dart';
 import '../constants.dart';
 import 'explore.dart';
 import 'home.dart';
@@ -10,29 +12,30 @@ import 'friends.dart';
 class Index extends StatefulWidget {
   static const String id = 'index_screen';
   static const Tag = "Tabbar";
-  final String phoneNumber;
 
-  Index({this.phoneNumber});
+
 
   @override
-  _IndexState createState() => _IndexState(phoneNumber: this.phoneNumber);
+  _IndexState createState() => _IndexState();
 }
 
 class _IndexState extends State<Index> {
   int _selectedIndex = 0;
   static Explore _explore;
-  final String phoneNumber;
   static String phoneNo;
+  LocationBrain _locationBrain;
+  List<PlacesSearchResult> places;
 
-  /*_IndexState({this.phoneNumber}) {
-    phoneNo = this.phoneNumber;
-  }*/
-
-  _IndexState({this.phoneNumber}) {
-    phoneNo = this.phoneNumber;
-    print(phoneNo);
-    print(phoneNo);
+  initState(){
+    super.initState();
+    this._locationBrain = LocationBrain();
+    _getPlaces();
   }
+
+  void _getPlaces() async {
+    this.places = await this._locationBrain.getNearbyPlaces();
+  }
+
 
   static Widget acquireExploreWidget() {
     if (_explore == null) {
@@ -67,16 +70,7 @@ class _IndexState extends State<Index> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       resizeToAvoidBottomPadding: true,
-      //bottomNavigationBar: _bottomNavigationBar(_selectedPage),
       body: _widgetOptions[_selectedIndex],
-      /*body: PageStorage(
-        child: pages[_selectedPage],
-        bucket: this.bucket,
-      ),*/
-      /*body: IndexedStack(
-        index: _selectedIndex,
-        children: widget.screens,
-      ),*/
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
