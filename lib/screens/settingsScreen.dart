@@ -137,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   logOutUser(){
     return Alert(
       context: context,
-      type: AlertType.error,
+      type: AlertType.warning,
       title: "Logout?",
       desc: "Are you sure to want to logout?",
       buttons: [
