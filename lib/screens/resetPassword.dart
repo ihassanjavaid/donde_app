@@ -130,8 +130,6 @@ class _State extends State<ResetPassword> {
           ref.document(document.documentID).updateData({'password' : newPassword1});
         }
 
-
-
         Alert(
           context: context,
           type: AlertType.success,

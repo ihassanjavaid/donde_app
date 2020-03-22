@@ -1,11 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:contacts_service/contacts_service.dart';
+import 'package:donde_app/contactsClass.dart';
 import 'package:flutter/material.dart';
-
+import 'package:donde_app/contactsClass.dart';
 import '../constants.dart';
 
 class Friends extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -33,10 +37,21 @@ class SwipeList extends StatefulWidget {
 }
 
 class ListItemWidget extends State<SwipeList> {
-  List items = getDummyList();
+
+  List items;
+
+  @override
+  initState(){
+    super.initState();
+    getList();
+    items = getFriends();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
         child: ListView.builder(
 
@@ -134,10 +149,27 @@ class ListItemWidget extends State<SwipeList> {
         ));
   }
 
-  static List getDummyList() {
-    List list = List.generate(10, (i) {
-      return "Friend ${i + 1}";
-    });
+  static Future<List> getList() async {
+    return await getFriends();
+  }
+
+  static Future<List> getFriends() async {
+
+    print('CONTACTS here!');
+    List<Contact> contacts = await ContactsClass.getContacts();
+    List<String> list = List();
+    for (var i in contacts) {
+      i.phones.forEach((phoneNum) async {
+        print(phoneNum.value.replaceAll(" ", ""));
+        QuerySnapshot query = await Firestore.instance.collection('users').where('phoneNo', isEqualTo: phoneNum.value.replaceAll(" ", "")).getDocuments();
+
+        for ( var document in query.documents) {
+          print(document.documentID);
+          print(document.data);
+          list.add(document.data['displayName']);
+        }
+      });
+    }
     return list;
   }
 }
