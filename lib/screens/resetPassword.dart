@@ -18,6 +18,11 @@ class _State extends State<ResetPassword> {
   TextEditingController passwordController = TextEditingController();
   bool showSpinner = false;
   UserData userData;
+  String phoneNumber;
+  String oldPassword;
+
+  String newPassword1;
+  String newPassword2;
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +48,27 @@ class _State extends State<ResetPassword> {
                 SizedBox(
                   height: 30,
                 ),
-                CustomTextField(placeholder: 'Old password  '),
+                CustomTextField(placeholder: 'Old password',
+                    onChanged: (value) {
+                      this.oldPassword;
+                    }
+                    ),
                 SizedBox(
                   height: 25,
                 ),
-                CustomTextField(placeholder: 'New password'),
+                CustomTextField(placeholder: 'New password',
+                    onChanged: (value) {
+                      this.newPassword1;
+                    }
+                    ),
                 SizedBox(
                   height: 25,
                 ),
-                CustomTextField(placeholder: 'Confirm new password'),
+                CustomTextField(placeholder: 'Confirm new password',
+                    onChanged: (value) {
+                      this.newPassword2;
+                    }
+                    ),
                 SizedBox(
                   height: 25,
                 ),
@@ -63,11 +80,15 @@ class _State extends State<ResetPassword> {
                       color: Colors.redAccent,
                       child: Text(' Reset '),
                       onPressed: () {
-                        // TODO Add reset functionality
+                        _authenticatePassword();
                       },
                     )),
               ],
             )));
+  }
+
+  bool _ifPasswordsMatch() {
+    return this.newPassword1 == this.newPassword2;
   }
 
   void _acquireUserData() async {
@@ -77,23 +98,24 @@ class _State extends State<ResetPassword> {
     });
   }
 
-  /*Future<void> authenticatePassword() async {
+  Future<void> _authenticatePassword() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    phoneNumber = prefs.getString('phoneNmber');
+
     setState(() {
       this.showSpinner = true;
     });
-    QuerySnapshot docs = await StoreFunc()
-        .authenticatePhoneWithPassword(widget.phoneNumber, password);
-    setState(() {
-      this.showSpinner = false;
-    });
-    if (docs.documents.isNotEmpty) {
-      await prefs.setString('phoneNumber', widget.phoneNumber);
-      print('authenticated from firestore');
 
-      Navigator.popAndPushNamed(context, Index.id);
-      return true;
-    } else {
+    if (_ifPasswordsMatch()) {
+      QuerySnapshot docs = await StoreFunc()
+          .authenticatePhoneWithPassword(phoneNumber, this.newPassword1);
+      setState(() {
+        this.showSpinner = false;
+      });
+      if (docs.documents.isNotEmpty) {
+        // firebase query to change password
+
+      } else {
       Alert(
         context: context,
         type: AlertType.error,
@@ -112,5 +134,27 @@ class _State extends State<ResetPassword> {
         ],
       ).show();
     }
-  }*/
+  } else {
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "Passwords don't match!",
+        desc: "The passwords you've written don't match with each other! Please try again.",
+        buttons: [
+          DialogButton(
+            color: Colors.redAccent,
+            child: Text(
+              "Retry",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+    }
+
+
+
+  }
 }
