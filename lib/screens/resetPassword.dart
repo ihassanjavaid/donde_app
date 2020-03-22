@@ -48,7 +48,7 @@ class _State extends State<ResetPassword> {
                       color: Colors.redAccent,
                       child: Text('Reset'),
                       onPressed: () {
-                        
+                        // TODO Add reset functionality
                       },
                     )),
               ],

@@ -5,6 +5,7 @@ import 'package:donde_app/store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 
 // setting file
@@ -14,20 +15,32 @@ class SettingsScreen extends StatefulWidget {
 
   SettingsScreen({this.phoneNumber});
 
+  
+
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
   UserData userData;
-  final String phoneNumber;
+  String phoneNumber;
 
-  _SettingsScreenState({this.phoneNumber});
+  
 
-  void acquireUserData() async {
-    print('Entering Test');
-    userData = await StoreRetrieve.getCurrentUserData(this.phoneNumber);
+  Future<void> _acquireUserData() async {
+    print('Entering Test area');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final phoneNo = prefs.getString('phoneNumber');  
+    final data = await StoreRetrieve.getCurrentUserData(widget.phoneNumber);
+    setState(() {
+      userData = data;
+    });
+    print(phoneNo);
     print(userData);
+  }
+
+  void acquireUserData() {
+    _acquireUserData();
   }
 
   @override
@@ -69,12 +82,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 style: kSettingsTextStyle,
               ),
             ),
-            SettingWidget(
+            /*SettingWidget(
               onTap: () {},
               icon: FontAwesomeIcons.filter,
               label: 'Filter',
               colour: Color(kDefaultBackgroundColour),
-            ),
+            ),*/
             SettingWidget(
               onTap: () {
                 Navigator.pushNamed(context, ResetPassword.id);
@@ -84,19 +97,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
               colour: Color(kDefaultBackgroundColour),
             ),
             SettingWidget(
-              onTap: () {},
+              onTap: () {
+                // TODO Add notification toggle
+              },
               icon: FontAwesomeIcons.solidBell,
               label: 'Notification',
               colour: Color(kDefaultBackgroundColour),
               canToggle: true,
               toggle: true,
             ),
-            SettingWidget(
-              onTap: () {},
+            /*SettingWidget(
+              onTap: () {
+              },
               icon: FontAwesomeIcons.language,
               label: 'Language',
               colour: Color(kDefaultBackgroundColour),
-            ),
+            ),*/
           ],
         ),
       ),

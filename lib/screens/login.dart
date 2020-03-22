@@ -215,6 +215,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                         child: Row(
                           children: <Widget>[
                             CountryCodePicker(
+                              initialSelection: 'pk',
                               onChanged: (countryCode) {
                                 this.countryCode = countryCode.toString();
                               },
@@ -279,14 +280,16 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                         height: 15.0,
                       ),
                       CustomIconButton(
+                        icon: FontAwesomeIcons.facebook,
                         buttonLabel: 'LOGIN WITH FACEBOOK',
+                        // TODO Add Facebook login
                         onTap: _handleFbSignIn,
                         colour: Color(0xff2d3c9b),
-                        icon: FontAwesomeIcons.facebook,
                       ),
                       CustomIconButton(
                         icon: FontAwesomeIcons.google,
                         buttonLabel: 'LOGIN WITH GOOGLE',
+                        // TODO Add Google login
                         onTap: _handleGSignIn,
                         colour: Colors.redAccent,
                       ),

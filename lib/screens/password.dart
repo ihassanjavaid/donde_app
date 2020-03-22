@@ -7,6 +7,7 @@ import '../components/customButton.dart';
 import '../components/customTextField.dart';
 import 'package:donde_app/store.dart';
 import 'index.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Password extends StatefulWidget {
   final phoneNumber;
@@ -27,19 +28,51 @@ class _PasswordState extends State<Password> {
   _PasswordState({this.phoneNumber});
 
   Future<void> authenticatePassword() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       this.showSpinner = true;
     });
-    StoreRetrieve().authenticatePhoneWithPassword(phoneNumber, password)
+    QuerySnapshot docs = await StoreRetrieve()
+        .authenticatePhoneWithPassword(phoneNumber, password);
+    setState(() {
+      this.showSpinner = false;
+    });
+    if (docs.documents.isNotEmpty) {
+      await prefs.setString('phoneNumber', this.phoneNumber);
+      print('authenticated from firestore');
+
+      Navigator.popAndPushNamed(context, Index.id);
+      return true;
+    } else {
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "Invalid Password!",
+        desc: "You have written an invalid password! Please try again.",
+        buttons: [
+          DialogButton(
+            color: Colors.redAccent,
+            child: Text(
+              "Retry",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+    }
+
+    /*StoreRetrieve().authenticatePhoneWithPassword(phoneNumber, password)
         // ignore: missing_return
         .then((QuerySnapshot docs) {
-          setState(() {
-            this.showSpinner = false;
-          });
+      setState(() {
+        this.showSpinner = false;
+      });
       if (docs.documents.isNotEmpty) {
+        await prefs.setInt('phoneNumber', this.phoneNumber);
         print('authenticated from firestore');
-        Navigator.pop(context);
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Index(phoneNumber: this.phoneNumber,)));
+        Navigator.popAndPushNamed(context, Index.id);
         return true;
       } else {
         Alert(
@@ -60,7 +93,7 @@ class _PasswordState extends State<Password> {
           ],
         ).show();
       }
-    });
+    });*/
   }
 
   @override

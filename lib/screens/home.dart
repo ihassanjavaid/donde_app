@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
   List<PlacesSearchResult> places;
 
   // Methods
+  // TODO Acquire restaurants and show one of them in the card
 
   @override
   initState() {
@@ -49,7 +50,6 @@ class _HomeState extends State<Home> {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              // Title with icon
               Container(
                 padding: EdgeInsets.all(20.0),
                 child: Row(
@@ -85,7 +85,9 @@ class _HomeState extends State<Home> {
               // Restaurant card
               Flexible(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    // TODO Open restaurant description
+                  },
                   child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0)),
@@ -147,7 +149,10 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     InkWell(
-                      onTap: () {}, // Dislike
+                      onTap: () {
+                        // TODO Add the current restaurant in the disliked list
+                        // TODO Show a new card
+                      }, // Dislike
                       child: Image(
                         image: AssetImage('images/crossicon.png'),
                         height: 36,
@@ -155,7 +160,9 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {}, // Dislike
+                      onTap: () {
+                        // TODO Show a new card
+                      }, // Referesh
                       child: Image(
                         image: AssetImage('images/refreshicon.png'),
                         height: 30,
@@ -163,7 +170,10 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {}, // Like
+                      onTap: () {
+                        // TODO Add the current restaurant in the liked list
+                        // TODO Show a new card
+                      }, // Like
                       child: Image(
                         image: AssetImage('images/hearticon.png'),
                         height: 36,
