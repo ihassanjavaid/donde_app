@@ -42,7 +42,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     setState(() {
       this.showSpinner = true;
     });
-    StoreRetrieve()
+    StoreFunc()
         .getUserPhoneNo(this.completePhoneNo)
         .then((QuerySnapshot docs) {
       setState(() {
