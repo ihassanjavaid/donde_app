@@ -15,7 +15,7 @@ class Index extends StatefulWidget {
   Index({this.phoneNumber});
 
   @override
-  _IndexState createState() => _IndexState();
+  _IndexState createState() => _IndexState(phoneNumber: this.phoneNumber);
 }
 
 class _IndexState extends State<Index> {
@@ -24,8 +24,14 @@ class _IndexState extends State<Index> {
   final String phoneNumber;
   static String phoneNo;
 
+  /*_IndexState({this.phoneNumber}) {
+    phoneNo = this.phoneNumber;
+  }*/
+
   _IndexState({this.phoneNumber}) {
     phoneNo = this.phoneNumber;
+    print(phoneNo);
+    print(phoneNo);
   }
 
   static Widget acquireExploreWidget() {

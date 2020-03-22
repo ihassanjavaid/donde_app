@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:donde_app/components/settingsWidget.dart';
 import 'package:donde_app/screens/resetPassword.dart';
 import 'package:donde_app/services/userData.dart';
@@ -5,6 +7,7 @@ import 'package:donde_app/store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 
@@ -35,7 +38,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       userData = data;
     });
 
-    print(phoneNumber);
+    print("Phonephonephone ");
+    print("Phonephonephone ");
+    print("Phonephonephone ");
+    print(this.phoneNumber);
     print(userData);
   }
 
@@ -106,6 +112,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               canToggle: true,
               toggle: true,
             ),
+            SettingWidget(
+              onTap: () {
+                logOutUser();
+                //Navigator.pushNamed();
+              },
+              icon: FontAwesomeIcons.doorOpen,
+              label: 'Logout',
+              colour: Color(kDefaultBackgroundColour),
+            ),
             /*SettingWidget(
               onTap: () {
               },
@@ -118,4 +133,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
+
+  logOutUser(){
+    return Alert(
+      context: context,
+      type: AlertType.error,
+      title: "Logout?",
+      desc: "Are you sure to want to logout?",
+      buttons: [
+        DialogButton(
+          color: Colors.redAccent,
+          child: Text(
+            "Logout",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => exit(0),
+          width: 120,
+        )
+      ],
+    ).show();
+  }
+
 }
