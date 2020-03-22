@@ -147,6 +147,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
               label: 'Language',
               colour: Color(kDefaultBackgroundColour),
             ),*/
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  height: 120,
+                  width: double.infinity,
+                  child: Text('Made with love in Pakistan', style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
+                    color: Colors.grey
+                  ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
