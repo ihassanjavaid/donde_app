@@ -74,7 +74,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 "",
                 backgroundColor: Colors.grey,
                 initialsText: Text(
-                  userData.displayName[0],
+                  userData != null ? userData.displayName[0] : "A",
                   style: TextStyle(
                     fontSize: 55,
                     color: Colors.white,
