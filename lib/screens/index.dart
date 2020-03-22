@@ -40,8 +40,9 @@ class _IndexState extends State<Index> {
           for (var restaurants in snapshot.documents) {
             for (var like in likeRes) {
               if (like == restaurants['restaurantName']) {
-                final sharedFriend = firestore.collection('users').document(friend).get();
-                print('$sharedFriend + just liked a restaurant on your like list\n $like');
+                final sharedFriend = await firestore.collection('users').document(friend).get();
+                var sharedFriendName = sharedFriend['displayName'];
+                print('$sharedFriendName + just liked a restaurant on your like list\n $like');
               }
             }
           }
