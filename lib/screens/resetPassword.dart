@@ -144,7 +144,10 @@ class _State extends State<ResetPassword> {
                 "Retry",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
               width: 120,
             )
           ],
