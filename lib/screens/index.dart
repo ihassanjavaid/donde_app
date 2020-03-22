@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donde_app/locationBrain.dart';
 import 'package:donde_app/screens/settingsScreen.dart';
+import 'package:donde_app/store.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
 import '../constants.dart';
@@ -26,7 +28,32 @@ class _IndexState extends State<Index> {
     this._locationBrain = LocationBrain();
   }
 
+  void getSharedRestaurants() async {
+    final friendsList = await StoreFunc.getCurrentUserFriends();
+    final likeRes = await StoreFunc.getSharedRestaurants();
+    final firestore = Firestore();
 
+    for (var res in likeRes) {
+      for (var friend in friendsList) {
+
+        await for (var snapshot in firestore.collection('users').document(friend).collection('liked_restaurants').snapshots()) {
+          for (var restaurants in snapshot.documents) {
+            for (var like in likeRes) {
+              if (like == restaurants['restaurantName']) {
+                final sharedFriend = firestore.collection('users').document(friend).get();
+                print('$sharedFriend + just liked a restaurant on your like list\n $like');
+              }
+            }
+          }
+        }
+        /*final friendRestaurants = await documents.getDocuments();
+        for (var friendLikedRes in friendRestaurants.documents) {
+
+        }*/
+
+      }
+    }
+  }
 
   static Widget acquireExploreWidget() {
     if (_explore == null) {

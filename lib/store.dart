@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:contacts_service/contacts_service.dart';
 import 'package:donde_app/services/userData.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'contactsClass.dart';
 
 class StoreFunc {
   getUserPhoneNo(String phoneNo) {
@@ -76,5 +79,49 @@ class StoreFunc {
           .collection(preference);
       restaurants.add({'restaurantName': place != null ? place.name : restaurant});
     }
+  }
+
+  static Future<List<String>> getSharedRestaurants() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final String phoneNo = pref.getString('phoneNumber');
+    final fireStore = Firestore();
+    List<String> resList = [];
+
+    final documents = await fireStore
+        .collection('users')
+        .where('phoneNo', isEqualTo: phoneNo)
+        .getDocuments();
+
+    for (var document in documents.documents) {
+      print(document.data);
+      CollectionReference restaurants = fireStore
+          .collection('users')
+          .document(document.documentID)
+          .collection('liked_restaurants');
+      final likeRestaurants = await restaurants.getDocuments();
+      for (var restaurant in likeRestaurants.documents) {
+        resList.add(restaurant['restaurantName']);
+      }
+    }
+    return resList;
+  }
+
+  static Future<List> getCurrentUserFriends() async {
+    List<Contact> contacts = await ContactsClass.getContacts();
+    List<String> list = [];
+    for (var i in contacts) {
+      i.phones.forEach((phoneNum) async {
+        print(phoneNum.value.replaceAll(" ", ""));
+        QuerySnapshot query = await Firestore.instance
+            .collection('users')
+            .where('phoneNo', isEqualTo: phoneNum.value.replaceAll(" ", ""))
+            .getDocuments();
+
+        for (var document in query.documents) {
+          list.add(document.documentID);
+        }
+      });
+    }
+    return list;
   }
 }
