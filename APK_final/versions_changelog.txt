@@ -1,3 +1,4 @@
 v1.0.0: (delivered)
 v1.0.1 : bug fixes
 v1.0.2 : First iteration complete
+v1.0.3 : Fixed alert for restaurant like
