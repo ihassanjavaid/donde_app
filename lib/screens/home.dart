@@ -1,11 +1,13 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 /// The page housing the restaurant card and associated controls
 import 'package:donde_app/store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -71,6 +73,60 @@ class _HomeState extends State<Home> {
     img15
   ];
 
+  void getSharedRestaurants() async {
+    final friendsList = await StoreFunc.getCurrentUserFriends();
+    final currentUserLikedRestaurants = await StoreFunc.getCurrentUserLikedRestaurants();
+    final firestore = Firestore();
+    String likedRestaurant = '';
+
+
+    for (var friend in friendsList) {
+
+      await for (var snapshot in firestore
+          .collection('users')
+          .document(friend)
+          .collection('liked_restaurants')
+          .snapshots()) {
+        for (var friendLikedRestaurant in snapshot.documents) {
+          for (var likedRestaurants in currentUserLikedRestaurants) {
+            if (likedRestaurants == friendLikedRestaurant['restaurantName'] &&
+                (friendLikedRestaurant['restaurantName'] != likedRestaurant ||
+                    likedRestaurant == '')) {
+              print(friendLikedRestaurant['restaurantName']);
+              likedRestaurant = likedRestaurants;
+              final sharedFriend =
+              await firestore.collection('users').document(friend).get();
+              var sharedFriendName = sharedFriend['displayName'];
+
+              print(
+                  '$sharedFriendName just liked a restaurant on your like list\n $likedRestaurants');
+              Alert(
+                context: context,
+                type: AlertType.success,
+                title: "It's a Match! ♥",
+                desc:
+                "$sharedFriendName just liked a restaurant on your like list\n $likedRestaurants",
+                buttons: [
+                  DialogButton(
+                    color: Colors.redAccent,
+                    child: Text(
+                      "Yayy!",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                    width: 120,
+                  )
+                ],
+              ).show();
+            }
+          }
+
+        }
+      }
+
+    }
+  }
+
   // Methods
   void setRestaurantData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -103,6 +159,7 @@ class _HomeState extends State<Home> {
     super.initState();
     _locationBrain = LocationBrain();
     setRestaurantData();
+    getSharedRestaurants();
   }
 
   Future<void> _getPlaces() async {
@@ -111,6 +168,8 @@ class _HomeState extends State<Home> {
       this.places = temp;
     });
   }
+
+
 
   void setRestaurantPreference(String preference) {
     String temp = '';

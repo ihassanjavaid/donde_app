@@ -75,7 +75,6 @@ class StoreFunc {
           .collection('users')
           .document(document.documentID)
           .collection(preference);
-      print('Test');
       restaurants
           .add({'restaurantName': place != null ? place : restaurant});
     }
