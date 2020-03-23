@@ -1,8 +1,6 @@
 import 'dart:math';
 
 /// The page housing the restaurant card and associated controls
-
-import 'package:donde_app/screens/restaurantDescription.dart';
 import 'package:donde_app/store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -112,6 +110,47 @@ class _HomeState extends State<Home> {
     setState(() {
       this.places = temp;
     });
+  }
+
+  void setRestaurantPreference(String preference) {
+    if (this.restaurantName != null) {
+      if (preference != 'refresh') {
+        final int randomIndex = Random().nextInt(this.places.length - 1);
+        try {
+          if (preference == "disliked_restaurants") {
+            // Remove all instances of the disliked restaurants
+            this.places.forEach(
+              (restaurant) {
+                if (restaurant.name == this.restaurantName) {
+                  this.places.remove(restaurant);
+                }
+              },
+            );
+          }
+          setState(() {
+            this.restaurantName = this.places.elementAt(randomIndex).name;
+          });
+          StoreFunc.addRestaurantToPreference(this.restaurantName, preference);
+        } catch (e) {
+          print(e);
+        }
+      } else {
+        final int randomIndex = Random().nextInt(this.places.length - 1);
+        try {
+          setState(() {
+            this.restaurantName = this.places.elementAt(randomIndex).name;
+          });
+        } catch (e) {
+          print(e);
+        }
+      }
+    } else {
+      setState(() {
+        this.counter++;
+        String temp = 'Restaurant Name $counter';
+        this.genericRestaurantName = temp;
+      });
+    }
   }
 
   @override
@@ -227,28 +266,7 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        if (this.restaurantName != null) {
-                          StoreFunc.addRestaurantToPreference(
-                              this.place, 'disliked_restaurants');
-                         final int randomIndex =
-                              Random().nextInt(this.places.length - 1);
-                          print(randomIndex);
-                          try {
-                            this.places.remove(this.restaurantName);
-                            print(this.places.elementAt(randomIndex).name);
-                            setState(() {
-                              this.restaurantName = this.places.elementAt(randomIndex).name;
-                            });
-
-                          } catch (e) {
-                            print(e);
-                          }
-                        }
-                        setState(() {
-                          this.counter++;
-                          String temp = 'Restaurant Name $counter';
-                          this.genericRestaurantName = temp;
-                        });
+                        setRestaurantPreference('disliked_restaurants');
                       }, // Dislike
                       child: Image(
                         image: AssetImage('images/crossicon.png'),
@@ -258,27 +276,8 @@ class _HomeState extends State<Home> {
                     ),
                     InkWell(
                       onTap: () {
-                        if (this.restaurantName != null) {
-                          final int randomIndex =
-                              Random().nextInt(this.places.length - 1);
-                          print(randomIndex);
-                          try {
-
-                            print(this.places.elementAt(randomIndex).name);
-                            setState(() {
-                              this.restaurantName = this.places.elementAt(randomIndex).name;
-                            });
-
-                          } catch (e) {
-                            print(e);
-                          }
-                        }
-                        setState(() {
-                          this.counter++;
-                          String temp = 'Restaurant Name $counter';
-                          this.genericRestaurantName = temp;
-                        });
-                      }, // Referesh
+                        setRestaurantPreference('refresh');
+                      }, // Refresh
                       child: Image(
                         image: AssetImage('images/refreshicon.png'),
                         height: 30,
@@ -287,22 +286,7 @@ class _HomeState extends State<Home> {
                     ),
                     InkWell(
                       onTap: () {
-                        if (this.restaurantName != null) {
-                          StoreFunc.addRestaurantToPreference(
-                              this.place, 'liked_restaurants');
-                          this.places.forEach((place) {
-                            if (place.name != this.restaurantName) {
-                              this.restaurantName = place.name;
-                              this.place = place;
-                              return;
-                            }
-                          });
-                        }
-                        setState(() {
-                          this.counter++;
-                          String temp = 'Restaurant Name $counter';
-                          this.genericRestaurantName = temp;
-                        });
+                        setRestaurantPreference('liked_restaurants');
                       }, // Like
                       child: Image(
                         image: AssetImage('images/hearticon.png'),

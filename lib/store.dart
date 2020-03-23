@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:donde_app/services/userData.dart';
-import 'package:google_maps_webservice/places.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'contactsClass.dart';
@@ -60,7 +59,7 @@ class StoreFunc {
   }
 
   static void addRestaurantToPreference(
-      PlacesSearchResult place, String preference) async {
+      String place, String preference) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final String phoneNo = pref.getString('phoneNumber');
     final String restaurant = pref.getString('restaurant');
@@ -77,8 +76,9 @@ class StoreFunc {
           .collection('users')
           .document(document.documentID)
           .collection(preference);
+      print('Test');
       restaurants
-          .add({'restaurantName': place != null ? place.name : restaurant});
+          .add({'restaurantName': place != null ? place : restaurant});
     }
   }
 
