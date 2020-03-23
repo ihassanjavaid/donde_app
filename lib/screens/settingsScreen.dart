@@ -212,7 +212,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       type: AlertType.success,
       title: "Share!",
       // TODO Add google drive link here after generating final version of APK
-      desc: "<Link to be added here>",
+      desc: "Link will be added soon!",
       buttons: [
         DialogButton(
           color: Colors.redAccent,
