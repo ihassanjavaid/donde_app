@@ -113,6 +113,7 @@ class _HomeState extends State<Home> {
   }
 
   void setRestaurantPreference(String preference) {
+    String temp = '';
     if (this.restaurantName != null) {
       if (preference != 'refresh') {
         final int randomIndex = Random().nextInt(this.places.length - 1);
@@ -127,10 +128,11 @@ class _HomeState extends State<Home> {
               },
             );
           }
+          temp = this.restaurantName;
           setState(() {
             this.restaurantName = this.places.elementAt(randomIndex).name;
           });
-          StoreFunc.addRestaurantToPreference(this.restaurantName, preference);
+          StoreFunc.addRestaurantToPreference(temp, preference);
         } catch (e) {
           print(e);
         }
