@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:donde_app/services/userData.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'contactsClass.dart';
 
 class StoreFunc {
