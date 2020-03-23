@@ -55,11 +55,23 @@ class _HomeState extends State<Home> {
   static final img14 = AssetImage('images/resImages/14.jpg');
   static final img15 = AssetImage('images/resImages/15.jpg');
 
-
   final List<AssetImage> resImages = [
-    img1, img2, img3, img4, img5,
-    img6, img7, img8, img9, img10,
-    img11, img12, img13, img14, img15];
+    img1,
+    img2,
+    img3,
+    img4,
+    img5,
+    img6,
+    img7,
+    img8,
+    img9,
+    img10,
+    img11,
+    img12,
+    img13,
+    img14,
+    img15
+  ];
 
   // Methods
   void setRestaurantData() async {
@@ -83,7 +95,6 @@ class _HomeState extends State<Home> {
       } catch (e) {
         print(e);
       }
-
     } else {
       print('Restaurants not found');
     }
@@ -217,9 +228,9 @@ class _HomeState extends State<Home> {
                     InkWell(
                       onTap: () {
                         if (this.restaurantName != null) {
-
-                          StoreFunc.addRestaurantToPreference(this.place, 'disliked_restaurants');
-                          this.places.forEach((place){
+                          StoreFunc.addRestaurantToPreference(
+                              this.place, 'disliked_restaurants');
+                          this.places.forEach((place) {
                             if (place.name != this.restaurantName) {
                               this.restaurantName = place.name;
                               this.place = place;
@@ -242,17 +253,19 @@ class _HomeState extends State<Home> {
                     InkWell(
                       onTap: () {
                         if (this.restaurantName != null) {
-                          this.places.forEach((place) {
-                            if (place.name != this.restaurantName) {
-                              setState(() {
-                                this.restaurantName = place.name;
-                                this.place = place;
-                              });
+                          final int randomIndex =
+                              Random().nextInt(this.places.length - 1);
+                          print(randomIndex);
+                          try {
 
+                            print(this.places.elementAt(randomIndex).name);
+                            setState(() {
+                              this.restaurantName = this.places.elementAt(randomIndex).name;
+                            });
 
-                              return;
-                            }
-                          });
+                          } catch (e) {
+                            print(e);
+                          }
                         }
                         setState(() {
                           this.counter++;
@@ -269,7 +282,8 @@ class _HomeState extends State<Home> {
                     InkWell(
                       onTap: () {
                         if (this.restaurantName != null) {
-                          StoreFunc.addRestaurantToPreference(this.place, 'liked_restaurants');
+                          StoreFunc.addRestaurantToPreference(
+                              this.place, 'liked_restaurants');
                           this.places.forEach((place) {
                             if (place.name != this.restaurantName) {
                               this.restaurantName = place.name;

@@ -34,6 +34,7 @@ class _IndexState extends State<Index> {
     final friendsList = await StoreFunc.getCurrentUserFriends();
     final likeRes = await StoreFunc.getSharedRestaurants();
     final firestore = Firestore();
+    String likedRestaurant = '';
 
     for (var res in likeRes) {
       for (var friend in friendsList) {
@@ -41,11 +42,12 @@ class _IndexState extends State<Index> {
         await for (var snapshot in firestore.collection('users').document(friend).collection('liked_restaurants').snapshots()) {
           for (var restaurants in snapshot.documents) {
             for (var like in likeRes) {
-              if (like == restaurants['restaurantName']) {
+              if (like == restaurants['restaurantName'] && (restaurants['restaurantName'] != likedRestaurant || likedRestaurant == '')){
+                likedRestaurant = like;
                 final sharedFriend = await firestore.collection('users').document(friend).get();
                 var sharedFriendName = sharedFriend['displayName'];
                 print('$sharedFriendName + just liked a restaurant on your like list\n $like');
-             /*   Alert(
+               Alert(
                   context: context,
                   type: AlertType.success,
                   title: "It's a Match! ♥",
@@ -61,7 +63,7 @@ class _IndexState extends State<Index> {
                       width: 120,
                     )
                   ],
-                ).show();*/
+                ).show();
               }
             }
           }
