@@ -32,7 +32,7 @@ class _IndexState extends State<Index> {
 
   void getSharedRestaurants() async {
     final friendsList = await StoreFunc.getCurrentUserFriends();
-    final likeRes = await StoreFunc.getSharedRestaurants();
+    final currentUserLikedRestaurants = await StoreFunc.getCurrentUserLikedRestaurants();
     final firestore = Firestore();
     String likedRestaurant = '';
 
@@ -42,37 +42,40 @@ class _IndexState extends State<Index> {
           .document(friend)
           .collection('liked_restaurants')
           .snapshots()) {
-        for (var restaurants in snapshot.documents) {
-          for (var like in likeRes) {
-            if (like == restaurants['restaurantName'] &&
-                (restaurants['restaurantName'] != likedRestaurant ||
-                    likedRestaurant == '')) {
-              likedRestaurant = like;
-              final sharedFriend =
-                  await firestore.collection('users').document(friend).get();
-              var sharedFriendName = sharedFriend['displayName'];
-              print(
-                  '$sharedFriendName + just liked a restaurant on your like list\n $like');
-              Alert(
-                context: context,
-                type: AlertType.success,
-                title: "It's a Match! ♥",
-                desc:
-                    "$sharedFriendName just liked a restaurant on your like list\n $like",
-                buttons: [
-                  DialogButton(
-                    color: Colors.redAccent,
-                    child: Text(
-                      "Yayy!",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                    width: 120,
-                  )
-                ],
-              ).show();
+        for (var friendLikedRestaurant in snapshot.documents) {
+            for (var likedRestaurants in currentUserLikedRestaurants) {
+              if (likedRestaurants == friendLikedRestaurant['restaurantName'] &&
+                  (friendLikedRestaurant['restaurantName'] != likedRestaurant ||
+                      likedRestaurant == '')) {
+                        print(friendLikedRestaurant['restaurantName']);
+                likedRestaurant = likedRestaurants;
+                final sharedFriend =
+                    await firestore.collection('users').document(friend).get();
+                var sharedFriendName = sharedFriend['displayName'];
+
+                print(
+                    '$sharedFriendName just liked a restaurant on your like list\n $likedRestaurants');
+                Alert(
+                  context: context,
+                  type: AlertType.success,
+                  title: "It's a Match! ♥",
+                  desc:
+                      "$sharedFriendName just liked a restaurant on your like list\n $likedRestaurants",
+                  buttons: [
+                    DialogButton(
+                      color: Colors.redAccent,
+                      child: Text(
+                        "Yayy!",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                      width: 120,
+                    )
+                  ],
+                ).show();
+              }
             }
-          }
+          
         }
       }
       /*final friendRestaurants = await documents.getDocuments();

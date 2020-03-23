@@ -82,11 +82,11 @@ class StoreFunc {
     }
   }
 
-  static Future<List<String>> getSharedRestaurants() async {
+  static Future<List<String>> getCurrentUserLikedRestaurants() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final String phoneNo = pref.getString('phoneNumber');
     final fireStore = Firestore();
-    List<String> resList = [];
+    List<String> currentUserLikedRestaurants = [];
 
     final documents = await fireStore
         .collection('users')
@@ -101,10 +101,11 @@ class StoreFunc {
           .collection('liked_restaurants');
       final likeRestaurants = await restaurants.getDocuments();
       for (var restaurant in likeRestaurants.documents) {
-        resList.add(restaurant['restaurantName']);
+        currentUserLikedRestaurants.add(restaurant['restaurantName']);
       }
     }
-    return resList;
+    print(currentUserLikedRestaurants);
+    return currentUserLikedRestaurants;
   }
 
   static Future<List> getCurrentUserFriends() async {
