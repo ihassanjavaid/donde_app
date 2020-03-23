@@ -209,7 +209,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   shareApp(){
     return Alert(
       context: context,
-      type: AlertType.warning,
+      type: AlertType.success,
       title: "Share!",
       // TODO Add google drive link here after generating final version of APK
       desc: "<Link to be added here>",
