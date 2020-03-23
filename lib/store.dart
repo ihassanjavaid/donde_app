@@ -71,15 +71,14 @@ class StoreFunc {
         .where('phoneNo', isEqualTo: phoneNo)
         .getDocuments();
 
-
-
     for (var document in documents.documents) {
       print(document.data);
       CollectionReference restaurants = fireStore
           .collection('users')
           .document(document.documentID)
           .collection(preference);
-      restaurants.add({'restaurantName': place != null ? place.name : restaurant});
+      restaurants
+          .add({'restaurantName': place != null ? place.name : restaurant});
     }
   }
 

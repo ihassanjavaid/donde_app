@@ -230,13 +230,19 @@ class _HomeState extends State<Home> {
                         if (this.restaurantName != null) {
                           StoreFunc.addRestaurantToPreference(
                               this.place, 'disliked_restaurants');
-                          this.places.forEach((place) {
-                            if (place.name != this.restaurantName) {
-                              this.restaurantName = place.name;
-                              this.place = place;
-                              return;
-                            }
-                          });
+                         final int randomIndex =
+                              Random().nextInt(this.places.length - 1);
+                          print(randomIndex);
+                          try {
+                            this.places.remove(this.restaurantName);
+                            print(this.places.elementAt(randomIndex).name);
+                            setState(() {
+                              this.restaurantName = this.places.elementAt(randomIndex).name;
+                            });
+
+                          } catch (e) {
+                            print(e);
+                          }
                         }
                         setState(() {
                           this.counter++;
