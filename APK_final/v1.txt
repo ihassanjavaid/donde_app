@@ -1,1 +1,2 @@
-this is v1
+v1: (delivered)
+v1.0.1 : bug fixes
