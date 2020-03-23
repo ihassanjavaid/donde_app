@@ -146,6 +146,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 label: 'Logout',
                 colour: Color(kDefaultBackgroundColour),
               ),
+              SettingWidget(
+                onTap: () {
+                  shareApp();
+                },
+                icon: FontAwesomeIcons.share,
+                label: 'Share',
+                colour: Color(kDefaultBackgroundColour),
+              ),
               /*SettingWidget(
                 onTap: () {
                 },
@@ -158,7 +166,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: <Widget>[
                   Container(
                     alignment: Alignment.bottomCenter,
-                    height: 80,
+                    height: 20,
                     width: double.infinity,
                     child: Text('Made with love in Pakistan', style: TextStyle(
                       fontStyle: FontStyle.italic,
@@ -191,6 +199,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           onPressed : () {
             _logOutAndRemoveUser();
+          },
+          width: 120,
+        )
+      ],
+    ).show();
+  }
+
+  shareApp(){
+    return Alert(
+      context: context,
+      type: AlertType.warning,
+      title: "Share!",
+      // TODO Add google drive link here after generating final version of APK
+      desc: "<Link to be added here>",
+      buttons: [
+        DialogButton(
+          color: Colors.redAccent,
+          child: Text(
+            "Done!",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed : () {
+            Navigator.pop(context);
           },
           width: 120,
         )
