@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donde_app/components/customTextField.dart';
+import 'package:donde_app/constants.dart';
 import 'package:donde_app/services/userData.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -30,17 +31,28 @@ class _State extends State<ResetPassword> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                 Container(
+                    child: Image(
+                      image: AssetImage(
+                        'images/logo.png',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                    height: 86,
+                    width: 86,
+                  ),
+
                 Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(10),
                     child: AutoSizeText(
                       'Reset your password',
                       maxLines: 1,
-                      style: TextStyle(
+                      style: kWelcomeTextStyle/*TextStyle(
                           color: Colors.redAccent,
                           fontWeight: FontWeight.w500,
                           fontStyle: FontStyle.italic,
-                          fontSize: 40),
+                          fontSize: 40)*/,
                     ),
                 ),
                 SizedBox(
