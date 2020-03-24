@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:donde_app/components/settingsWidget.dart';
 import 'package:donde_app/screens/login.dart';
 import 'package:donde_app/screens/resetPassword.dart';
@@ -22,7 +20,8 @@ class SettingsScreen extends StatefulWidget {
   SettingsScreen({this.phoneNumber});
 
   @override
-  _SettingsScreenState createState() => _SettingsScreenState(phoneNumber: this.phoneNumber);
+  _SettingsScreenState createState() =>
+      _SettingsScreenState(phoneNumber: this.phoneNumber);
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
@@ -39,7 +38,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -52,139 +50,127 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: true,
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(top: 10.0),
-                child: Text(
-                  'Settings',
-                  style: kSettingsTextStyle,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 15.0),
-                width: 120.0,
-                height: 120.0,
-                /*decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(
-                        "https://i.ya-webdesign.com/images/funny-png-avatar-2.png"),
-                  ),
-                ),*/
-                child: CircularProfileAvatar(
-                  "",
-                  backgroundColor: Colors.grey,
-                  initialsText: Text(
-                    userData != null ? userData.displayName[0] : "A",
-                    style: TextStyle(
-                      fontSize: 55,
-                      color: Colors.white,
-                    ),
-                  ),
-                  elevation: 8.0,
-//                borderColor: Colors.redAccent,
-//                borderWidth: 3,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 5, right: 10.0, left: 10.0/*, top: 25.0*/),
-                child: AutoSizeText(
-                  userData != null ? userData.displayName : 'Anonymous',
-                  style: kSettingsTextStyle,
-                  maxLines: 1,
-                  overflow: TextOverflow.clip,
-                ),
-              ),
-              /*SettingWidget(
-                onTap: () {},
-                icon: FontAwesomeIcons.filter,
-                label: 'Filter',
-                colour: Color(kDefaultBackgroundColour),
-              ),*/
-              Container(
-                margin: EdgeInsets.only(bottom: 35.0, right: 10.0, left: 10.0/*, top: 25.0*/),
-                child: AutoSizeText(
-                  userData != null ? userData.phoneNumber : '+-- -- -------',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.8,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.clip,
-                ),
-              ),
-              SettingWidget(
-                onTap: () {
-                  Navigator.pushNamed(context, ResetPassword.id);
-                },
-                icon: FontAwesomeIcons.lock,
-                label: 'Security',
-                colour: Color(kDefaultBackgroundColour),
-              ),
-              SettingWidget(
-                onTap: () {
-                  setState(() {
-                    this.toggleNotification = !this.toggleNotification;
-                  });
-                },
-                icon: FontAwesomeIcons.solidBell,
-                label: 'Notification',
-                colour: Color(kDefaultBackgroundColour),
-                canToggle: true,
-                toggle: this.toggleNotification,
-              ),
-              SettingWidget(
-                onTap: () {
-                  logOutUser();
-                  //Navigator.pushNamed();
-                },
-                icon: FontAwesomeIcons.doorOpen,
-                label: 'Logout',
-                colour: Color(kDefaultBackgroundColour),
-              ),
-              SettingWidget(
-                onTap: () {
-                  shareApp();
-                },
-                icon: FontAwesomeIcons.share,
-                label: 'Share',
-                colour: Color(kDefaultBackgroundColour),
-              ),
-              /*SettingWidget(
-                onTap: () {
-                },
-                icon: FontAwesomeIcons.language,
-                label: 'Language',
-                colour: Color(kDefaultBackgroundColour),
-              ),*/
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              flex: 4,
+              child: Column(
                 children: <Widget>[
                   Container(
-                    alignment: Alignment.bottomCenter,
-                    height: 20,
-                    width: double.infinity,
-                    child: Text('Made with love in Pakistan', style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 14,
-                      color: Colors.grey
+                    margin: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      'Settings',
+                      style: kSettingsTextStyle,
                     ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 15.0),
+                    child: CircularProfileAvatar(
+                      "",
+                      backgroundColor: Colors.grey,
+                      initialsText: Text(
+                        userData != null ? userData.displayName[0] : "A",
+                        style: TextStyle(
+                          fontSize: 35,
+                          color: Colors.white,
+                        ),
+                      ),
+                      elevation: 8.0,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                        bottom: 5, right: 10.0, left: 10.0 /*, top: 25.0*/),
+                    child: AutoSizeText(
+                      userData != null ? userData.displayName : 'Anonymous',
+                      style: kSettingsTextStyle,
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                        bottom: 35.0, right: 10.0, left: 10.0 /*, top: 25.0*/),
+                    child: AutoSizeText(
+                      userData != null ? userData.phoneNumber : '+-- -- -------',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.8,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
                     ),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            Expanded(
+              flex: 3,
+              child: ListView(
+                children: <Widget>[
+                  SettingWidget(
+                    onTap: () {
+                      Navigator.pushNamed(context, ResetPassword.id);
+                    },
+                    icon: FontAwesomeIcons.lock,
+                    label: 'Security',
+                    colour: Color(kDefaultBackgroundColour),
+                  ),
+                  SettingWidget(
+                    onTap: () {
+                      setState(() {
+                        this.toggleNotification = !this.toggleNotification;
+                      });
+                    },
+                    icon: FontAwesomeIcons.solidBell,
+                    label: 'Notifications',
+                    colour: Color(kDefaultBackgroundColour),
+                    canToggle: true,
+                    toggle: this.toggleNotification,
+                  ),
+                  SettingWidget(
+                    onTap: () {
+                      logOutUser();
+                      //Navigator.pushNamed();
+                    },
+                    icon: FontAwesomeIcons.doorOpen,
+                    label: 'Logout',
+                    colour: Color(kDefaultBackgroundColour),
+                  ),
+                  SettingWidget(
+                    onTap: () {
+                      shareApp();
+                    },
+                    icon: FontAwesomeIcons.share,
+                    label: 'Share',
+                    colour: Color(kDefaultBackgroundColour),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                width: double.infinity,
+                child: Text(
+                  'Made with love in Pakistan',
+                  style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: 14,
+                      color: Colors.grey),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  logOutUser(){
+  logOutUser() {
     return Alert(
       context: context,
       type: AlertType.warning,
@@ -197,7 +183,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             "Logout",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          onPressed : () {
+          onPressed: () {
             _logOutAndRemoveUser();
           },
           width: 120,
@@ -206,7 +192,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ).show();
   }
 
-  shareApp(){
+  shareApp() {
     return Alert(
       context: context,
       type: AlertType.success,
@@ -220,7 +206,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             "Done!",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          onPressed : () {
+          onPressed: () {
             Navigator.pop(context);
           },
           width: 120,
@@ -235,5 +221,4 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Navigator.pop(context);
     Navigator.popAndPushNamed(context, Login.id);
   }
-
 }
