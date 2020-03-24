@@ -1,13 +1,13 @@
 import 'package:donde_app/store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'index.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
 import '../components/customTextField.dart';
-
 
 // ignore: must_be_immutable
 class Registration extends StatelessWidget {
@@ -19,21 +19,25 @@ class Registration extends StatelessWidget {
   String name;
   String password;
   final phoneNo;
+  bool _showSpinner = false;
 
   Registration({this.userCred, this.user, this.phoneNo});
 
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            lowerHalf(context),
-            upperHalf(context),
-            signUpCard(context),
-            pageTitle(),
-          ],
+    return ModalProgressHUD(
+      inAsyncCall: _showSpinner,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              lowerHalf(context),
+              upperHalf(context),
+              signUpCard(context),
+              pageTitle(),
+            ],
+          ),
         ),
       ),
     );
@@ -143,37 +147,41 @@ class Registration extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () async {
-
+                          _showSpinner = true;
                           print('pressed register button');
 
                           StoreFunc().registerNewUser(
-                            name: this.name,
-                            email: this.email,
-                            phoneNo: this.phoneNo,
-                            password: this.password
+                              name: this.name,
+                              email: this.email,
+                              phoneNo: this.phoneNo,
+                              password: this.password);
+
+                          await SharedPreferences.getInstance().then(
+                            (prefs) async {
+                              await prefs.setString(
+                                  'phoneNumber', this.phoneNo);
+                            },
                           );
-
-                          await SharedPreferences.getInstance().then((prefs) async {
-                            await prefs.setString('phoneNumber', this.phoneNo);
-                          },);
-
+                          _showSpinner = false;
                           Alert(
                             context: context,
                             type: AlertType.success,
                             title: "Congtratulations!",
-                            desc: "You are now registered for Donde!\nHappy hoteling.",
+                            desc:
+                                "You are now registered for Donde!\nHappy hoteling.",
                             buttons: [
                               DialogButton(
                                 color: Colors.redAccent,
                                 child: Text(
                                   "Go to Home!",
-                                  style: TextStyle(color: Colors.white, fontSize: 20),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
                                 ),
                                 onPressed: () {
-                                  /** TODO
-                                   * Added phone number to index page navigator
-                                   */
-                                  Navigator.pushReplacementNamed(context, Index.id);
+                                  _showSpinner = true;
+                                  Navigator.pushReplacementNamed(
+                                      context, Index.id);
+                                  _showSpinner = false;
                                 },
                                 width: 150,
                               )

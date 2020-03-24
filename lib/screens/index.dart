@@ -12,17 +12,26 @@ import 'friends.dart';
 
 class Index extends StatefulWidget {
   static const String id = 'index_screen';
+  static const Tag = "Tabbar";
+  final List<Widget> screens;
+
+  Index({this.screens});
 
   @override
   _IndexState createState() => _IndexState();
 }
 
 class _IndexState extends State<Index> {
+
+
+
   int _selectedIndex = 0;
   static Explore _explore;
   static String phoneNo;
   LocationBrain _locationBrain;
   static List<PlacesSearchResult> places = [];
+  // Bottom navigation properties
+
 
   initState() {
     super.initState();
@@ -93,7 +102,7 @@ class _IndexState extends State<Index> {
     return _explore;
   }
 
-  final List<Widget> _widgetOptions = <Widget>[
+  /*final List<Widget> _widgetOptions = <Widget>[
     SafeArea(
       child: Home(),
     ),
@@ -106,7 +115,7 @@ class _IndexState extends State<Index> {
     SafeArea(
       child: SettingsScreen(phoneNumber: phoneNo),
     ),
-  ];
+  ];*/
 
   void _onItemTapped(int index) {
     setState(() {
@@ -119,7 +128,10 @@ class _IndexState extends State<Index> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       resizeToAvoidBottomPadding: true,
-      body: _widgetOptions[_selectedIndex],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: widget.screens,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

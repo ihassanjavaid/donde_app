@@ -33,13 +33,14 @@ class _PasswordState extends State<Password> {
     QuerySnapshot docs = await StoreFunc()
         .authenticatePhoneWithPassword(widget.phoneNumber, password);
     setState(() {
-      this.showSpinner = false;
+
     });
     if (docs.documents.isNotEmpty) {
       await prefs.setString('phoneNumber', widget.phoneNumber);
       print('authenticated from firestore');
 
       Navigator.popAndPushNamed(context, Index.id);
+      this.showSpinner = false;
       return true;
     } else {
       Alert(

@@ -1,9 +1,11 @@
 import 'package:donde_app/screens/explore.dart';
+import 'package:donde_app/screens/friends.dart';
 import 'package:donde_app/screens/home.dart';
 import 'package:donde_app/screens/index.dart';
 import 'package:donde_app/screens/registration.dart';
 import 'package:donde_app/screens/resetPassword.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'constants.dart';
 import 'screens/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,11 +27,28 @@ class Donde extends StatelessWidget {
         Login.id: (context) => Login(),
         //Password.id: (context) => Password(),
         Registration.id: (context) => Registration(),
-        Index.id: (context) => Index(),
+        Index.id: (context) => Index(
+              screens: <Widget>[
+                SafeArea(
+                  child: Home(),
+                ),
+                SafeArea(
+                  child: Explore(),
+                ),
+                SafeArea(
+                  child: Center(
+                    child: Friends(),
+                  ),
+                ),
+                SafeArea(
+                  child: SettingsScreen(),
+                ),
+              ],
+            ),
         Home.id: (context) => Home(),
         Explore.id: (context) => Explore(),
         SettingsScreen.id: (context) => SettingsScreen(),
-        ResetPassword.id:(context)=> ResetPassword(),
+        ResetPassword.id: (context) => ResetPassword(),
       },
     );
   }
@@ -48,7 +67,6 @@ class _RouteDeciderState extends State<RouteDecider> {
   void initState() {
     autoLogin();
     super.initState();
-
   }
 
   void autoLogin() async {
@@ -66,7 +84,6 @@ class _RouteDeciderState extends State<RouteDecider> {
       print('First time sign in');
       Navigator.popAndPushNamed(context, Login.id);
     }
-
   }
 
   @override
@@ -74,4 +91,3 @@ class _RouteDeciderState extends State<RouteDecider> {
     return Container();
   }
 }
-
