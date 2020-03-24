@@ -1,16 +1,11 @@
-import 'package:donde_app/components/customIconButton.dart';
 import 'package:donde_app/screens/password.dart';
 import 'package:donde_app/screens/registration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import '../components/customButton.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import '../components/dividerWithText.dart';
-import 'index.dart';
 import 'package:donde_app/store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -218,6 +213,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                           children: <Widget>[
                             CountryCodePicker(
                               initialSelection: 'pk',
+                              onInit: (countryCode) {
+                                this.countryCode = countryCode.toString();
+                              },
                               onChanged: (countryCode) {
                                 this.countryCode = countryCode.toString();
                               },
@@ -261,6 +259,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                       CustomButton(
                         buttonLabel: 'Next',
                         onTap: () async {
+
                           this.completePhoneNo =
                               this.countryCode + this.phoneNo;
 
