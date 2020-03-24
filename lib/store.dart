@@ -86,13 +86,12 @@ class StoreFunc {
     final fireStore = Firestore();
     List<String> currentUserLikedRestaurants = [];
 
-    final documents = await fireStore
+    final currentUserData = await fireStore
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
         .getDocuments();
 
-    for (var document in documents.documents) {
-      print(document.data);
+    for (var document in currentUserData.documents) {
       CollectionReference restaurants = fireStore
           .collection('users')
           .document(document.documentID)
@@ -108,20 +107,20 @@ class StoreFunc {
 
   static Future<List> getCurrentUserFriends() async {
     List<Contact> contacts = await ContactsClass.getContacts();
-    List<String> list = [];
-    for (var i in contacts) {
-      i.phones.forEach((phoneNum) async {
-        print(phoneNum.value.replaceAll(" ", ""));
+    List<String> friendsDocumentReferencesList = [];
+
+    for (var contact in contacts) {
+      contact.phones.forEach((phoneNum) async {
         QuerySnapshot query = await Firestore.instance
             .collection('users')
             .where('phoneNo', isEqualTo: phoneNum.value.replaceAll(" ", ""))
             .getDocuments();
 
         for (var document in query.documents) {
-          list.add(document.documentID);
+          friendsDocumentReferencesList.add(document.documentID);
         }
       });
     }
-    return list;
+    return friendsDocumentReferencesList;
   }
 }
