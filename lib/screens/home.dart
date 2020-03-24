@@ -76,13 +76,13 @@ class _HomeState extends State<Home> {
   void getSharedRestaurants() async {
     final friendsList = await StoreFunc.getCurrentUserFriends();
     final currentUserLikedRestaurants = await StoreFunc.getCurrentUserLikedRestaurants();
-    final firestore = Firestore();
+    final _firestore = Firestore.instance;
     String likedRestaurant = '';
 
 
     for (var friend in friendsList) {
 
-      await for (var snapshot in firestore
+      await for (var snapshot in _firestore
           .collection('users')
           .document(friend)
           .collection('liked_restaurants')
@@ -95,7 +95,7 @@ class _HomeState extends State<Home> {
               print(friendLikedRestaurant['restaurantName']);
               likedRestaurant = likedRestaurants;
               final sharedFriend =
-              await firestore.collection('users').document(friend).get();
+              await _firestore.collection('users').document(friend).get();
               var sharedFriendName = sharedFriend['displayName'];
 
               print(
@@ -159,7 +159,7 @@ class _HomeState extends State<Home> {
     super.initState();
     _locationBrain = LocationBrain();
     setRestaurantData();
-    getSharedRestaurants();
+//    getSharedRestaurants();
   }
 
   Future<void> _getPlaces() async {
