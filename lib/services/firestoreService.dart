@@ -114,12 +114,9 @@ class FirestoreService {
         }
       }
 
-      if (!restaurantAlreadyInStore) if (preference == 'liked_restaurants') {
-        restaurants
-            .add({'restaurantName': restaurantToBeStored, 'notified': false});
-      } else {
-        restaurants.add({'restaurantName': restaurantToBeStored});
-      }
+      // Add the restaurant to the user store
+      restaurants.add({'restaurantName': restaurantToBeStored});
+
     }
   }
 

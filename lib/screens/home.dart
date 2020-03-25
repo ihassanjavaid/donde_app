@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// The page housing the restaurant card and associated controls
 import 'package:donde_app/services/firestoreService.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -117,7 +118,7 @@ class _HomeState extends State<Home> {
       }
     }
 
-    *//*for (var friend in friendsList) {
+    */ /*for (var friend in friendsList) {
       // Get the friend's liked restaurants
       await for (var snapshot in _firestore
           .collection('users')
@@ -155,7 +156,7 @@ class _HomeState extends State<Home> {
           }
         }
       }
-    }*//*
+    }*/ /*
   }*/
 
   // Methods
@@ -184,18 +185,41 @@ class _HomeState extends State<Home> {
     }
   }
 
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  _getToken() {
+    _firebaseMessaging.getToken().then((deviceToken) {
+      print('Device Token: $deviceToken');
+    });
+  }
+
+  _configureFirebaseListeners() {
+    _firebaseMessaging.configure(
+        onMessage: (Map<String, dynamic> message) async {
+      print('onMessage: $message');
+    }, onLaunch: (Map<String, dynamic> message) async {
+      print('onLaunch: $message');
+    }, onResume: (Map<String, dynamic> message) async {
+      print('onResume: $message');
+    });
+  }
+
   @override
   initState() {
     super.initState();
+    _getToken();
+    _configureFirebaseListeners();
+
     _locationBrain = LocationBrain();
     setRestaurantData();
+
 //    getSharedRestaurants();
     //_interstitialAd = Ads().createInterstitialAd()..load()..show();
     //_interstitialAd..load()..show();
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
     _interstitialAd.dispose();
   }
