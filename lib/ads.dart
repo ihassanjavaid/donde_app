@@ -1,8 +1,6 @@
-
-import 'package:flutter/material.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
-const String adDevice = "ca-app-pub-5777492202424173~3025761937";
+const String appID = "ca-app-pub-5777492202424173~3025761937";
 const String interstitialID = "ca-app-pub-5777492202424173/6773435257";
 const String bannerID = "ca-app-pub-5777492202424173/7164317495";
 
@@ -12,26 +10,20 @@ class Ads {
     "Cafe", "Lunch", "Dinner", "Restaurant", "Donde", "Eat"];
 
   static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-      testDevices: adDevice != null ? <String>[adDevice] : null,
+      testDevices: appID != null ? <String>[appID] : null,
       nonPersonalizedAds: false,
       keywords: keywordsList
   );
-
-
-/* There are 2 types of ads:
-  1. Banner Ads
-  2. Interstitial Ad
-  3. Rewarded Ad*/
-
-  //static BannerAd _bannerAd;
-  //static InterstitialAd _interstitialAd;
 
   BannerAd createBannerAd() {
     return BannerAd(
         adUnitId: bannerID,
         size: AdSize.banner, // can be diff sized
         targetingInfo: targetingInfo,
-        listener: (MobileAdEvent event) {
+        listener: (event) {
+          if ( event == MobileAdEvent.loaded ) {
+
+          }
           print("BannerAd $event");
         }
     );
@@ -47,40 +39,5 @@ class Ads {
         }
     );
   }
-
-  /*@override
-  void initState() {
-    super.initState();
-    FirebaseAdMob.instance.initialize(
-        appId: BannerAd.testAdUnitId
-    );
-    _bannerAd = createBannerAd()
-      ..load()
-      ..show();
-  }*/
-
- /* @override
-  void dispose() {
-    super.dispose();
-    _bannerAd.dispose();
-    _interstitialAd.dispose();
-  }*/
-
-  /*@override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: RaisedButton(
-          child: Text('click for ad'),
-          onPressed: () {
-            _interstitialAd = createInterstitialAd()
-              ..load()
-              ..show();
-          },
-        ),
-      ),
-    );
-  }*/
-
 }
 
