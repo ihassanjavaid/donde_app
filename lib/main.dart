@@ -1,3 +1,4 @@
+import 'package:donde_app/ads.dart';
 import 'package:donde_app/screens/explore.dart';
 import 'package:donde_app/screens/friends.dart';
 import 'package:donde_app/screens/home.dart';
@@ -31,6 +32,7 @@ class Donde extends StatelessWidget {
               screens: <Widget>[
                 SafeArea(
                   child: Home(),
+                  //child: Ads(),
                 ),
                 SafeArea(
                   child: Explore(),
