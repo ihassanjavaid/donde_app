@@ -1,8 +1,8 @@
-/*
+
 import 'package:flutter/material.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
-const String testDevice = 'Mobile_id';
+const String testDevice = 'ca-app-pub-5777492202424173/6773435257';
 
 class Ads extends StatefulWidget {
   @override
@@ -19,11 +19,11 @@ class _AdsState extends State<Ads> {
       keywords: keywordsList
   );
 
-  */
+
 /* There are 2 types of ads:
   1. Banner Ads
   2. Interstitial Ad
-  3. Rewarded Ad*//*
+  3. Rewarded Ad*/
 
 
   BannerAd _bannerAd;
@@ -80,4 +80,4 @@ class _AdsState extends State<Ads> {
     );
   }
 }
-*/
+
