@@ -67,7 +67,7 @@ class ListItemWidget extends State<SwipeList> {
   }
 
   void getFriends() async {
-    showAdOnFriendsScreen();
+    //showAdOnFriendsScreen();
     print('CONTACTS here!');
     List<Contact> contacts = await ContactsClass.getContacts();
     for (var i in contacts) {
