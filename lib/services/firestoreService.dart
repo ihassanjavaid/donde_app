@@ -57,31 +57,41 @@ class FirestoreService {
     return userData;
   }
 
-  void addRestaurantToPreference(String restaurantToBeStored, String preference) async {
+  void addRestaurantToPreference(
+      String restaurantToBeStored, String preference) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final String phoneNo = pref.getString('phoneNumber');
     final fireStore = Firestore();
     bool restaurantAlreadyInStore = false;
 
     // Get current user's documents from Firestore
-    final documents = await fireStore
+    final userDocuments = await fireStore
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
         .getDocuments();
 
-    // Get the collection based on preference from the fetched documents
-    for (var document in documents.documents) {
-      print(document.data);
+    for (var document in userDocuments.documents) {
+      // Get the collection based on preference from the fetched document(s)
       CollectionReference restaurants = fireStore
           .collection('users')
           .document(document.documentID)
           .collection(preference);
 
-      // Check in the collection if the restaurant already exists
-      final restaurantsInPreference = await fireStore.collection(restaurants.toString()).getDocuments();
+      // Get the documents from the acquired collection
+      print(restaurants.id);
+      final restaurantsInPreference = await fireStore
+          .collection('users')
+          .document(document.documentID)
+          .collection(restaurants.id)
+          .getDocuments();
+
+      // Check in the documents if the restaurant already exists
       for (var restaurant in restaurantsInPreference.documents) {
-        if (restaurantToBeStored == restaurant['restaurantName'])
+        if (restaurantToBeStored == restaurant['restaurantName']) {
           restaurantAlreadyInStore = true;
+          break;
+        }
+
       }
 
       if (restaurantAlreadyInStore == false)
