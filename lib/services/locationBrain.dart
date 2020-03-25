@@ -43,7 +43,7 @@ class LocationBrain {
     if (result.status == "OK") {
       _placesList = result.results;
     }
-
+        
     return _placesList;
   }
 
