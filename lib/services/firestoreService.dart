@@ -4,7 +4,7 @@ import 'package:donde_app/services/userData.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'contactsClass.dart';
 
-class StoreFunc {
+class FirestoreService {
   getUserPhoneNo(String phoneNo) {
     return Firestore.instance
         .collection('users')
@@ -31,7 +31,7 @@ class StoreFunc {
     }, merge: true);
   }
 
-  static Future<UserData> getCurrentUserData() async {
+  Future<UserData> getCurrentUserData() async {
     String phoneNumber;
     String displayName;
     String email;
@@ -57,30 +57,39 @@ class StoreFunc {
     return userData;
   }
 
-  static void addRestaurantToPreference(
-      String place, String preference) async {
+  void addRestaurantToPreference(String restaurantToBeStored, String preference) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final String phoneNo = pref.getString('phoneNumber');
-    final String restaurant = pref.getString('restaurant');
     final fireStore = Firestore();
+    bool restaurantAlreadyInStore = false;
 
+    // Get current user's documents from Firestore
     final documents = await fireStore
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
         .getDocuments();
 
+    // Get the collection based on preference from the fetched documents
     for (var document in documents.documents) {
       print(document.data);
       CollectionReference restaurants = fireStore
           .collection('users')
           .document(document.documentID)
           .collection(preference);
-      restaurants
-          .add({'restaurantName': place != null ? place : restaurant});
+
+      // Check in the collection if the restaurant already exists
+      final restaurantsInPreference = await fireStore.collection(restaurants.toString()).getDocuments();
+      for (var restaurant in restaurantsInPreference.documents) {
+        if (restaurantToBeStored == restaurant['restaurantName'])
+          restaurantAlreadyInStore = true;
+      }
+
+      if (restaurantAlreadyInStore == false)
+        restaurants.add({'restaurantName': restaurantToBeStored});
     }
   }
 
-  static Future<List<String>> getCurrentUserLikedRestaurants() async {
+  Future<List<String>> getCurrentUserLikedRestaurants() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final String phoneNo = pref.getString('phoneNumber');
     final fireStore = Firestore();
@@ -105,7 +114,7 @@ class StoreFunc {
     return currentUserLikedRestaurants;
   }
 
-  static Future<List> getCurrentUserFriends() async {
+  Future<List> getCurrentUserFriends() async {
     List<Contact> contacts = await ContactsClass.getContacts();
     List<String> friendsDocumentReferencesList = [];
 
