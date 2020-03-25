@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 /// The page housing the restaurant card and associated controls
 import 'package:donde_app/services/firestoreService.dart';
 import 'package:flutter/cupertino.dart';
@@ -76,13 +77,12 @@ class _HomeState extends State<Home> {
 
   void getSharedRestaurants() async {
     final friendsList = await _firestoreService.getCurrentUserFriends();
-    final currentUserLikedRestaurants = await _firestoreService.getCurrentUserLikedRestaurants();
+    final currentUserLikedRestaurants =
+        await _firestoreService.getCurrentUserLikedRestaurants();
     final _firestore = Firestore.instance;
     String likedRestaurant = '';
 
-
     for (var friend in friendsList) {
-
       await for (var snapshot in _firestore
           .collection('users')
           .document(friend)
@@ -96,7 +96,7 @@ class _HomeState extends State<Home> {
               print(friendLikedRestaurant['restaurantName']);
               likedRestaurant = likedRestaurants;
               final sharedFriend =
-              await _firestore.collection('users').document(friend).get();
+                  await _firestore.collection('users').document(friend).get();
               var sharedFriendName = sharedFriend['displayName'];
 
               print(
@@ -106,7 +106,7 @@ class _HomeState extends State<Home> {
                 type: AlertType.success,
                 title: "It's a Match! ♥",
                 desc:
-                "$sharedFriendName just liked a restaurant on your like list\n $likedRestaurants",
+                    "$sharedFriendName just liked a restaurant on your like list\n $likedRestaurants",
                 buttons: [
                   DialogButton(
                     color: Colors.redAccent,
@@ -121,10 +121,8 @@ class _HomeState extends State<Home> {
               ).show();
             }
           }
-
         }
       }
-
     }
   }
 
@@ -169,8 +167,6 @@ class _HomeState extends State<Home> {
       this.places = temp;
     });
   }
-
-
 
   void setRestaurantPreference(String preference) {
     String temp = '';
