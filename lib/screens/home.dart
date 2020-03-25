@@ -42,6 +42,8 @@ class _HomeState extends State<Home> {
 
   InterstitialAd _interstitialAd;
   String photoRef;
+  double ratingOfRes = 0;
+  String ratingStars = "No Rating!";
 
 /*  void getSharedRestaurants() async {
     final _firestore = Firestore.instance;
@@ -139,6 +141,7 @@ class _HomeState extends State<Home> {
           await prefs.setString('restaurant', place.name);
           setState(() {
             this.restaurantName = place.name;
+            this.ratingStars = getRatingStars(this.place.rating);
             place.photos.forEach((photo){
               this.photoRef = photo.photoReference;
             });
@@ -252,6 +255,7 @@ class _HomeState extends State<Home> {
           temp = this.restaurantName;
           setState(() {
             this.restaurantName = this.places.elementAt(randomIndex).name;
+            this.ratingStars = getRatingStars(this.places.elementAt(randomIndex).rating);
             this.places.elementAt(randomIndex).photos.forEach((photo){
               this.photoRef = photo.photoReference;
               return;
@@ -266,6 +270,7 @@ class _HomeState extends State<Home> {
         try {
           setState(() {
             this.restaurantName = this.places.elementAt(randomIndex).name;
+            this.ratingStars = getRatingStars(this.places.elementAt(randomIndex).rating);
             this.places.elementAt(randomIndex).photos.forEach((photo){
               this.photoRef = photo.photoReference;
               return;
@@ -282,6 +287,21 @@ class _HomeState extends State<Home> {
         this.genericRestaurantName = temp;
       });
     }
+  }
+
+  getRatingStars(double ratingDouble){
+    if (ratingDouble <= 0.0 )
+      return "No Ratings yet!";
+    if (ratingDouble < 2.0)
+      return "★";
+    if (ratingDouble < 3.0)
+      return "★★";
+    if (ratingDouble < 4.0)
+      return "★★★";
+    if (ratingDouble < 4.9)
+      return "★★★★";
+    else
+      return "★★★★★";
   }
 
   @override
@@ -384,13 +404,17 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
-                              /*Expanded(
+                              Expanded(
                                 flex: 1,
                                 child: Text(
-                                  '0.0 KMs',
-                                  style: kNormalTextStyle,
+                                  ratingStars,
+                                  style:  TextStyle(
+                                    fontStyle: FontStyle.normal,
+                                    color: Color(0xffebca46),
+                                    fontSize: 20
+                                  ),
                                 ),
-                              ),*/
+                              ),
                             ],
                           ),
                         ),
