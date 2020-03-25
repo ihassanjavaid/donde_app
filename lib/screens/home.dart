@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 /// The page housing the restaurant card and associated controls
-import 'package:donde_app/services/store.dart';
+import 'package:donde_app/services/firestoreService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -35,6 +35,7 @@ class _HomeState extends State<Home> {
   LocationBrain _locationBrain;
   int counter = 1;
   String genericRestaurantName = 'Restaurant Name';
+  final FirestoreService _firestoreService = FirestoreService();
 
   // for pictures
   static final img1 = AssetImage('images/resImages/01.jpg');
@@ -74,8 +75,8 @@ class _HomeState extends State<Home> {
   ];
 
   void getSharedRestaurants() async {
-    final friendsList = await StoreFunc.getCurrentUserFriends();
-    final currentUserLikedRestaurants = await StoreFunc.getCurrentUserLikedRestaurants();
+    final friendsList = await _firestoreService.getCurrentUserFriends();
+    final currentUserLikedRestaurants = await _firestoreService.getCurrentUserLikedRestaurants();
     final _firestore = Firestore.instance;
     String likedRestaurant = '';
 
@@ -191,7 +192,7 @@ class _HomeState extends State<Home> {
           setState(() {
             this.restaurantName = this.places.elementAt(randomIndex).name;
           });
-          StoreFunc.addRestaurantToPreference(temp, preference);
+          _firestoreService.addRestaurantToPreference(temp, preference);
         } catch (e) {
           print(e);
         }

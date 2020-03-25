@@ -1,4 +1,4 @@
-import 'package:donde_app/services/store.dart';
+import 'package:donde_app/services/firestoreService.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -150,7 +150,7 @@ class Registration extends StatelessWidget {
                           _showSpinner = true;
                           print('pressed register button');
 
-                          StoreFunc().registerNewUser(
+                          FirestoreService().registerNewUser(
                               name: this.name,
                               email: this.email,
                               phoneNo: this.phoneNo,

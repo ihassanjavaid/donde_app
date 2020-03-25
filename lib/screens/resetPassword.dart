@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../services/store.dart';
+import '../services/firestoreService.dart';
 
 class ResetPassword extends StatefulWidget {
   @override
@@ -124,7 +124,7 @@ class _State extends State<ResetPassword> {
       print("passwords match yay!");
       print(this.newPassword2);
 
-      QuerySnapshot docs = await StoreFunc()
+      QuerySnapshot docs = await FirestoreService()
           .authenticatePhoneWithPassword(phoneNumber, this.oldPassword);
       setState(() {
         this.showSpinner = false;

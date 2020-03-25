@@ -2,7 +2,7 @@ import 'package:donde_app/components/settingsWidget.dart';
 import 'package:donde_app/screens/login.dart';
 import 'package:donde_app/screens/resetPassword.dart';
 import 'package:donde_app/services/userData.dart';
-import 'package:donde_app/services/store.dart';
+import 'package:donde_app/services/firestoreService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,11 +28,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   UserData userData;
   String phoneNumber;
   bool toggleNotification = true;
+  final FirestoreService _firestoreService = FirestoreService();
 
   _SettingsScreenState({this.phoneNumber});
 
   void _acquireUserData() async {
-    final data = await StoreFunc.getCurrentUserData();
+    final data = await _firestoreService.getCurrentUserData();
     setState(() {
       userData = data;
     });

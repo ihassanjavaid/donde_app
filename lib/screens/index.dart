@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:donde_app/services/store.dart';
+import 'package:donde_app/services/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -22,10 +22,11 @@ class _IndexState extends State<Index> {
   static Explore _explore;
   static String phoneNo;
   static List<PlacesSearchResult> places = [];
+  final FirestoreService _firestoreService = FirestoreService();
 
   void getSharedRestaurants() async {
-    final friendsList = await StoreFunc.getCurrentUserFriends();
-    final currentUserLikedRestaurants = await StoreFunc.getCurrentUserLikedRestaurants();
+    final friendsList = await _firestoreService.getCurrentUserFriends();
+    final currentUserLikedRestaurants = await _firestoreService.getCurrentUserLikedRestaurants();
     final firestore = Firestore();
     String likedRestaurant = '';
 

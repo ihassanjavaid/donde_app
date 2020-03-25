@@ -5,7 +5,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../constants.dart';
 import '../components/customButton.dart';
 import '../components/customTextField.dart';
-import 'package:donde_app/services/store.dart';
+import 'package:donde_app/services/firestoreService.dart';
 import 'index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,7 +30,7 @@ class _PasswordState extends State<Password> {
     setState(() {
       this.showSpinner = true;
     });
-    QuerySnapshot docs = await StoreFunc()
+    QuerySnapshot docs = await FirestoreService()
         .authenticatePhoneWithPassword(widget.phoneNumber, password);
     setState(() {
 

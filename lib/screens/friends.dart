@@ -6,7 +6,7 @@ import 'package:donde_app/services/contactsClass.dart';
 import 'package:donde_app/services/userData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../services/store.dart';
+import '../services/firestoreService.dart';
 
 class Friends extends StatelessWidget {
 
@@ -44,6 +44,7 @@ class SwipeList extends StatefulWidget {
 class ListItemWidget extends State<SwipeList> {
   List items = [];
   UserData userData;
+  final FirestoreService _firestoreService = FirestoreService();
 
   @override
   void initState() {
@@ -196,7 +197,7 @@ class ListItemWidget extends State<SwipeList> {
   }
 
   void _acquireUserData() async {
-    final data = await StoreFunc.getCurrentUserData();
+    final data = await _firestoreService.getCurrentUserData();
     setState(() {
       userData = data;
     });
