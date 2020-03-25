@@ -5,15 +5,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'contactsClass.dart';
 
 class FirestoreService {
+  final _firestore = Firestore();
+
   getUserPhoneNo(String phoneNo) {
-    return Firestore.instance
+    return _firestore
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
         .getDocuments();
   }
 
   authenticatePhoneWithPassword(String phoneNo, String password) {
-    return Firestore.instance
+    return _firestore
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
         .where('password', isEqualTo: password)
@@ -22,7 +24,7 @@ class FirestoreService {
 
   registerNewUser(
       {String name, String phoneNo, String email, String password}) {
-    DocumentReference ref = Firestore.instance.collection('users').document();
+    DocumentReference ref = _firestore.collection('users').document();
     ref.setData({
       'displayName': name,
       'email': email,
@@ -41,7 +43,7 @@ class FirestoreService {
     final String phoneNo = pref.getString('phoneNumber');
 
     // final documents = store.getUserData(phoneNumber);
-    final documents = await Firestore()
+    final documents = await _firestore
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
         .getDocuments();
@@ -61,25 +63,25 @@ class FirestoreService {
       String restaurantToBeStored, String preference) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final String phoneNo = pref.getString('phoneNumber');
-    final fireStore = Firestore();
+
     bool restaurantAlreadyInStore = false;
 
     // Get current user's documents from Firestore
-    final userDocuments = await fireStore
+    final userDocuments = await _firestore
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
         .getDocuments();
 
     for (var document in userDocuments.documents) {
       // Get the collection based on preference from the fetched document(s)
-      CollectionReference restaurants = fireStore
+      CollectionReference restaurants = _firestore
           .collection('users')
           .document(document.documentID)
           .collection(preference);
 
       // Get the documents from the acquired collection
       print(restaurants.id);
-      final restaurantsInPreference = await fireStore
+      final restaurantsInPreference = await _firestore
           .collection('users')
           .document(document.documentID)
           .collection(restaurants.id)
@@ -91,31 +93,30 @@ class FirestoreService {
           restaurantAlreadyInStore = true;
           break;
         }
-
       }
 
-      if (restaurantAlreadyInStore == false)
-        if (preference == 'liked_restaurants') {
-          restaurants.add({'restaurantName': restaurantToBeStored, 'notified': false});
-        } else {
-          restaurants.add({'restaurantName': restaurantToBeStored});
-        }
+      if (restaurantAlreadyInStore == false) if (preference ==
+          'liked_restaurants') {
+        restaurants
+            .add({'restaurantName': restaurantToBeStored, 'notified': false});
+      } else {
+        restaurants.add({'restaurantName': restaurantToBeStored});
+      }
     }
   }
 
   Future<List<String>> getCurrentUserLikedRestaurants() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final String phoneNo = pref.getString('phoneNumber');
-    final fireStore = Firestore();
     List<String> currentUserLikedRestaurants = [];
 
-    final currentUserData = await fireStore
+    final currentUserData = await _firestore
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
         .getDocuments();
 
     for (var document in currentUserData.documents) {
-      CollectionReference restaurants = fireStore
+      CollectionReference restaurants = _firestore
           .collection('users')
           .document(document.documentID)
           .collection('liked_restaurants');
@@ -134,7 +135,7 @@ class FirestoreService {
 
     for (var contact in contacts) {
       contact.phones.forEach((phoneNum) async {
-        QuerySnapshot query = await Firestore.instance
+        QuerySnapshot query = await _firestore
             .collection('users')
             .where('phoneNo', isEqualTo: phoneNum.value.replaceAll(" ", ""))
             .getDocuments();
@@ -147,7 +148,15 @@ class FirestoreService {
     return friendsDocumentReferencesList;
   }
 
-  void updateLikedRestaurantNotificationStatus() {
+  void updateLikedRestaurantNotificationStatus(
+      {DocumentSnapshot friend, String restaurantToBeUpdated}) async {
+    final CollectionReference likedRestaurant = _firestore
+        .collection('users')
+        .document(friend.documentID)
+        .collection('liked_restaurants')
+        .where('restaurantName', isEqualTo: restaurantToBeUpdated);
+
+    likedRestaurant.add({'notified': true});
 
   }
 }

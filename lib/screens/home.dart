@@ -81,6 +81,13 @@ class _HomeState extends State<Home> {
     final _firestore = Firestore.instance;
     String likedRestaurant = '';
 
+
+    await for (var snapshot in _firestore.collection('users').snapshots()) {
+      for (var user in snapshot.documentChanges) {
+        print(user.document.data);
+      }
+    }
+
     for (var friend in friendsList) {
       // Get the friend's liked restaurants
       await for (var snapshot in _firestore
@@ -89,25 +96,20 @@ class _HomeState extends State<Home> {
           .collection('liked_restaurants')
           .where('notified', isEqualTo: false)
           .snapshots()) {
+        // Compare friend's each restaurant with current user's restaurant for match
         for (var friendLikedRestaurant in snapshot.documents) {
-          /*for (var likedRestaurants in currentUserLikedRestaurants) {
-            if (likedRestaurants == friendLikedRestaurant['restaurantName'] &&
-                (friendLikedRestaurant['restaurantName'] != likedRestaurant ||
-                    likedRestaurant == '')) {
-              print(friendLikedRestaurant['restaurantName']);
-              likedRestaurant = likedRestaurants;
-              final sharedFriend =
+          for (var likedRestaurant in currentUserLikedRestaurants) {
+            if (likedRestaurant == friendLikedRestaurant['restaurantName']) {
+              final friendData =
                   await _firestore.collection('users').document(friend).get();
-              var sharedFriendName = sharedFriend['displayName'];
-
-              print(
-                  '$sharedFriendName just liked a restaurant on your like list\n $likedRestaurants');
+              final matchFriendName = friendData['displayName'];
+              _firestoreService.updateLikedRestaurantNotificationStatus(friend: friendData, restaurantToBeUpdated: likedRestaurant);
               Alert(
                 context: context,
                 type: AlertType.success,
                 title: "It's a Match! ♥",
                 desc:
-                    "$sharedFriendName just liked a restaurant on your like list\n $likedRestaurants",
+                    "$matchFriendName just liked a restaurant on your like list\n $likedRestaurant",
                 buttons: [
                   DialogButton(
                     color: Colors.redAccent,
@@ -121,7 +123,7 @@ class _HomeState extends State<Home> {
                 ],
               ).show();
             }
-          }*/
+          }
         }
       }
     }
@@ -134,7 +136,6 @@ class _HomeState extends State<Home> {
     await _getPlaces();
     await prefs.setString('restaurant', 'Tehzeeb');
     if (places.length != 0) {
-      print('Found Restaurants');
       // Get one of the indexes
       try {
         /*final int randomIndex = Random().nextInt(widget.places.length - 1);
@@ -159,7 +160,7 @@ class _HomeState extends State<Home> {
     super.initState();
     _locationBrain = LocationBrain();
     setRestaurantData();
-//    getSharedRestaurants();
+    getSharedRestaurants();
   }
 
   Future<void> _getPlaces() async {
