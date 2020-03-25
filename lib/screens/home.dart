@@ -41,43 +41,7 @@ class _HomeState extends State<Home> {
   final FirestoreService _firestoreService = FirestoreService();
 
   InterstitialAd _interstitialAd;
-
-  // for pictures
-  static final img1 = AssetImage('images/resImages/01.jpg');
-  static final img2 = AssetImage('images/resImages/02.jpg');
-  static final img3 = AssetImage('images/resImages/03.jpg');
-  static final img4 = AssetImage('images/resImages/04.jpg');
-  static final img5 = AssetImage('images/resImages/05.jpg');
-
-  static final img6 = AssetImage('images/resImages/06.jpg');
-  static final img7 = AssetImage('images/resImages/07.jpg');
-  static final img8 = AssetImage('images/resImages/08.jpg');
-  static final img9 = AssetImage('images/resImages/09.jpg');
-  static final img10 = AssetImage('images/resImages/10.jpg');
-
-  static final img11 = AssetImage('images/resImages/11.jpg');
-  static final img12 = AssetImage('images/resImages/12.jpg');
-  static final img13 = AssetImage('images/resImages/13.jpg');
-  static final img14 = AssetImage('images/resImages/14.jpg');
-  static final img15 = AssetImage('images/resImages/15.jpg');
-
-  final List<AssetImage> resImages = [
-    img1,
-    img2,
-    img3,
-    img4,
-    img5,
-    img6,
-    img7,
-    img8,
-    img9,
-    img10,
-    img11,
-    img12,
-    img13,
-    img14,
-    img15
-  ];
+  String photoRef;
 
 /*  void getSharedRestaurants() async {
     final _firestore = Firestore.instance;
@@ -163,6 +127,7 @@ class _HomeState extends State<Home> {
   void setRestaurantData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
+
     await _getPlaces();
     await prefs.setString('restaurant', 'Tehzeeb');
     if (places.length != 0) {
@@ -174,6 +139,9 @@ class _HomeState extends State<Home> {
           await prefs.setString('restaurant', place.name);
           setState(() {
             this.restaurantName = place.name;
+            place.photos.forEach((photo){
+              this.photoRef = photo.photoReference;
+            });
           });
           break;
         }
@@ -196,28 +164,28 @@ class _HomeState extends State<Home> {
   _configureFirebaseListeners() {
     _firebaseMessaging.configure(
         onMessage: (Map<String, dynamic> message) async {
-      print('onMessage: $message');
-      setState(() {
-        Alert(
-          context: context,
-          type: AlertType.success,
-          title: "Test notification",
-          desc: 'Just got the test notification',
-          buttons: [
-            DialogButton(
-              color: Colors.redAccent,
-              child: Text(
-                "Yayy!",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              onPressed: () => Navigator.pop(context),
-              width: 120,
-            )
-          ],
-        ).show();
-      });
-      _setNotification(message);
-    }, onLaunch: (Map<String, dynamic> message) async {
+          print('onMessage: $message');
+          setState(() {
+            Alert(
+              context: context,
+              type: AlertType.success,
+              title: "Test notification",
+              desc: 'Just got the test notification',
+              buttons: [
+                DialogButton(
+                  color: Colors.redAccent,
+                  child: Text(
+                    "Yayy!",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  width: 120,
+                )
+              ],
+            ).show();
+          });
+          _setNotification(message);
+        }, onLaunch: (Map<String, dynamic> message) async {
       print('onLaunch: $message');
       _setNotification(message);
     }, onResume: (Map<String, dynamic> message) async {
@@ -274,7 +242,7 @@ class _HomeState extends State<Home> {
           if (preference == "disliked_restaurants") {
             // Remove all instances of the disliked restaurants
             this.places.forEach(
-              (restaurant) {
+                  (restaurant) {
                 if (restaurant.name == this.restaurantName) {
                   this.places.remove(restaurant);
                 }
@@ -284,6 +252,10 @@ class _HomeState extends State<Home> {
           temp = this.restaurantName;
           setState(() {
             this.restaurantName = this.places.elementAt(randomIndex).name;
+            this.places.elementAt(randomIndex).photos.forEach((photo){
+              this.photoRef = photo.photoReference;
+              return;
+            });
           });
           _firestoreService.addRestaurantToPreference(temp, preference);
         } catch (e) {
@@ -294,6 +266,10 @@ class _HomeState extends State<Home> {
         try {
           setState(() {
             this.restaurantName = this.places.elementAt(randomIndex).name;
+            this.places.elementAt(randomIndex).photos.forEach((photo){
+              this.photoRef = photo.photoReference;
+              return;
+            });
           });
         } catch (e) {
           print(e);
@@ -369,7 +345,7 @@ class _HomeState extends State<Home> {
                       children: <Widget>[
                         Expanded(
                           flex: 3,
-                          child: Container(
+                          /*child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
@@ -378,6 +354,9 @@ class _HomeState extends State<Home> {
                                 image: resImages[Random().nextInt(14)],
                               ),
                             ),
+                          ),*/
+                          child: Image.network(
+                            'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoRef&key=AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U'
                           ),
                         ),
                         Expanded(

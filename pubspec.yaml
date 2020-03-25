@@ -72,21 +72,7 @@ flutter:
     - images/food.jpeg
     - images/refreshicon.png
     - images/logo.png
-    - images/resImages/01.jpg
-    - images/resImages/02.jpg
-    - images/resImages/03.jpg
-    - images/resImages/04.jpg
-    - images/resImages/05.jpg
-    - images/resImages/06.jpg
-    - images/resImages/07.jpg
-    - images/resImages/08.jpg
-    - images/resImages/09.jpg
-    - images/resImages/10.jpg
-    - images/resImages/11.jpg
-    - images/resImages/12.jpg
-    - images/resImages/13.jpg
-    - images/resImages/14.jpg
-    - images/resImages/15.jpg
+
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
