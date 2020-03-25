@@ -1,12 +1,13 @@
 import 'package:donde_app/screens/password.dart';
 import 'package:donde_app/screens/registration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../constants.dart';
 import '../components/customButton.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:donde_app/services/store.dart';
+import 'package:donde_app/services/firestoreService.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Login extends StatefulWidget {
@@ -35,7 +36,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     setState(() {
       this.showSpinner = true;
     });
-    StoreFunc()
+    FirestoreService()
         .getUserPhoneNo(this.completePhoneNo)
         .then((QuerySnapshot docs) {
       setState(() {
@@ -211,26 +212,28 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                       Container(
                         child: Row(
                           children: <Widget>[
-                            CountryCodePicker(
-                              initialSelection: 'pk',
-                              onInit: (countryCode) {
-                                this.countryCode = countryCode.toString();
-                              },
-                              onChanged: (countryCode) {
-                                this.countryCode = countryCode.toString();
-                              },
-                            ),
-                            VerticalDivider(
-                              color: Colors.redAccent,
-                              thickness: 1.0,
-                            ),
                             Expanded(
+                              flex: 1,
+                              child: CountryCodePicker(
+                                initialSelection: 'pk',
+                                onInit: (countryCode) {
+                                  this.countryCode = countryCode.toString();
+                                },
+                                onChanged: (countryCode) {
+                                  this.countryCode = countryCode.toString();
+                                },
+                              ),
+                            ),
+                            
+                            Expanded(
+                              flex: 4,
                               child: TextField(
                                 keyboardType: TextInputType.phone,
                                 onChanged: (value) {
                                   this.phoneNo = value;
                                 },
                                 decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10.0),
                                   labelText: 'Enter Number',
                                   hasFloatingPlaceholder: true,
                                   labelStyle: TextStyle(
