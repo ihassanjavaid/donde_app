@@ -11,7 +11,7 @@ class Ads {
 
   static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
       testDevices: appID != null ? <String>[appID] : null,
-      nonPersonalizedAds: false,
+      nonPersonalizedAds: true,
       keywords: keywordsList
   );
 
