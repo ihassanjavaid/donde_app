@@ -17,6 +17,7 @@ class RestaurantDescription extends StatefulWidget {
 
 class _RestaurantDescriptionState extends State<RestaurantDescription> {
   InterstitialAd _interstitialAd;
+  String photoRef;
 
   @override
   void initState() {
@@ -33,11 +34,11 @@ class _RestaurantDescriptionState extends State<RestaurantDescription> {
   @override
   Widget build(BuildContext context) {
     if (widget.place != null) {
-      String photoRef = widget.place.photos[0].photoReference;
+      photoRef = widget.place.photos[0].photoReference;
       print(widget.place.photos[0].photoReference);
-      String photoAddress =
+      /*String photoAddress =
           "https://maps.googleapis.com/maps/api/place/photo?maxwidth=960&photoreference=$photoRef&key=AIzaSyA-aRQiJZfCzNgsyHfoUYNE8rwBLcu7fio";
-      print(photoAddress);
+      print(photoAddress);*/
     }
     return Scaffold(
       appBar: AppBar(
@@ -98,15 +99,22 @@ class _RestaurantDescriptionState extends State<RestaurantDescription> {
                     children: <Widget>[
                       Expanded(
                         flex: 3,
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: NetworkImage(
-                                  'https://wpcdn.us-east-1.vip.tn-cloud.net/www.abc6.com/content/uploads/2020/03/restaurants.jpg'),
+                        /*child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: resImages[Random().nextInt(14)],
+                              ),
                             ),
+                          ),*/
+                        child: Container(
+                          child: Image.network(
+                            'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoRef&key=AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U',
+                            width: double.maxFinite,
+                            height: double.maxFinite,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
@@ -151,16 +159,16 @@ class _RestaurantDescriptionState extends State<RestaurantDescription> {
                     onTap: () {}, // Dislike
                     child: Image(
                       image: AssetImage('images/crossicon.png'),
-                      height: 36,
-                      width: 36,
+                      height: 40,
+                      width: 40,
                     ),
                   ),
                   InkWell(
                     onTap: () {}, // Like
                     child: Image(
                       image: AssetImage('images/hearticon.png'),
-                      height: 36,
-                      width: 36,
+                      height: 40,
+                      width: 40,
                     ),
                   ),
                 ],

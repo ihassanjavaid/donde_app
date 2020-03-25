@@ -108,7 +108,7 @@ class _IndexState extends State<Index> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      //_interstitialAd = Ads().createInterstitialAd()..load()..show();
+      _interstitialAd = Ads().createInterstitialAd()..load()..show();
     });
   }
 

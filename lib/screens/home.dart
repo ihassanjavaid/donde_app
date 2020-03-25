@@ -338,9 +338,10 @@ class _HomeState extends State<Home> {
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
                     borderOnForeground: true,
-                    elevation: 18.0,
+                    elevation: 58.0,
                     child: Column(
                       children: <Widget>[
                         Expanded(
@@ -355,8 +356,13 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                           ),*/
-                          child: Image.network(
-                            'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoRef&key=AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U'
+                          child: Container(
+                            child: Image.network(
+                              'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoRef&key=AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U',
+                              width: double.maxFinite,
+                              height: double.maxFinite,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
                         Expanded(
@@ -404,8 +410,8 @@ class _HomeState extends State<Home> {
                       }, // Dislike
                       child: Image(
                         image: AssetImage('images/crossicon.png'),
-                        height: 36,
-                        width: 36,
+                        height: 58,
+                        width: 58,
                       ),
                     ),
                     InkWell(
@@ -424,8 +430,8 @@ class _HomeState extends State<Home> {
                       }, // Like
                       child: Image(
                         image: AssetImage('images/hearticon.png'),
-                        height: 36,
-                        width: 36,
+                        height: 58,
+                        width: 58,
                       ),
                     ),
                   ],

@@ -7,7 +7,7 @@ class FriendDetails extends StatelessWidget {
   List restaurants;
 
   void getFriendRestaurants() {
-    List restaurants = _firestoreService.getFriendLikedRestaurants();
+    List restaurants = _firestoreService.getFriendLikedRestaurants("");
   }
 
   @override
