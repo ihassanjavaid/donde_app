@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:donde_app/ads.dart';
 import 'package:donde_app/screens/explore.dart';
 import 'package:donde_app/screens/friends.dart';
@@ -13,7 +14,9 @@ import 'package:flutter/material.dart';
 
 import 'screens/settingsScreen.dart';
 
-void main() => runApp(Donde());
+void main() {
+  runApp(Donde());
+}
 
 class Donde extends StatelessWidget {
   @override
