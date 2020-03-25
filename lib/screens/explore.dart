@@ -34,7 +34,7 @@ class _ExploreState extends State<Explore> {
   void initState() {
     super.initState();
     _setupMap();
-    showAdOnExploreScreen();
+    //showAdOnExploreScreen();
   }
 
   @override

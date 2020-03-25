@@ -78,14 +78,46 @@ class _HomeState extends State<Home> {
     img15
   ];
 
-  void getSharedRestaurants() async {
-    final friendsList = await _firestoreService.getCurrentUserFriends();
-    final currentUserLikedRestaurants =
-        await _firestoreService.getCurrentUserLikedRestaurants();
+/*  void getSharedRestaurants() async {
     final _firestore = Firestore.instance;
-    String likedRestaurant = '';
 
-    for (var friend in friendsList) {
+    await for (var snapshot in _firestore.collection('liked_restaurants').where().snapshots()) {
+      for (var likedRestaurant in snapshot.documents) {
+        String matchFriendName = '';
+        final likedRestaurantTemp = likedRestaurant['restaurantName'];
+        // Get the friend for whom the match was found
+        final friend = await _firestore.collection('users').where('phoneNo', isEqualTo: likedRestaurant['userID']).getDocuments();
+        for (var userData in friend.documents) {
+          matchFriendName = userData['displayName'];
+          break;
+        }
+
+        // Mark the restaurant as notified in firestore
+//        _firestoreService.updateLikedRestaurantNotificationStatus(userID: likedRestaurant['userID'], restaurantToBeUpdated: likedRestaurantTemp);
+
+        // Display alert
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "It's a Match! ♥",
+          desc:
+          "$matchFriendName just liked a restaurant on your like list\n $likedRestaurantTemp",
+          buttons: [
+            DialogButton(
+              color: Colors.redAccent,
+              child: Text(
+                "Yayy!",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+      }
+    }
+
+    *//*for (var friend in friendsList) {
       // Get the friend's liked restaurants
       await for (var snapshot in _firestore
           .collection('users')
@@ -123,8 +155,8 @@ class _HomeState extends State<Home> {
           }
         }
       }
-    }
-  }
+    }*//*
+  }*/
 
   // Methods
   void setRestaurantData() async {
@@ -157,7 +189,8 @@ class _HomeState extends State<Home> {
     super.initState();
     _locationBrain = LocationBrain();
     setRestaurantData();
-    getSharedRestaurants();_interstitialAd = Ads().createInterstitialAd()..load()..show();
+//    getSharedRestaurants();
+    //_interstitialAd = Ads().createInterstitialAd()..load()..show();
     //_interstitialAd..load()..show();
   }
 

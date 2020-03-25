@@ -24,7 +24,7 @@ class _IndexState extends State<Index> {
   static List<PlacesSearchResult> places = [];
   final FirestoreService _firestoreService = FirestoreService();
 
-  void getSharedRestaurants() async {
+  /*void getSharedRestaurants() async {
     final friendsList = await _firestoreService.getCurrentUserFriends();
     final currentUserLikedRestaurants = await _firestoreService.getCurrentUserLikedRestaurants();
     final firestore = Firestore();
@@ -72,13 +72,13 @@ class _IndexState extends State<Index> {
           
         }
       }
-      /*final friendRestaurants = await documents.getDocuments();
+      *//*final friendRestaurants = await documents.getDocuments();
         for (var friendLikedRes in friendRestaurants.documents) {
 
-        }*/
+        }*//*
 
     }
-  }
+  }*/
 
   static Widget acquireExploreWidget() {
     if (_explore == null) {

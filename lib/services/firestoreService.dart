@@ -63,8 +63,27 @@ class FirestoreService {
       String restaurantToBeStored, String preference) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final String phoneNo = pref.getString('phoneNumber');
-
     bool restaurantAlreadyInStore = false;
+
+    /* // Get the collection based on required preference
+    final CollectionReference preferenceBasedRestaurants = _firestore.collection(preference);
+
+    // Check in the collection documents if the restaurant already exists
+    final restaurantsInPreference = await preferenceBasedRestaurants.getDocuments();
+    for (var restaurant in restaurantsInPreference.documents) {
+      if (restaurantToBeStored == restaurant['restaurantName']) {
+        restaurantAlreadyInStore = true;
+        break;
+      }
+    }
+
+    // Store the restaurant as per the required preference
+    if (!restaurantAlreadyInStore) {
+      if (preference == 'liked_restaurants')
+        preferenceBasedRestaurants.add({'restaurantName': restaurantToBeStored, 'notified': false, 'userID': phoneNo});
+      else
+        preferenceBasedRestaurants.add({'restaurantName': restaurantToBeStored, 'userID': phoneNo});
+    }*/
 
     // Get current user's documents from Firestore
     final userDocuments = await _firestore
@@ -95,8 +114,7 @@ class FirestoreService {
         }
       }
 
-      if (restaurantAlreadyInStore == false) if (preference ==
-          'liked_restaurants') {
+      if (!restaurantAlreadyInStore) if (preference == 'liked_restaurants') {
         restaurants
             .add({'restaurantName': restaurantToBeStored, 'notified': false});
       } else {
@@ -105,7 +123,7 @@ class FirestoreService {
     }
   }
 
-  Future<List<String>> getCurrentUserLikedRestaurants() async {
+  /*Future<List<String>> getCurrentUserLikedRestaurants() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final String phoneNo = pref.getString('phoneNumber');
     List<String> currentUserLikedRestaurants = [];
@@ -127,9 +145,9 @@ class FirestoreService {
     }
     print(currentUserLikedRestaurants);
     return currentUserLikedRestaurants;
-  }
+  }*/
 
-  Future<List> getCurrentUserFriends() async {
+  /*Future<List> getCurrentUserFriends() async {
     List<Contact> contacts = await ContactsClass.getContacts();
     List<String> friendsDocumentReferencesList = [];
 
@@ -146,17 +164,24 @@ class FirestoreService {
       });
     }
     return friendsDocumentReferencesList;
-  }
+  }*/
 
   void updateLikedRestaurantNotificationStatus(
-      {DocumentSnapshot friend, String restaurantToBeUpdated}) async {
-    final CollectionReference likedRestaurant = _firestore
+      {String userID, String restaurantToBeUpdated}) async {
+    /*final CollectionReference likedRestaurant = _firestore
         .collection('users')
         .document(friend.documentID)
         .collection('liked_restaurants')
         .where('restaurantName', isEqualTo: restaurantToBeUpdated);
 
-    likedRestaurant.add({'notified': true});
+    likedRestaurant.add({'notified': true});*/
+    // Get the collection reference for the user's required restaurant
+    final CollectionReference restaurantUpdateReference = _firestore
+        .collection('liked_restaurants')
+        .where('userID', isEqualTo: userID)
+        .where('restaurantName', isEqualTo: restaurantToBeUpdated);
 
+    // Update the notified status
+    restaurantUpdateReference.add({'notified': true});
   }
 }
