@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contacts_service/contacts_service.dart';
+import 'package:donde_app/screens/friendDetails.dart';
 import 'package:donde_app/services/contactsClass.dart';
 import 'package:donde_app/services/userData.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 import '../services/firestoreService.dart';
 
 class Friends extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +59,6 @@ class ListItemWidget extends State<SwipeList> {
     List<Contact> contacts = await ContactsClass.getContacts();
     for (var i in contacts) {
       i.phones.forEach((phoneNum) async {
-
         reducedPhoneNum = phoneNum.value.replaceAll(" ", "");
         reducedPhoneNum = reducedPhoneNum.replaceAll("-", "");
         print(reducedPhoneNum);
@@ -75,7 +74,6 @@ class ListItemWidget extends State<SwipeList> {
           setState(() {
             this.items.add(document.data['displayName']);
           });
-
         }
       });
     }
@@ -86,9 +84,103 @@ class ListItemWidget extends State<SwipeList> {
     _acquireUserData();
     return Container(
         child: ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            return Dismissible(
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          child: Card(
+            elevation: 10,
+            child: Container(
+              height: 90.0,
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    height: 70.0,
+                    width: 70.0,
+                    child: CircularProfileAvatar(
+                      "",
+                      backgroundColor: Colors.grey,
+                      initialsText: Text(
+                        items[index] != null ? items[index][0] : "",
+                        style: TextStyle(
+                          fontSize: 42,
+                          color: Colors.white,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      elevation: 10.0,
+//                borderColor: Colors.redAccent,
+//                borderWidth: 3,
+                    ),
+                    /*decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            topLeft: Radius.circular(20)),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                                "https://i.ya-webdesign.com/images/funny-png-avatar-2.png")
+                        ),
+                    ),*/
+                  ),
+                  Container(
+                    //width: double.infinity,
+                    height: 100,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          AutoSizeText(
+                            items[index],
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
+                            child: Container(
+                              width: 50,
+                              decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  border: Border.all(color: Colors.green),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: Text(
+                                "Online",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
+                            child: Container(
+                              width: 260,
+                              child: Text(
+                                "Swipe to delete ←",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+        /*Dismissible(
               key: Key(items[index]),
               background: Container(
                 alignment: AlignmentDirectional.centerEnd,
@@ -102,6 +194,7 @@ class ListItemWidget extends State<SwipeList> {
               onDismissed: (direction) {
                 setState(() {
                   items.removeAt(index);
+
                 });
               },
               direction: DismissDirection.endToStart,
@@ -197,9 +290,9 @@ class ListItemWidget extends State<SwipeList> {
                   ),
                 ),
               ),
-            );
-          },
-        ));
+            );*/
+      },
+    ));
   }
 
   void _acquireUserData() async {

@@ -1,6 +1,7 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:donde_app/ads.dart';
 import 'package:donde_app/screens/explore.dart';
+import 'package:donde_app/screens/friendDetails.dart';
 import 'package:donde_app/screens/friends.dart';
 import 'package:donde_app/screens/home.dart';
 import 'package:donde_app/screens/index.dart';
@@ -54,6 +55,7 @@ class Donde extends StatelessWidget {
         Explore.id: (context) => Explore(),
         SettingsScreen.id: (context) => SettingsScreen(),
         ResetPassword.id: (context) => ResetPassword(),
+        FriendDetails.id: (context) => FriendDetails(),
       },
     );
   }

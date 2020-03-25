@@ -181,4 +181,8 @@ class FirestoreService {
     // Update the notified status
     restaurantUpdateReference.add({'notified': true});
   }
+
+  getFriendLikedRestaurants(String friendNumber) {
+
+  }
 }
