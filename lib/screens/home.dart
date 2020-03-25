@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 /// The page housing the restaurant card and associated controls
-import 'package:donde_app/store.dart';
+import 'package:donde_app/services/store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -13,7 +13,7 @@ import '../constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-import '../locationBrain.dart';
+import '../services/locationBrain.dart';
 
 // ignore: must_be_immutable
 class Home extends StatefulWidget {

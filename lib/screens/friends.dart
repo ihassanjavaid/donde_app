@@ -2,13 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contacts_service/contacts_service.dart';
-import 'package:donde_app/contactsClass.dart';
+import 'package:donde_app/services/contactsClass.dart';
 import 'package:donde_app/services/userData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:donde_app/contactsClass.dart';
-import '../constants.dart';
-import '../store.dart';
+import '../services/store.dart';
 
 class Friends extends StatelessWidget {
 
@@ -56,7 +54,6 @@ class ListItemWidget extends State<SwipeList> {
   void getFriends() async {
     print('CONTACTS here!');
     List<Contact> contacts = await ContactsClass.getContacts();
-    List<String> list = List();
     for (var i in contacts) {
       i.phones.forEach((phoneNum) async {
         print(phoneNum.value.replaceAll(" ", ""));

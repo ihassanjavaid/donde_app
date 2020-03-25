@@ -1,14 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:donde_app/locationBrain.dart';
-import 'package:donde_app/screens/settingsScreen.dart';
-import 'package:donde_app/store.dart';
+import 'package:donde_app/services/store.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../constants.dart';
 import 'explore.dart';
-import 'home.dart';
-import 'friends.dart';
 
 class Index extends StatefulWidget {
   static const String id = 'index_screen';
@@ -22,22 +18,10 @@ class Index extends StatefulWidget {
 }
 
 class _IndexState extends State<Index> {
-
-
-
   int _selectedIndex = 0;
   static Explore _explore;
   static String phoneNo;
-  LocationBrain _locationBrain;
   static List<PlacesSearchResult> places = [];
-  // Bottom navigation properties
-
-
-  initState() {
-    super.initState();
-    this._locationBrain = LocationBrain();
-    //getSharedRestaurants();
-  }
 
   void getSharedRestaurants() async {
     final friendsList = await StoreFunc.getCurrentUserFriends();

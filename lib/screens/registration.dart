@@ -1,4 +1,4 @@
-import 'package:donde_app/store.dart';
+import 'package:donde_app/services/store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';

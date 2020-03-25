@@ -5,7 +5,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../constants.dart';
 import '../components/customButton.dart';
 import '../components/customTextField.dart';
-import 'package:donde_app/store.dart';
+import 'package:donde_app/services/store.dart';
 import 'index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

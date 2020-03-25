@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../store.dart';
+import '../services/store.dart';
 
 class ResetPassword extends StatefulWidget {
   @override

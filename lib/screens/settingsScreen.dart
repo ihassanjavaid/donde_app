@@ -2,7 +2,7 @@ import 'package:donde_app/components/settingsWidget.dart';
 import 'package:donde_app/screens/login.dart';
 import 'package:donde_app/screens/resetPassword.dart';
 import 'package:donde_app/services/userData.dart';
-import 'package:donde_app/store.dart';
+import 'package:donde_app/services/store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
