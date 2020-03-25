@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:donde_app/screens/restaurantDescription.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:donde_app/services/locationBrain.dart';
 import 'package:google_maps_webservice/places.dart';
+
+import '../ads.dart';
 
 class Explore extends StatefulWidget {
   static const String id = 'explore_screen';
@@ -20,6 +23,7 @@ class _ExploreState extends State<Explore> {
   LocationBrain locationBrain = LocationBrain();
   Completer<GoogleMapController> _controller = Completer();
   List placeMarkers = [];
+  InterstitialAd _interstitialAd;
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -30,6 +34,17 @@ class _ExploreState extends State<Explore> {
   void initState() {
     super.initState();
     _setupMap();
+    //_interstitialAd..load()..show();
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    _interstitialAd.dispose();
+  }
+
+  void showAdonExploreScreen(){
+    _interstitialAd = Ads().createInterstitialAd()..load()..show();
   }
 
   void _setupMap() async {

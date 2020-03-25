@@ -14,6 +14,8 @@ import '../constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../services/locationBrain.dart';
+import 'package:donde_app/ads.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 
 // ignore: must_be_immutable
 class Home extends StatefulWidget {
@@ -36,6 +38,8 @@ class _HomeState extends State<Home> {
   int counter = 1;
   String genericRestaurantName = 'Restaurant Name';
   final FirestoreService _firestoreService = FirestoreService();
+
+  InterstitialAd _interstitialAd;
 
   // for pictures
   static final img1 = AssetImage('images/resImages/01.jpg');
@@ -159,7 +163,15 @@ class _HomeState extends State<Home> {
     super.initState();
     _locationBrain = LocationBrain();
     setRestaurantData();
-//    getSharedRestaurants();
+    //getSharedRestaurants();
+    _interstitialAd = Ads().createInterstitialAd()..load()..show();
+    //_interstitialAd..load()..show();
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    _interstitialAd.dispose();
   }
 
   Future<void> _getPlaces() async {

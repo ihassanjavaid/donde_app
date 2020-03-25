@@ -6,12 +6,7 @@ const String adDevice = "ca-app-pub-5777492202424173~3025761937";
 const String interstitialID = "ca-app-pub-5777492202424173/6773435257";
 const String bannerID = "ca-app-pub-5777492202424173/7164317495";
 
-class Ads extends StatefulWidget {
-  @override
-  _AdsState createState() => _AdsState();
-}
-
-class _AdsState extends State<Ads> {
+class Ads {
 
   static const List<String> keywordsList = ["Restaurants", "Hotels",
     "Cafe", "Lunch", "Dinner", "Restaurant", "Donde", "Eat"];
@@ -28,10 +23,10 @@ class _AdsState extends State<Ads> {
   2. Interstitial Ad
   3. Rewarded Ad*/
 
-  BannerAd _bannerAd;
-  InterstitialAd _interstitialAd;
+  //static BannerAd _bannerAd;
+  //static InterstitialAd _interstitialAd;
 
-  BannerAd createBannerAd(){
+  BannerAd createBannerAd() {
     return BannerAd(
         adUnitId: bannerID,
         size: AdSize.banner, // can be diff sized
@@ -42,7 +37,7 @@ class _AdsState extends State<Ads> {
     );
   }
 
-  InterstitialAd createInterstitialAd(){
+  InterstitialAd createInterstitialAd() {
     return InterstitialAd(
         adUnitId: interstitialID,
         //size: AdSize.banner, // size not needed in this type
@@ -53,34 +48,39 @@ class _AdsState extends State<Ads> {
     );
   }
 
-  @override
+  /*@override
   void initState() {
     super.initState();
     FirebaseAdMob.instance.initialize(
-      appId: BannerAd.testAdUnitId
+        appId: BannerAd.testAdUnitId
     );
-    _bannerAd = createBannerAd()..load()..show();
-  }
+    _bannerAd = createBannerAd()
+      ..load()
+      ..show();
+  }*/
 
-  @override
+ /* @override
   void dispose() {
     super.dispose();
     _bannerAd.dispose();
     _interstitialAd.dispose();
-  }
+  }*/
 
-  @override
+  /*@override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: RaisedButton(
           child: Text('click for ad'),
           onPressed: () {
-            _interstitialAd = createInterstitialAd()..load()..show();
+            _interstitialAd = createInterstitialAd()
+              ..load()
+              ..show();
           },
         ),
       ),
     );
-  }
+  }*/
+
 }
 
