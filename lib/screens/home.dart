@@ -216,7 +216,7 @@ class _HomeState extends State<Home> {
     setRestaurantData();
 
 //    getSharedRestaurants();
-    //_interstitialAd = Ads().createInterstitialAd()..load()..show();
+    _interstitialAd = Ads().createInterstitialAd()..load()..show();
     //_interstitialAd..load()..show();
   }
 
