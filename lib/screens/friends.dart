@@ -48,7 +48,7 @@ class ListItemWidget extends State<SwipeList> {
   UserData userData;
   final FirestoreService _firestoreService = FirestoreService();
   //InterstitialAd _interstitialAd;
-  BannerAd _bannerAd;
+  //BannerAd _bannerAd;
 
   @override
   void initState() {
@@ -59,14 +59,15 @@ class ListItemWidget extends State<SwipeList> {
   @override
   void dispose() {
     super.dispose();
-    _bannerAd.dispose();
+    //_bannerAd.dispose();
   }
 
-  void showAdonFriendsScreen(){
-    _bannerAd = Ads().createBannerAd()..load()..show();
+  void showAdOnFriendsScreen(){
+    //_bannerAd = Ads().createBannerAd()..load()..show();
   }
 
   void getFriends() async {
+    showAdOnFriendsScreen();
     print('CONTACTS here!');
     List<Contact> contacts = await ContactsClass.getContacts();
     for (var i in contacts) {

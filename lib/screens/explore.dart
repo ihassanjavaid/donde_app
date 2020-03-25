@@ -34,7 +34,7 @@ class _ExploreState extends State<Explore> {
   void initState() {
     super.initState();
     _setupMap();
-    //_interstitialAd..load()..show();
+    showAdOnExploreScreen();
   }
 
   @override
@@ -43,7 +43,7 @@ class _ExploreState extends State<Explore> {
     _interstitialAd.dispose();
   }
 
-  void showAdonExploreScreen(){
+  void showAdOnExploreScreen(){
     _interstitialAd = Ads().createInterstitialAd()..load()..show();
   }
 
