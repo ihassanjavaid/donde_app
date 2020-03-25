@@ -1,20 +1,40 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:donde_app/ads.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:donde_app/constants.dart';
 import 'package:google_maps_webservice/places.dart';
 
-class RestaurantDescription extends StatelessWidget {
+class RestaurantDescription extends StatefulWidget {
   static const String id = 'restaurant_description_screen';
   final PlacesSearchResult place;
 
   RestaurantDescription({@required this.place});
 
+  @override
+  _RestaurantDescriptionState createState() => _RestaurantDescriptionState();
+}
+
+class _RestaurantDescriptionState extends State<RestaurantDescription> {
+  InterstitialAd _interstitialAd;
+
+  @override
+  void initState() {
+    super.initState();
+    _interstitialAd = Ads().createInterstitialAd()..load()..show();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _interstitialAd.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (place != null) {
-      String photoRef = place.photos[0].photoReference;
-      print(place.photos[0].photoReference);
+    if (widget.place != null) {
+      String photoRef = widget.place.photos[0].photoReference;
+      print(widget.place.photos[0].photoReference);
       String photoAddress =
           "https://maps.googleapis.com/maps/api/place/photo?maxwidth=960&photoreference=$photoRef&key=AIzaSyA-aRQiJZfCzNgsyHfoUYNE8rwBLcu7fio";
       print(photoAddress);
@@ -58,7 +78,7 @@ class RestaurantDescription extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    place != null ?this.place.name: "Restaurant Name",
+                    widget.place != null ?this.widget.place.name: "Restaurant Name",
                     style: kTitleTextStyle,
                   ),
                 ],

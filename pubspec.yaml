@@ -46,6 +46,7 @@ dependencies:
   network_to_file_image: ^2.2.8
   contacts_service: ^0.3.10
   permission_handler: ^3.1.0
+  firebase_admob: ^0.9.3
 
 dev_dependencies:
   flutter_test:

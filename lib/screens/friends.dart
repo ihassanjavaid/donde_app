@@ -7,6 +7,8 @@ import 'package:donde_app/services/userData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../services/firestoreService.dart';
+import 'package:firebase_admob/firebase_admob.dart';
+import 'package:donde_app/ads.dart';
 
 class Friends extends StatelessWidget {
 
@@ -45,6 +47,8 @@ class ListItemWidget extends State<SwipeList> {
   List items = [];
   UserData userData;
   final FirestoreService _firestoreService = FirestoreService();
+  //InterstitialAd _interstitialAd;
+  //BannerAd _bannerAd;
 
   @override
   void initState() {
@@ -52,7 +56,18 @@ class ListItemWidget extends State<SwipeList> {
     getFriends();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    //_bannerAd.dispose();
+  }
+
+  void showAdOnFriendsScreen(){
+    //_bannerAd = Ads().createBannerAd()..load()..show();
+  }
+
   void getFriends() async {
+    //showAdOnFriendsScreen();
     print('CONTACTS here!');
     List<Contact> contacts = await ContactsClass.getContacts();
     for (var i in contacts) {
@@ -200,6 +215,7 @@ class ListItemWidget extends State<SwipeList> {
     final data = await _firestoreService.getCurrentUserData();
     setState(() {
       userData = data;
+      //showAdonFriendsScreen();
     });
   }
 }
