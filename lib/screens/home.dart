@@ -1,7 +1,6 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:donde_app/notifcationData.dart';
 /// The page housing the restaurant card and associated controls
 import 'package:donde_app/services/firestoreService.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -38,6 +37,7 @@ class _HomeState extends State<Home> {
   LocationBrain _locationBrain;
   int counter = 1;
   String genericRestaurantName = 'Restaurant Name';
+  List<NotificationData> _notifications;
   final FirestoreService _firestoreService = FirestoreService();
 
   InterstitialAd _interstitialAd;
@@ -197,10 +197,44 @@ class _HomeState extends State<Home> {
     _firebaseMessaging.configure(
         onMessage: (Map<String, dynamic> message) async {
       print('onMessage: $message');
+      setState(() {
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Test notification",
+          desc: 'Just got the test notification',
+          buttons: [
+            DialogButton(
+              color: Colors.redAccent,
+              child: Text(
+                "Yayy!",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+      });
+      _setNotification(message);
     }, onLaunch: (Map<String, dynamic> message) async {
       print('onLaunch: $message');
+      _setNotification(message);
     }, onResume: (Map<String, dynamic> message) async {
       print('onResume: $message');
+      _setNotification(message);
+    });
+  }
+
+  _setNotification(Map<String, dynamic> message) {
+    final notification = message['notification'];
+    final data = message['data'];
+    final String title = notification['title'];
+    final String body = notification['body'];
+    final String mMessage = data['message'];
+    setState(() {
+      NotificationData n = NotificationData(title: title, body: body, message: mMessage);
+      _notifications.add(n);
     });
   }
 
@@ -209,7 +243,7 @@ class _HomeState extends State<Home> {
     super.initState();
     _getToken();
     _configureFirebaseListeners();
-
+    _notifications = List<NotificationData>();
     _locationBrain = LocationBrain();
     setRestaurantData();
 
