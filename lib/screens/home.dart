@@ -13,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-
 import '../services/locationBrain.dart';
 
 // ignore: must_be_immutable
@@ -83,13 +82,15 @@ class _HomeState extends State<Home> {
     String likedRestaurant = '';
 
     for (var friend in friendsList) {
+      // Get the friend's liked restaurants
       await for (var snapshot in _firestore
           .collection('users')
           .document(friend)
           .collection('liked_restaurants')
+          .where('notified', isEqualTo: false)
           .snapshots()) {
         for (var friendLikedRestaurant in snapshot.documents) {
-          for (var likedRestaurants in currentUserLikedRestaurants) {
+          /*for (var likedRestaurants in currentUserLikedRestaurants) {
             if (likedRestaurants == friendLikedRestaurant['restaurantName'] &&
                 (friendLikedRestaurant['restaurantName'] != likedRestaurant ||
                     likedRestaurant == '')) {
@@ -120,7 +121,7 @@ class _HomeState extends State<Home> {
                 ],
               ).show();
             }
-          }
+          }*/
         }
       }
     }

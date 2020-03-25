@@ -95,7 +95,11 @@ class FirestoreService {
       }
 
       if (restaurantAlreadyInStore == false)
-        restaurants.add({'restaurantName': restaurantToBeStored});
+        if (preference == 'liked_restaurants') {
+          restaurants.add({'restaurantName': restaurantToBeStored, 'notified': false});
+        } else {
+          restaurants.add({'restaurantName': restaurantToBeStored});
+        }
     }
   }
 
@@ -141,5 +145,9 @@ class FirestoreService {
       });
     }
     return friendsDocumentReferencesList;
+  }
+
+  void updateLikedRestaurantNotificationStatus() {
+
   }
 }
