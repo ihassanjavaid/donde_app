@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
-const String testDevice = 'ca-app-pub-5777492202424173/6773435257';
+const String adDevice = "ca-app-pub-5777492202424173~3025761937";
+const String interstitialID = "ca-app-pub-5777492202424173/6773435257";
+const String bannerID = "ca-app-pub-5777492202424173/7164317495";
 
 class Ads extends StatefulWidget {
   @override
@@ -11,11 +13,12 @@ class Ads extends StatefulWidget {
 
 class _AdsState extends State<Ads> {
 
-  static const List<String> keywordsList = ["Restaurants", "Hotels", "Cafe", "Lunch", "Dinner"];
+  static const List<String> keywordsList = ["Restaurants", "Hotels",
+    "Cafe", "Lunch", "Dinner", "Restaurant", "Donde", "Eat"];
 
   static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-      testDevices: testDevice != null ? <String>[testDevice] : null,
-      nonPersonalizedAds: true,
+      testDevices: adDevice != null ? <String>[adDevice] : null,
+      nonPersonalizedAds: false,
       keywords: keywordsList
   );
 
@@ -25,13 +28,12 @@ class _AdsState extends State<Ads> {
   2. Interstitial Ad
   3. Rewarded Ad*/
 
-
   BannerAd _bannerAd;
   InterstitialAd _interstitialAd;
 
   BannerAd createBannerAd(){
     return BannerAd(
-        adUnitId: BannerAd.testAdUnitId,
+        adUnitId: bannerID,
         size: AdSize.banner, // can be diff sized
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
@@ -42,7 +44,7 @@ class _AdsState extends State<Ads> {
 
   InterstitialAd createInterstitialAd(){
     return InterstitialAd(
-        adUnitId: InterstitialAd.testAdUnitId,
+        adUnitId: interstitialID,
         //size: AdSize.banner, // size not needed in this type
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
@@ -72,8 +74,9 @@ class _AdsState extends State<Ads> {
     return Scaffold(
       body: Center(
         child: RaisedButton(
+          child: Text('click for ad'),
           onPressed: () {
-            _interstitialAd..load()..show();
+            _interstitialAd = createInterstitialAd()..load()..show();
           },
         ),
       ),

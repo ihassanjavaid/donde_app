@@ -31,8 +31,8 @@ class Donde extends StatelessWidget {
         Index.id: (context) => Index(
               screens: <Widget>[
                 SafeArea(
-                  child: Home(),
-                  //child: Ads(),
+                  //child: Home(),
+                  child: Ads(),
                 ),
                 SafeArea(
                   child: Explore(),
