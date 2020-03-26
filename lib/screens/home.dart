@@ -100,8 +100,8 @@ class _HomeState extends State<Home> {
         Alert(
           context: context,
           type: AlertType.success,
-          title: "Test notification",
-          desc: 'Just got the test notification',
+          title: "It's a Match! ♥",
+          desc: 'A friend on your friends list just liked a restaurant',
           buttons: [
             DialogButton(
               color: Colors.redAccent,
@@ -211,9 +211,7 @@ class _HomeState extends State<Home> {
     _getToken();
     _configureFirebaseListeners();
     _notifications = List<NotificationData>();
-    _interstitialAd = Ads().createInterstitialAd()
-      ..load()
-      ..show();
+    _interstitialAd = Ads().createInterstitialAd()..load()..show();
   }
 
   @override
@@ -426,7 +424,7 @@ class _HomeState extends State<Home> {
               color: Colors.white,
             ),
             Text(
-              " Liked",
+              " Like",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,

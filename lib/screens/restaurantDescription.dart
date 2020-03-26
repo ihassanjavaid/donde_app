@@ -99,16 +99,6 @@ class _RestaurantDescriptionState extends State<RestaurantDescription> {
                     children: <Widget>[
                       Expanded(
                         flex: 3,
-                        /*child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: resImages[Random().nextInt(14)],
-                              ),
-                            ),
-                          ),*/
                         child: Container(
                           child: Image.network(
                             'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoRef&key=AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U',
@@ -118,39 +108,12 @@ class _RestaurantDescriptionState extends State<RestaurantDescription> {
                           ),
                         ),
                       ),
-//                      Expanded(
-//                        flex: 1,
-//                        child: Row(
-//                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                          children: <Widget>[
-//                            Expanded(
-//                              flex: 3,
-//                              child: Padding(
-//                                padding: const EdgeInsets.only(left: 8.0),
-//                                child: AutoSizeText(
-//                                  place != null ? place.name : 'Restaurant Name',
-//                                  style: kCardTitleTextStyle,
-//                                  maxLines: 2,
-//                                  overflow: TextOverflow.clip,
-//                                ),
-//                              ),
-//                            ),
-//                            Expanded(
-//                              flex: 1,
-//                              child: Text(
-//                                '0.0 KMs',
-//                                style: kNormalTextStyle,
-//                              ),
-//                            ),
-//                          ],
-//                        ),
-//                      ),
                     ],
                   ),
                 ),
               ),
             ),
-            Padding(
+            /*Padding(
               padding: const EdgeInsets.all(18.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -173,7 +136,7 @@ class _RestaurantDescriptionState extends State<RestaurantDescription> {
                   ),
                 ],
               ),
-            )
+            )*/
           ],
         ),
       ),
