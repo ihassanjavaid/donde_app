@@ -37,7 +37,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       this.showSpinner = true;
     });
     FirestoreService()
-        .getUserPhoneNo(this.completePhoneNo)
+        .getUserDocuments(this.completePhoneNo)
         .then((QuerySnapshot docs) {
       setState(() {
         this.showSpinner = false;

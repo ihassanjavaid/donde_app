@@ -19,9 +19,7 @@ class SettingWidget extends StatelessWidget {
     this.toggle = false,
   });
 
-  IconData setToggleState() {
 
-  }
 
   @override
   Widget build(BuildContext context) {

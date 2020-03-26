@@ -42,39 +42,35 @@ class SwipeList extends StatefulWidget {
 }
 
 class ListItemWidget extends State<SwipeList> {
-  List items = [];
+  List friendsDataList = [];
   UserData userData;
   final FirestoreService _firestoreService = FirestoreService();
 
   @override
   void initState() {
-    super.initState();
     getFriends();
+    super.initState();
   }
 
   void getFriends() async {
     String reducedPhoneNum;
-
-    print('Contacts here!');
     List<Contact> contacts = await ContactsClass.getContacts();
-    for (var i in contacts) {
-      i.phones.forEach((phoneNum) async {
+
+    for (var contact in contacts) {
+      contact.phones.forEach((phoneNum) async {
         reducedPhoneNum = phoneNum.value.replaceAll(" ", "");
         reducedPhoneNum = reducedPhoneNum.replaceAll("-", "");
-        print(reducedPhoneNum);
 
-        QuerySnapshot query = await Firestore.instance
-            .collection('users')
-            .where('phoneNo', isEqualTo: reducedPhoneNum)
-            .getDocuments();
+        final QuerySnapshot query =
+            await _firestoreService.getUserDocuments(reducedPhoneNum);
 
         for (var document in query.documents) {
-          print(document.documentID);
-          print(document.data);
           setState(() {
-            this.items.add(document.data['displayName']);
+            this.friendsDataList.add(document.data);
           });
         }
+        print('Total friends:');
+        print(this.friendsDataList.length);
       });
     }
   }
@@ -84,9 +80,20 @@ class ListItemWidget extends State<SwipeList> {
     _acquireUserData();
     return Container(
         child: ListView.builder(
-      itemCount: items.length,
+      itemCount: friendsDataList.length,
       itemBuilder: (context, index) {
         return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FriendDetails(
+                  phoneNumber: friendsDataList[index]['phoneNo'],
+                  name: friendsDataList[index]['displayName'],
+                ),
+              ),
+            );
+          },
           child: Card(
             elevation: 10,
             child: Container(
@@ -100,7 +107,9 @@ class ListItemWidget extends State<SwipeList> {
                       "",
                       backgroundColor: Colors.grey,
                       initialsText: Text(
-                        items[index] != null ? items[index][0] : "",
+                        friendsDataList[index] != null
+                            ? friendsDataList[index]['displayName'][0]
+                            : 'A',
                         style: TextStyle(
                           fontSize: 42,
                           color: Colors.white,
@@ -131,7 +140,9 @@ class ListItemWidget extends State<SwipeList> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           AutoSizeText(
-                            items[index],
+                            friendsDataList[index] != null
+                                ? friendsDataList[index]['displayName']
+                                : 'Anonymous User',
                             maxLines: 1,
                             overflow: TextOverflow.clip,
                             style: TextStyle(
@@ -162,7 +173,7 @@ class ListItemWidget extends State<SwipeList> {
                             child: Container(
                               width: 260,
                               child: Text(
-                                "Swipe to delete ←",
+                                "Tap to view liked restaurants",
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontStyle: FontStyle.italic,

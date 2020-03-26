@@ -7,7 +7,7 @@ import 'contactsClass.dart';
 class FirestoreService {
   final _firestore = Firestore();
 
-  getUserPhoneNo(String phoneNo) {
+  getUserDocuments(String phoneNo) {
     return _firestore
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
@@ -116,7 +116,6 @@ class FirestoreService {
 
       // Add the restaurant to the user store
       restaurants.add({'restaurantName': restaurantToBeStored});
-
     }
   }
 
@@ -182,7 +181,22 @@ class FirestoreService {
     restaurantUpdateReference.add({'notified': true});
   }
 
-  getFriendLikedRestaurants(String friendNumber) {
+  getFriendLikedRestaurants(String friendNumber) async {
+    List likedRestaurantsList = [];
+    // Get user data
+    final friendDocuments = await getUserDocuments(friendNumber);
 
+    // Look up liked restaurants
+    for (var document in friendDocuments.documents) {
+      final likedRestaurants = await _firestore
+          .collection('users')
+          .document(document.documentID)
+          .collection('liked_restaurants')
+          .getDocuments();
+      for (var restaurant in likedRestaurants.documents) {
+        likedRestaurantsList.add(restaurant['restaurantName']);
+      }
+    }
+    return likedRestaurantsList;
   }
 }
