@@ -1,16 +1,15 @@
-import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:donde_app/notifcationData.dart';
-
 /// The page housing the restaurant card and associated controls
+///
+import 'dart:math';
+import 'package:donde_app/notifcationData.dart';
 import 'package:donde_app/services/firestoreService.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -43,86 +42,6 @@ class _HomeState extends State<Home> {
   String photoRef = 'CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU';
   double ratingOfRes = 0;
   String ratingStars = "No Rating!";
-
-/*  void getSharedRestaurants() async {
-    final _firestore = Firestore.instance;
-
-    await for (var snapshot in _firestore.collection('liked_restaurants').where().snapshots()) {
-      for (var likedRestaurant in snapshot.documents) {
-        String matchFriendName = '';
-        final likedRestaurantTemp = likedRestaurant['restaurantName'];
-        // Get the friend for whom the match was found
-        final friend = await _firestore.collection('users').where('phoneNo', isEqualTo: likedRestaurant['userID']).getDocuments();
-        for (var userData in friend.documents) {
-          matchFriendName = userData['displayName'];
-          break;
-        }
-
-        // Mark the restaurant as notified in firestore
-//        _firestoreService.updateLikedRestaurantNotificationStatus(userID: likedRestaurant['userID'], restaurantToBeUpdated: likedRestaurantTemp);
-
-        // Display alert
-        Alert(
-          context: context,
-          type: AlertType.success,
-          title: "It's a Match! ♥",
-          desc:
-          "$matchFriendName just liked a restaurant on your like list\n $likedRestaurantTemp",
-          buttons: [
-            DialogButton(
-              color: Colors.redAccent,
-              child: Text(
-                "Yayy!",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              onPressed: () => Navigator.pop(context),
-              width: 120,
-            )
-          ],
-        ).show();
-      }
-    }
-
-    */ /*for (var friend in friendsList) {
-      // Get the friend's liked restaurants
-      await for (var snapshot in _firestore
-          .collection('users')
-          .document(friend)
-          .collection('liked_restaurants')
-          .where('notified', isEqualTo: false)
-          .snapshots()) {
-        // Compare friend's each restaurant with current user's restaurant for match
-        for (var friendLikedRestaurant in snapshot.documents) {
-          for (var likedRestaurant in currentUserLikedRestaurants) {
-            if (likedRestaurant == friendLikedRestaurant['restaurantName']) {
-              final friendData =
-                  await _firestore.collection('users').document(friend).get();
-              final matchFriendName = friendData['displayName'];
-              _firestoreService.updateLikedRestaurantNotificationStatus(friend: friendData, restaurantToBeUpdated: likedRestaurant);
-              Alert(
-                context: context,
-                type: AlertType.success,
-                title: "It's a Match! ♥",
-                desc:
-                    "$matchFriendName just liked a restaurant on your like list\n $likedRestaurant",
-                buttons: [
-                  DialogButton(
-                    color: Colors.redAccent,
-                    child: Text(
-                      "Yayy!",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                    width: 120,
-                  )
-                ],
-              ).show();
-            }
-          }
-        }
-      }
-    }*/ /*
-  }*/
 
   // Methods
   void setRestaurantData() async {
@@ -292,12 +211,9 @@ class _HomeState extends State<Home> {
     _getToken();
     _configureFirebaseListeners();
     _notifications = List<NotificationData>();
-
-//    getSharedRestaurants();
-    /*_interstitialAd = Ads().createInterstitialAd()
+    _interstitialAd = Ads().createInterstitialAd()
       ..load()
-      ..show();*/
-    //_interstitialAd..load()..show();
+      ..show();
   }
 
   @override
@@ -348,81 +264,78 @@ class _HomeState extends State<Home> {
 
               // Restaurant card
               Flexible(
-                child: GestureDetector(
-                  onTap: () {
-                    /*Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Center(
-                            child: RestaurantDescription(place: place),
-                          ),
-                        ));*/
+                child: Dismissible(
+                  key: Key(this.restaurantName),
+                  background: slideRightBackground(),
+                  secondaryBackground: slideLeftBackground(),
+                  // ignore: missing_return
+                  confirmDismiss: (direction) async {
+                    if (direction == DismissDirection.endToStart) {
+                      // User liked the restaurant
+                      setRestaurantPreference('liked_restaurants');
+                    } else {
+                      // User disliked the restaurant
+                      setRestaurantPreference('disliked_restaurants');
+                    }
                   },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    borderOnForeground: true,
-                    elevation: 58.0,
-                    child: Column(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          /*child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
+                  child: InkWell(
+                    onTap: () {},
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      borderOnForeground: true,
+                      elevation: 58.0,
+                      child: Column(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Image.network(
+                                'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoRef&key=AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U',
+                                width: double.maxFinite,
+                                height: double.maxFinite,
                                 fit: BoxFit.fill,
-                                image: resImages[Random().nextInt(14)],
                               ),
-                            ),
-                          ),*/
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: Image.network(
-                              'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoRef&key=AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U',
-                              width: double.maxFinite,
-                              height: double.maxFinite,
-                              fit: BoxFit.fill,
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Expanded(
-                                flex: 3,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: AutoSizeText(
-                                    this.restaurantName != null
-                                        ? this.restaurantName
-                                        : this.genericRestaurantName,
-                                    style: kCardTitleTextStyle,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.clip,
+                          Expanded(
+                            flex: 1,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: AutoSizeText(
+                                      this.restaurantName != null
+                                          ? this.restaurantName
+                                          : this.genericRestaurantName,
+                                      style: kCardTitleTextStyle,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.clip,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  ratingStars,
-                                  style: TextStyle(
-                                    fontStyle: FontStyle.normal,
-                                    color: Color(0xffebca46),
-                                    fontSize: 22,
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    ratingStars,
+                                    style: TextStyle(
+                                      fontStyle: FontStyle.normal,
+                                      color: Color(0xffebca46),
+                                      fontSize: 22,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -468,6 +381,64 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget slideRightBackground() {
+    return Container(
+      color: Colors.red,
+      child: Align(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              width: 20,
+            ),
+            Icon(
+              FontAwesomeIcons.ban,
+              color: Colors.white,
+            ),
+            Text(
+              " Dislike",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.left,
+            ),
+          ],
+        ),
+        alignment: Alignment.centerLeft,
+      ),
+    );
+  }
+
+  Widget slideLeftBackground() {
+    return Container(
+      color: Colors.green,
+      child: Align(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Icon(
+              FontAwesomeIcons.heart,
+              color: Colors.white,
+            ),
+            Text(
+              " Liked",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.right,
+            ),
+            SizedBox(
+              width: 20,
+            ),
+          ],
+        ),
+        alignment: Alignment.centerRight,
       ),
     );
   }
