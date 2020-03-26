@@ -1,5 +1,3 @@
-
-
 class RestaurantCard {
   int redColor = 0;
   int greenColor = 0;

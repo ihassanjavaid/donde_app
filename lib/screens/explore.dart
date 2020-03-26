@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:donde_app/services/locationBrain.dart';
 import 'package:google_maps_webservice/places.dart';
-
-import '../ads.dart';
+import '../services/ads.dart';
 
 class Explore extends StatefulWidget {
   static const String id = 'explore_screen';

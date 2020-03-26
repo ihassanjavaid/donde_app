@@ -14,7 +14,7 @@ import '../constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../services/locationBrain.dart';
-import 'package:donde_app/ads.dart';
+import 'package:donde_app/services/ads.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
 // ignore: must_be_immutable

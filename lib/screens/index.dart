@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:donde_app/services/firestoreService.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-import '../ads.dart';
+import '../services/ads.dart';
 import '../constants.dart';
 import 'explore.dart';
 
@@ -24,7 +21,6 @@ class _IndexState extends State<Index> {
   static Explore _explore;
   static String phoneNo;
   static List<PlacesSearchResult> places = [];
-  final FirestoreService _firestoreService = FirestoreService();
   InterstitialAd _interstitialAd;
 
   /*void getSharedRestaurants() async {

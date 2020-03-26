@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contacts_service/contacts_service.dart';
 import 'package:donde_app/services/userData.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'contactsClass.dart';
 
 class FirestoreService {
   final _firestore = Firestore();
@@ -115,7 +113,9 @@ class FirestoreService {
       }
 
       // Add the restaurant to the user store
-      restaurants.add({'restaurantName': restaurantToBeStored});
+      if (!restaurantAlreadyInStore) {
+        restaurants.add({'restaurantName': restaurantToBeStored});
+      }
     }
   }
 

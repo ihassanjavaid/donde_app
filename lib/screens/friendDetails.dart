@@ -1,8 +1,6 @@
 import 'package:donde_app/components/infoDisplayField.dart';
-import 'package:donde_app/components/settingsWidget.dart';
 import 'package:donde_app/services/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:donde_app/constants.dart';
 
 class FriendDetails extends StatefulWidget {
   FriendDetails({@required this.phoneNumber, @required this.name});
