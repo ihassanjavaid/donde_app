@@ -4,3 +4,4 @@ v1.0.2 : First iteration complete
 v1.0.3 : Fixed alert for restaurant like (delivered) DLV-2
 v1.0.4 : pre-APK for the next v1.1 iteration (includes many new features)
 v1.0.5 : Added swipe cards on home page along with friends restaurant details page
+v:1.1 Increment release
