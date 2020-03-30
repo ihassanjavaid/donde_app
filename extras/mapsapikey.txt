@@ -1,5 +1,0 @@
-maps api key: AIzaSyBY3uVSwIDtVZ-V2LesfjEB5wN_tfqi_po (free key - deprecated)
-
-server key : AIzaSyA-aRQiJZfCzNgsyHfoUYNE8rwBLcu7fio
-
-final_key: AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U

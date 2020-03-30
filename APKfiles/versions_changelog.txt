@@ -1,5 +1,0 @@
-v1.0.0: (delivered) DLV-1
-v1.0.1 : bug fixes
-v1.0.2 : First iteration complete
-v1.0.3 : Fixed alert for restaurant like (delivered) DLV-2
-v1.0.4 : pre-APK for the next v1.1 iteration (includes many new features)
