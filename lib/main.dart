@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:donde/screens/explore_screen.dart';
-import 'package:donde/screens/friends_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:donde/screens/login_screen.dart';
+import 'package:donde/screens/registration_screen.dart';
+import 'package:donde/screens/dashboard_screen.dart';
+import 'package:donde/screens/reset_password_screen.dart';
+import 'package:donde/screens/settings_screen.dart';
 
 void main() {
   runApp(Donde());
@@ -17,11 +21,10 @@ class Donde extends StatelessWidget {
       initialRoute: RouteDecider.id,
       routes: {
         RouteDecider.id: (context) => RouteDecider(),
-        Login.id: (context) => Login(),
-        //Password.id: (context) => Password(),
-        Registration.id: (context) => Registration(),
-        Index.id: (context) => Index(
-              screens: <Widget>[
+        LoginScreen.id: (context) => LoginScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
+        Dashboard.id: (context) => Dashboard(
+            /*screens: <Widget>[
                 SafeArea(
                   child: Home(),
                   //child: Ads(),
@@ -37,12 +40,10 @@ class Donde extends StatelessWidget {
                 SafeArea(
                   child: SettingsScreen(),
                 ),
-              ],
+              ],*/
             ),
-        Home.id: (context) => Home(),
-        Explore.id: (context) => Explore(),
         SettingsScreen.id: (context) => SettingsScreen(),
-        ResetPassword.id: (context) => ResetPassword(),
+        ResetPasswordScreen.id: (context) => ResetPasswordScreen(),
       },
     );
   }
@@ -72,11 +73,11 @@ class _RouteDeciderState extends State<RouteDecider> {
       setState(() {
         this.isLoggedIn = true;
       });
-      Navigator.popAndPushNamed(context, Index.id);
+      Navigator.popAndPushNamed(context, Dashboard.id);
       return;
     } else {
       print('First time sign in');
-      Navigator.popAndPushNamed(context, Login.id);
+      Navigator.popAndPushNamed(context, LoginScreen.id);
     }
   }
 
