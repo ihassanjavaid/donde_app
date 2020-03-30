@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
+  static const String id = 'home_tab';
   @override
   _HomeState createState() => _HomeState();
 }

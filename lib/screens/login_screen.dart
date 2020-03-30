@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class Friends extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
+  static const String id = 'login_screen';
+
   @override
   Widget build(BuildContext context) {
     return Container();
