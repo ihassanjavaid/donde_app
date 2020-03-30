@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:donde_app/constants.dart';
 import 'package:donde_app/components/rounded_button.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:donde_app/services/firestore_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:donde_app/screens/password_entry_screen.dart';
+import 'package:donde_app/screens/registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -14,6 +18,8 @@ class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
+  String countryCode;
+  String phoneNumber;
 
   @override
   void initState() {
@@ -28,6 +34,23 @@ class _LoginScreenState extends State<LoginScreen>
     controller.addListener(() {
       setState(() {});
     });
+  }
+
+  void decideLoginRoute() async {
+    if (this.phoneNumber != null) {
+      final SharedPreferences pref = await SharedPreferences.getInstance();
+      await pref.setString('phoneNumber', this.phoneNumber);
+
+      if (await FirestoreService().userExists(phoneNumber)) {
+        // Returning user
+        print('Returning User');
+        Navigator.pushNamed(context, PasswordEntryScreen.id);
+      } else {
+        // New user
+        print('New User');
+        Navigator.pushNamed(context, RegistrationScreen.id);
+      }
+    }
   }
 
   @override
@@ -74,16 +97,24 @@ class _LoginScreenState extends State<LoginScreen>
                           Expanded(
                             flex: 1,
                             child: CountryCodePicker(
-                              initialSelection: 'pk',
-                              onInit: (countryCode) {},
-                              onChanged: (countryCode) {},
+                              initialSelection: 'us',
+                              onInit: (countryCode) {
+                                this.countryCode = countryCode.toString();
+                              },
+                              onChanged: (countryCode) {
+                                // Store user country code
+                                this.countryCode = countryCode.toString();
+                              },
                             ),
                           ),
                           Expanded(
                             flex: 4,
                             child: TextField(
                               keyboardType: TextInputType.phone,
-                              onChanged: (value) {},
+                              onChanged: (value) {
+                                // Store user phone number
+                                this.phoneNumber = value;
+                              },
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(10.0),
                                 labelText: 'Enter Number',
@@ -113,10 +144,9 @@ class _LoginScreenState extends State<LoginScreen>
                     ),
                     RoundedButton(
                       buttonLabel: 'Next',
-                      onTap: () {},
-                      /*onTap: () {
-                          Navigator.pushNamed(context, Index.id);
-                        },*/
+                      onTap: () {
+                        // Process number
+                      },
                       colour: Color(kButtonContainerColour),
                     ),
                     SizedBox(
