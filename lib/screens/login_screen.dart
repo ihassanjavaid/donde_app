@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:donde/constants.dart';
-import 'package:donde/components/rounded_button.dart';
+import 'package:donde_app/constants.dart';
+import 'package:donde_app/components/rounded_button.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 
 class LoginScreen extends StatefulWidget {

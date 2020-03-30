@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:donde/screens/login_screen.dart';
-import 'package:donde/screens/registration_screen.dart';
-import 'package:donde/screens/dashboard_screen.dart';
-import 'package:donde/screens/reset_password_screen.dart';
-import 'package:donde/screens/settings_screen.dart';
+import 'package:donde_app/screens/login_screen.dart';
+import 'package:donde_app/screens/registration_screen.dart';
+import 'package:donde_app/screens/dashboard_screen.dart';
+import 'package:donde_app/screens/reset_password_screen.dart';
+import 'package:donde_app/screens/settings_screen.dart';
 
 void main() {
   runApp(Donde());

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:donde/constants.dart';
+import 'package:donde_app/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SettingsControl extends StatelessWidget {

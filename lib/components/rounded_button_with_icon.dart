@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:donde/constants.dart';
+import 'package:donde_app/constants.dart';
 
 class RoundedButtonWithIcon extends StatelessWidget {
   final String buttonLabel;

@@ -1,4 +1,4 @@
-package cui.donde;
+package cui.donde_app;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:donde/components/custom_text_field.dart';
-import 'package:donde/screens/login_screen.dart';
+import 'package:donde_app/components/custom_text_field.dart';
+import 'package:donde_app/screens/login_screen.dart';
 
 class RegistrationScreen extends StatelessWidget {
   static const String id = 'registration_screen';
