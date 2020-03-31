@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
   }
 
   void updateRestaurant() async {
-    await getNearByPlaces();
+    if (places == null) await getNearByPlaces();
     try {
       final int randomIndex = Random().nextInt(this.places.length - 1);
       setState(() {
@@ -61,19 +61,13 @@ class _HomeState extends State<Home> {
   void setRestaurantPreference(String preference) {
     if (this.restaurantName != null) {
       try {
+        var temp = this.restaurantName;
+        updateRestaurant();
         if (preference == "disliked_restaurants") {
           // Remove all instances of the disliked restaurants
-          this.places.forEach(
-            (restaurant) {
-              if (restaurant.name == this.restaurantName) {
-                this.places.remove(restaurant);
-              }
-            },
-          );
+          this.places.remove(temp);
         }
-        FirestoreService()
-            .addRestaurantToPreference(this.restaurantName, preference);
-        updateRestaurant();
+        FirestoreService().addRestaurantToPreference(temp, preference);
       } catch (e) {
         print(e);
       }
