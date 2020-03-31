@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:donde_app/services/ads_service.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:donde_app/utilities/constants.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -14,11 +16,18 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
   List<PlacesSearchResult> places;
+  InterstitialAd _interstitialAd;
+
+  @override
+  void dispose() {
+    super.dispose();
+    _interstitialAd.dispose();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-//      _interstitialAd = Ads().createInterstitialAd()..load()..show();
+      _interstitialAd = Ads().createInterstitialAd()..load()..show();
     });
   }
 

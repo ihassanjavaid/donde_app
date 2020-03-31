@@ -19,6 +19,7 @@ class Donde extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
         backgroundColor: Color(0xfff8f8f8),
       ),
