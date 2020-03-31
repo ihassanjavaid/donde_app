@@ -3,6 +3,8 @@ import 'package:donde_app/components/custom_text_field.dart';
 import 'package:donde_app/screens/login_screen.dart';
 import 'package:donde_app/services/firestore_service.dart';
 import 'package:donde_app/services/auth_service.dart';
+import 'package:donde_app/screens/dashboard_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class RegistrationScreen extends StatelessWidget {
@@ -131,10 +133,20 @@ class RegistrationScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () async {
-                          FirestoreService().registerNewUser(
-                              name: this._name, email: this._email);
-                          await Auth().registerUser(
-                              email: this._email, password: this._password);
+                          try {
+                            await Auth().registerUser(
+                                email: this._email, password: this._password);
+                            FirestoreService().registerNewUser(
+                                name: this._name, email: this._email);
+
+                            Navigator.pop(context);
+                            Navigator.popAndPushNamed(context, Dashboard.id);
+                          } catch (e) {
+                            print(e);
+                            final SharedPreferences pref =
+                                await SharedPreferences.getInstance();
+                            pref.remove('phoneNumber');
+                          }
                         },
                       ),
                     ],

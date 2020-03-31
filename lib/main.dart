@@ -7,6 +7,9 @@ import 'package:donde_app/screens/dashboard_screen.dart';
 import 'package:donde_app/screens/reset_password_screen.dart';
 import 'package:donde_app/screens/settings_tab.dart';
 
+import 'screens/password_entry_screen.dart';
+import 'screens/password_entry_screen.dart';
+
 void main() {
   runApp(Donde());
 }
@@ -23,6 +26,7 @@ class Donde extends StatelessWidget {
         RouteDecider.id: (context) => RouteDecider(),
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
+        PasswordEntryScreen.id: (context) => PasswordEntryScreen(),
         Dashboard.id: (context) => Dashboard(
             /*screens: <Widget>[
                 SafeArea(

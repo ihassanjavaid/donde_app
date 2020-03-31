@@ -10,8 +10,13 @@ class Auth {
     final userEmail = await FirestoreService().getUserEmail();
 
     // Use the email and password to sign-in the user
-    await _auth.signInWithEmailAndPassword(
-        email: userEmail, password: userPassword);
+    try {
+      await _auth.signInWithEmailAndPassword(
+          email: userEmail, password: userPassword);
+    } catch (e) {
+      print(e);
+      throw 'Invalid username or password';
+    }
   }
 
   Future<void> registerUser({String email, String password}) async {

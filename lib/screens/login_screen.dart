@@ -146,6 +146,7 @@ class _LoginScreenState extends State<LoginScreen>
                       buttonLabel: 'Next',
                       onTap: () {
                         // Process number
+                        decideLoginRoute();
                       },
                       colour: Color(kButtonContainerColour),
                     ),

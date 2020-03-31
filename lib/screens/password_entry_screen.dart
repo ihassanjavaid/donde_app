@@ -3,6 +3,9 @@ import 'package:donde_app/constants.dart';
 import 'package:donde_app/components/custom_text_field.dart';
 import 'package:donde_app/components/rounded_button.dart';
 import 'package:donde_app/services/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'dashboard_screen.dart';
 
 String password;
 
@@ -49,7 +52,16 @@ class PasswordEntryScreen extends StatelessWidget {
               RoundedButton(
                 buttonLabel: 'Next',
                 onTap: () async {
-                  await Auth().loginUserWithEmailAndPassword();
+                  try {
+                    await Auth().loginUserWithEmailAndPassword();
+                    Navigator.pop(context);
+                    Navigator.popAndPushNamed(context, Dashboard.id);
+                  } catch (e) {
+                    print(e);
+                    final SharedPreferences pref =
+                        await SharedPreferences.getInstance();
+                    pref.remove('phoneNumber');
+                  }
                 },
                 colour: Color(kButtonContainerColour),
               ),
