@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SettingsScreen extends StatefulWidget {
+class Settings extends StatefulWidget {
   static const String id = 'settings_screen';
 
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
+  _SettingsState createState() => _SettingsState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Container();

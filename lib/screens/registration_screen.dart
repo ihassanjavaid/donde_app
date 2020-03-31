@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:donde_app/components/custom_text_field.dart';
 import 'package:donde_app/screens/login_screen.dart';
+import 'package:donde_app/services/firestore_service.dart';
+import 'package:donde_app/services/auth_service.dart';
 
+// ignore: must_be_immutable
 class RegistrationScreen extends StatelessWidget {
   static const String id = 'registration_screen';
+  String _name;
+  String _email;
+  String _password;
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +79,18 @@ class RegistrationScreen extends StatelessWidget {
                   ),
                   CustomTextField(
                     placeholder: 'Your Name',
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      this._name = value;
+                    },
                   ),
                   SizedBox(
                     height: 15,
                   ),
                   CustomTextField(
                     placeholder: 'Your E-Mail',
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      this._email = value;
+                    },
                     keyboardType: TextInputType.emailAddress,
                   ),
                   SizedBox(
@@ -89,7 +99,9 @@ class RegistrationScreen extends StatelessWidget {
                   CustomTextField(
                     placeholder: 'Your Password',
                     isPassword: true,
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      this._password = value;
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -118,7 +130,12 @@ class RegistrationScreen extends StatelessWidget {
                             left: 38, right: 38, top: 15, bottom: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          FirestoreService().registerNewUser(
+                              name: this._name, email: this._email);
+                          await Auth().registerUser(
+                              email: this._email, password: this._password);
+                        },
                       ),
                     ],
                   ),

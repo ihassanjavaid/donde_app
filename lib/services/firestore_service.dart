@@ -5,7 +5,9 @@ class FirestoreService {
   final _firestore = Firestore();
 
   Future<bool> userExists(String phoneNumber) async {
-    var userData = await _firestore.collection('users').where('phoneNo', isEqualTo: phoneNumber)
+    var userData = await _firestore
+        .collection('users')
+        .where('phoneNo', isEqualTo: phoneNumber)
         .getDocuments();
 
     return userData.documents.length > 0;
@@ -18,6 +20,20 @@ class FirestoreService {
         .getDocuments();
   }
 
+  Future<String> getUserEmail() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final String phoneNo = pref.getString('phoneNumber');
+    String email = '';
+
+    final userDocuments = await getUserDocuments(phoneNo);
+
+    for (var document in userDocuments.document) {
+      email = document['email'];
+    }
+
+    return email;
+  }
+
   authenticatePhoneWithPassword(String phoneNo, String password) {
     return _firestore
         .collection('users')
@@ -26,42 +42,14 @@ class FirestoreService {
         .getDocuments();
   }
 
-  registerNewUser(
-      {String name, String phoneNo, String email, String password}) {
-    DocumentReference ref = _firestore.collection('users').document();
-    ref.setData({
-      'displayName': name,
-      'email': email,
-      'password': password,
-      'phoneNo': phoneNo
-    }, merge: true);
-  }
-
-  /*Future<UserData> getCurrentUserData() async {
-    String phoneNumber;
-    String displayName;
-    String email;
-    UserData userData;
-
+  registerNewUser({String name, String email}) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final String phoneNo = pref.getString('phoneNumber');
+    DocumentReference ref = _firestore.collection('users').document();
 
-    // final documents = store.getUserData(phoneNumber);
-    final documents = await _firestore
-        .collection('users')
-        .where('phoneNo', isEqualTo: phoneNo)
-        .getDocuments();
-
-    for (var document in documents.documents) {
-      phoneNumber = document.data['phoneNo'];
-      displayName = document.data['displayName'];
-      email = document.data['email'];
-      userData = UserData(
-          phoneNumber: phoneNumber, displayName: displayName, email: email);
-    }
-
-    return userData;
-  }*/
+    ref.setData({'displayName': name, 'email': email, 'phoneNo': phoneNo},
+        merge: true);
+  }
 
   void addRestaurantToPreference(
       String restaurantToBeStored, String preference) async {
@@ -107,12 +95,6 @@ class FirestoreService {
 
   void updateLikedRestaurantNotificationStatus(
       {String userID, String restaurantToBeUpdated}) async {
-    /*final CollectionReference likedRestaurant = _firestore
-        .collection('users')
-        .document(friend.documentID)
-        .collection('liked_restaurants')
-        .where('restaurantName', isEqualTo: restaurantToBeUpdated);
-    likedRestaurant.add({'notified': true});*/
     // Get the collection reference for the user's required restaurant
     final CollectionReference restaurantUpdateReference = _firestore
         .collection('liked_restaurants')
