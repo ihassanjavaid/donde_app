@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:donde_app/utilities/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,9 +27,11 @@ class InfoDisplayField extends StatelessWidget {
               ),
               Expanded(
                 flex: 5,
-                child: Text(
+                child: AutoSizeText(
                   this.label,
                   style: kSettingWidgetTextStyle,
+                  maxLines: 2,
+                  overflow: TextOverflow.clip,
                 ),
               ),
             ],
