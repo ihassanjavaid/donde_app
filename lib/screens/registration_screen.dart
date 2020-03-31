@@ -4,26 +4,36 @@ import 'package:donde_app/screens/login_screen.dart';
 import 'package:donde_app/services/firestore_service.dart';
 import 'package:donde_app/services/auth_service.dart';
 import 'package:donde_app/screens/dashboard_screen.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// ignore: must_be_immutable
-class RegistrationScreen extends StatelessWidget {
+class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
+
+  @override
+  _RegistrationScreenState createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
   String _name;
   String _email;
   String _password;
+  bool _showSpinner = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            lowerHalf(context),
-            upperHalf(context),
-            signUpCard(context),
-            pageTitle(),
-          ],
+    return ModalProgressHUD(
+      inAsyncCall: _showSpinner,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              lowerHalf(context),
+              upperHalf(context),
+              signUpCard(context),
+              pageTitle(),
+            ],
+          ),
         ),
       ),
     );
@@ -109,7 +119,7 @@ class RegistrationScreen extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                    "Password must be at least 8 characters and include a special character and number",
+                    "Password must be at least 6 characters and include a special character and number",
                     style: TextStyle(color: Colors.grey),
                   ),
                   SizedBox(
@@ -133,6 +143,9 @@ class RegistrationScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () async {
+                          setState(() {
+                            _showSpinner = true;
+                          });
                           try {
                             await Auth().registerUser(
                                 email: this._email, password: this._password);
@@ -147,6 +160,9 @@ class RegistrationScreen extends StatelessWidget {
                                 await SharedPreferences.getInstance();
                             pref.remove('phoneNumber');
                           }
+                          setState(() {
+                            _showSpinner = false;
+                          });
                         },
                       ),
                     ],

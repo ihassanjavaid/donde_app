@@ -6,8 +6,6 @@ import 'package:donde_app/screens/registration_screen.dart';
 import 'package:donde_app/screens/dashboard_screen.dart';
 import 'package:donde_app/screens/reset_password_screen.dart';
 import 'package:donde_app/screens/settings_tab.dart';
-
-import 'screens/password_entry_screen.dart';
 import 'screens/password_entry_screen.dart';
 
 void main() {

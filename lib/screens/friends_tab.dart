@@ -6,6 +6,7 @@ import 'package:donde_app/services/firestore_service.dart';
 import 'package:donde_app/utilities/user_data.dart';
 import 'package:flutter/material.dart';
 import 'friend_details_screen.dart';
+import 'package:donde_app/services/contacts_service.dart';
 
 class Friends extends StatefulWidget {
   static const String id = 'friends_tab';
@@ -31,8 +32,7 @@ class ListItemWidget extends State<Friends> {
     String reducedPhoneNum;
 
     try {
-      final Iterable<Contact> contacts =
-          await ContactsService.getContacts(withThumbnails: false);
+      final Iterable<Contact> contacts = await Contacts().getContacts();
       for (var contact in contacts) {
         contact.phones.forEach((phoneNum) async {
           reducedPhoneNum = phoneNum.value.replaceAll(" ", "");

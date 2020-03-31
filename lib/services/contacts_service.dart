@@ -1,12 +1,41 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Contacts {
   static List<Contact> contacts;
 
-  Future<Iterable<Contact>> getContacts() async {
-    return await ContactsService.getContacts(withThumbnails: false);
+  /*Future<Iterable<Contact>> getContacts() async {
+    PermissionStatus permissionStatus = await _getContactPermission();
+    if (permissionStatus == PermissionStatus.granted) {
+      return (await ContactsService.getContacts(withThumbnails: false))
+          .toList();
+    } else {
+      _handleInvalidPermissions(permissionStatus);
+    }
   }
+
+  Future<PermissionStatus> _getContactPermission() async {
+    PermissionStatus permission = await Permission.contacts.request();
+    if (permission != PermissionStatus.granted) {
+    } else {
+      return permission;
+    }
+  }
+
+  void _handleInvalidPermissions(PermissionStatus permissionStatus) {
+    if (permissionStatus == PermissionStatus.denied) {
+      throw new PlatformException(
+          code: "PERMISSION_DENIED",
+          message: "Access to contacts denied",
+          details: null);
+    } else if (permissionStatus == PermissionStatus.disabled) {
+      throw new PlatformException(
+          code: "PERMISSION_DISABLED",
+          message: "Contacts are not available on device",
+          details: null);
+    }
+  }*/
 
   /*static Future<List<Contact>> getContacts() async {
     PermissionStatus permissionStatus = await _getContactPermission();
