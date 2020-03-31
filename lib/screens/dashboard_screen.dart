@@ -69,7 +69,7 @@ class _DashboardState extends State<Dashboard> {
   BottomNavigationBarItem getNavigationBarItem({String label, IconData icon}) {
     return BottomNavigationBarItem(
       icon: Icon(
-        Icons.home,
+        icon,
         size: 24,
         color: Colors.grey,
       ),

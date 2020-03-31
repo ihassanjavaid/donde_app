@@ -30,8 +30,8 @@ class _HomeState extends State<Home> {
   }
 
   void updateRestaurant() {
-    final int randomIndex = Random().nextInt(widget.places.length - 1);
     try {
+      final int randomIndex = Random().nextInt(widget.places.length - 1);
       setState(() {
         this.restaurantName = widget.places.elementAt(randomIndex).name;
         this.ratingStars = getRatingStars(
@@ -43,6 +43,10 @@ class _HomeState extends State<Home> {
       });
     } catch (e) {
       print(e);
+      this.restaurantName = genericRestaurantName;
+      this.photoRef =
+          'CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU';
+      this.ratingStars = 'No Ratings yet!';
     }
   }
 
