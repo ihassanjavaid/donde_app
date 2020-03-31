@@ -1,63 +1,36 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:contacts_service/contacts_service.dart';
 import 'package:donde_app/services/firestore_service.dart';
 import 'package:donde_app/utilities/user_data.dart';
 import 'package:flutter/material.dart';
-
 import 'friend_details_screen.dart';
+import 'package:donde_app/services/contacts_service.dart';
 
-class Friends extends StatelessWidget {
+class Friends extends StatefulWidget {
   static const String id = 'friends_tab';
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.redAccent,
-        ),
-        backgroundColor: Colors.white,
-        title: AutoSizeText(
-          'Friends',
-          overflow: TextOverflow.clip,
-          maxLines: 1,
-          style: TextStyle(
-            fontSize: 30,
-            fontStyle: FontStyle.italic,
-            color: Colors.redAccent,
-          ),
-        ),
-        centerTitle: false,
-      ),
-      body: Center(
-        child: SwipeList(),
-      ),
-    );
-  }
-}
-
-class SwipeList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return ListItemWidget();
   }
 }
 
-class ListItemWidget extends State<SwipeList> {
+class ListItemWidget extends State<Friends> {
   List friendsDataList = [];
   UserData userData;
   final FirestoreService _firestoreService = FirestoreService();
 
   @override
   void initState() {
-    getFriends();
     super.initState();
+    getUserContacts();
   }
 
-  void getFriends() async {
+  void getUserContacts() async {
     String reducedPhoneNum;
-    List<Contact> contacts = await ContactsClass.getContacts();
+    final Iterable<Contact> contacts = await Contacts().getContacts();
 
     for (var contact in contacts) {
       contact.phones.forEach((phoneNum) async {
@@ -68,26 +41,18 @@ class ListItemWidget extends State<SwipeList> {
             await _firestoreService.getUserDocuments(reducedPhoneNum);
 
         for (var document in query.documents) {
-          setState(() {
-            this.friendsDataList.add(document.data);
-          });
+          this.friendsDataList.add(document.data);
         }
+        setState(() {});
+
         print('Total friends:');
         print(this.friendsDataList.length);
       });
     }
   }
 
-  void _acquireUserData() async {
-    final data = await _firestoreService.getCurrentUserData();
-    setState(() {
-      userData = data;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    _acquireUserData();
     return Container(
         child: ListView.builder(
       itemCount: friendsDataList.length,

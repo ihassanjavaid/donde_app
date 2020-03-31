@@ -1,8 +1,14 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/services.dart';
 
-class ContactsClass {
+class Contacts {
   static List<Contact> contacts;
+
+  Future<Iterable<Contact>> getContacts() async {
+    Iterable<Contact> contacts =
+        await ContactsService.getContacts(withThumbnails: false);
+    return contacts;
+  }
 
   /*static Future<List<Contact>> getContacts() async {
     PermissionStatus permissionStatus = await _getContactPermission();
