@@ -53,7 +53,8 @@ class PasswordEntryScreen extends StatelessWidget {
                 buttonLabel: 'Next',
                 onTap: () async {
                   try {
-                    await Auth().loginUserWithEmailAndPassword();
+                    await Auth()
+                        .loginUserWithEmailAndPassword(userPassword: password);
                     Navigator.pop(context);
                     Navigator.popAndPushNamed(context, Dashboard.id);
                   } catch (e) {

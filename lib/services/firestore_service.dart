@@ -13,7 +13,7 @@ class FirestoreService {
     return userData.documents.length > 0;
   }
 
-  getUserDocuments(String phoneNo) {
+  Future<QuerySnapshot> getUserDocuments(String phoneNo) {
     return _firestore
         .collection('users')
         .where('phoneNo', isEqualTo: phoneNo)
@@ -27,7 +27,7 @@ class FirestoreService {
 
     final userDocuments = await getUserDocuments(phoneNo);
 
-    for (var document in userDocuments.document) {
+    for (var document in userDocuments.documents) {
       email = document['email'];
     }
 
