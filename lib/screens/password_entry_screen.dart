@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:donde_app/constants.dart';
+import 'package:donde_app/utilities/constants.dart';
 import 'package:donde_app/components/custom_text_field.dart';
 import 'package:donde_app/components/rounded_button.dart';
 import 'package:donde_app/services/auth_service.dart';

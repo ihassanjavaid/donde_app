@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:donde_app/constants.dart';
+import 'package:donde_app/utilities/constants.dart';
 import 'package:donde_app/screens/home_tab.dart';
 import 'package:donde_app/screens/explore_tab.dart';
 import 'package:donde_app/screens/friends_tab.dart';
@@ -26,7 +26,10 @@ class _DashboardState extends State<Dashboard> {
   }
 
   void getNearByPlaces() async {
-    this.places = await LocationService().getNearbyPlaces();
+    final temp = await LocationService().getNearbyPlaces();
+    setState(() {
+      this.places = temp;
+    });
   }
 
   Widget _getTab({String tabID}) {

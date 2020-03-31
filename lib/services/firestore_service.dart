@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:donde_app/utilities/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FirestoreService {
@@ -7,7 +8,7 @@ class FirestoreService {
   Future<bool> userExists(String phoneNumber) async {
     var userData = await _firestore
         .collection('users')
-        .where('phoneNo', isEqualTo: phoneNumber)
+        .where('phoneNumber', isEqualTo: phoneNumber)
         .getDocuments();
 
     return userData.documents.length > 0;
@@ -16,8 +17,23 @@ class FirestoreService {
   Future<QuerySnapshot> getUserDocuments(String phoneNo) {
     return _firestore
         .collection('users')
-        .where('phoneNo', isEqualTo: phoneNo)
+        .where('phoneNumber', isEqualTo: phoneNo)
         .getDocuments();
+  }
+
+  Future<UserData> getCurrentUserData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final String phoneNo = pref.getString('phoneNumber');
+    final userDocuments = await getUserDocuments(phoneNo);
+    UserData userData;
+
+    for (var document in userDocuments.documents) {
+      var name = document['displayName'];
+      var email = document['email'];
+      var phoneNumber = document['phoneNumber'];
+    }
+
+    return userData;
   }
 
   Future<String> getUserEmail() async {
@@ -37,7 +53,7 @@ class FirestoreService {
   authenticatePhoneWithPassword(String phoneNo, String password) {
     return _firestore
         .collection('users')
-        .where('phoneNo', isEqualTo: phoneNo)
+        .where('phoneNumber', isEqualTo: phoneNo)
         .where('password', isEqualTo: password)
         .getDocuments();
   }
@@ -47,7 +63,7 @@ class FirestoreService {
     final String phoneNo = pref.getString('phoneNumber');
     DocumentReference ref = _firestore.collection('users').document();
 
-    ref.setData({'displayName': name, 'email': email, 'phoneNo': phoneNo},
+    ref.setData({'displayName': name, 'email': email, 'phoneNumber': phoneNo},
         merge: true);
   }
 
@@ -58,10 +74,7 @@ class FirestoreService {
     bool restaurantAlreadyInStore = false;
 
     // Get current user's documents from Firestore
-    final userDocuments = await _firestore
-        .collection('users')
-        .where('phoneNo', isEqualTo: phoneNo)
-        .getDocuments();
+    final userDocuments = await getUserDocuments(phoneNo);
 
     for (var document in userDocuments.documents) {
       // Get the collection based on preference from the fetched document(s)

@@ -21,6 +21,8 @@ dependencies:
   geolocator: ^5.3.0
   google_maps_flutter: ^0.5.25+2
   google_maps_webservice: ^0.0.16
+  circular_profile_avatar: ^1.0.6
+  contacts_service: ^0.3.10
 
 dev_dependencies:
   flutter_test:

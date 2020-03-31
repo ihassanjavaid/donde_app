@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:donde_app/constants.dart';
+import 'package:donde_app/utilities/constants.dart';
 import 'package:donde_app/components/rounded_button.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:donde_app/services/firestore_service.dart';
@@ -36,12 +36,12 @@ class _LoginScreenState extends State<LoginScreen>
     });
   }
 
-  void decideLoginRoute() async {
-    if (this.phoneNumber != null) {
+  void decideLoginRoute(String completePhoneNumber) async {
+    if (completePhoneNumber != null) {
       final SharedPreferences pref = await SharedPreferences.getInstance();
-      await pref.setString('phoneNumber', this.phoneNumber);
+      await pref.setString('phoneNumber', completePhoneNumber);
 
-      if (await FirestoreService().userExists(phoneNumber)) {
+      if (await FirestoreService().userExists(completePhoneNumber)) {
         // Returning user
         print('Returning User');
         Navigator.pushNamed(context, PasswordEntryScreen.id);
@@ -146,7 +146,9 @@ class _LoginScreenState extends State<LoginScreen>
                       buttonLabel: 'Next',
                       onTap: () {
                         // Process number
-                        decideLoginRoute();
+                        String completePhoneNumber =
+                            this.countryCode + this.phoneNumber;
+                        decideLoginRoute(completePhoneNumber);
                       },
                       colour: Color(kButtonContainerColour),
                     ),

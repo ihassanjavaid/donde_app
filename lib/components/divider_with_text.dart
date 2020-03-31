@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:donde_app/constants.dart';
+import 'package:donde_app/utilities/constants.dart';
 
 class DividerWithText extends StatelessWidget {
   final String text;
