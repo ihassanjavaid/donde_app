@@ -31,6 +31,8 @@ class FirestoreService {
       var name = document['displayName'];
       var email = document['email'];
       var phoneNumber = document['phoneNumber'];
+      userData =
+          UserData(displayName: name, email: email, phoneNumber: phoneNumber);
     }
 
     return userData;

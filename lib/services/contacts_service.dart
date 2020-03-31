@@ -5,9 +5,7 @@ class Contacts {
   static List<Contact> contacts;
 
   Future<Iterable<Contact>> getContacts() async {
-    Iterable<Contact> contacts =
-        await ContactsService.getContacts(withThumbnails: false);
-    return contacts;
+    return await ContactsService.getContacts(withThumbnails: false);
   }
 
   /*static Future<List<Contact>> getContacts() async {

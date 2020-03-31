@@ -18,11 +18,17 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
   List<PlacesSearchResult> places;
+  Home _home;
+  Explore _explore;
+  Friends _friends;
+  Settings _settings;
 
   @override
   void initState() {
     getNearByPlaces();
     super.initState();
+    _friends = Friends();
+    _settings = Settings();
   }
 
   void getNearByPlaces() async {
@@ -35,13 +41,33 @@ class _DashboardState extends State<Dashboard> {
   Widget _getTab({String tabID}) {
     switch (tabID) {
       case Home.id:
-        return Home(places: this.places);
+        if (_home == null) {
+          print('Found null on home object');
+          setState(() {
+            _home = Home(places: this.places);
+          });
+        }
+        return _home;
       case Explore.id:
-        return Explore(places: this.places);
+        if (_explore == null) {
+          print('Found null on explore object');
+          setState(() {
+            _explore = Explore(places: this.places);
+          });
+        }
+        return _explore;
       case Friends.id:
-        return Friends();
+        if (_friends == null) {
+          print('Found null on friends object');
+          _friends = Friends();
+        }
+        return _friends;
       case Settings.id:
-        return Settings();
+        if (_settings == null) {
+          print('Found null on settings object');
+          _settings = Settings();
+        }
+        return _settings;
       default:
         return null;
     }
