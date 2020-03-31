@@ -33,15 +33,12 @@ class Donde extends StatelessWidget {
               screens: <Widget>[
                 SafeArea(
                   child: Home(),
-                  //child: Ads(),
                 ),
                 SafeArea(
                   child: Explore(),
                 ),
                 SafeArea(
-                  child: Center(
-                    child: Friends(),
-                  ),
+                  child: Friends(),
                 ),
                 SafeArea(
                   child: Settings(),
@@ -66,8 +63,8 @@ class _RouteDeciderState extends State<RouteDecider> {
 
   @override
   void initState() {
-    autoLogin();
     super.initState();
+    autoLogin();
   }
 
   void autoLogin() async {

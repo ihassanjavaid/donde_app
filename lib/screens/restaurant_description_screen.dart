@@ -39,41 +39,54 @@ class _RestaurantDescriptionScreenState
         child: Column(
           children: <Widget>[
             // Title with icon
-            Container(
-              padding: EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Tab(
-                    icon: Container(
-                      child: Image(
-                        image: AssetImage(
-                          'images/logo.png',
+            Flexible(
+              flex: 1,
+              child: Container(
+                padding: EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: Tab(
+                        icon: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Image(
+                            image: AssetImage(
+                              'images/logo.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+//                        height: 45,
+//                        width: 45,
                         ),
-                        fit: BoxFit.cover,
                       ),
-                      height: 45,
-                      width: 45,
                     ),
-                  ),
-                  Text(
-                    '  ',
-                    style: TextStyle(
-                      fontSize: 30,
+//                  Expanded(
+//                    flex: 1,
+//                    child: SizedBox(
+//                      width: 10.0,
+//                    ),
+//                  ),
+                    Expanded(
+                      flex: 5,
+                      child: AutoSizeText(
+                        widget.place != null
+                            ? this.widget.place.name
+                            : "Restaurant Name",
+                        style: kTitleTextStyle,
+                        maxLines: 1,
+                        overflow: TextOverflow.clip,
+                      ),
                     ),
-                  ),
-                  Text(
-                    widget.place != null
-                        ? this.widget.place.name
-                        : "Restaurant Name",
-                    style: kTitleTextStyle,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
 
             // Restaurant card
             Flexible(
+              flex: 2,
               child: GestureDetector(
                 onTap: () {},
                 child: Card(
