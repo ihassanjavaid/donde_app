@@ -6,6 +6,9 @@ import 'package:donde_app/screens/registration_screen.dart';
 import 'package:donde_app/screens/dashboard_screen.dart';
 import 'package:donde_app/screens/reset_password_screen.dart';
 import 'package:donde_app/screens/settings_tab.dart';
+import 'screens/explore_tab.dart';
+import 'screens/friends_tab.dart';
+import 'screens/home_tab.dart';
 import 'screens/password_entry_screen.dart';
 
 void main() {
@@ -26,7 +29,7 @@ class Donde extends StatelessWidget {
         RegistrationScreen.id: (context) => RegistrationScreen(),
         PasswordEntryScreen.id: (context) => PasswordEntryScreen(),
         Dashboard.id: (context) => Dashboard(
-            /*screens: <Widget>[
+              screens: <Widget>[
                 SafeArea(
                   child: Home(),
                   //child: Ads(),
@@ -40,9 +43,9 @@ class Donde extends StatelessWidget {
                   ),
                 ),
                 SafeArea(
-                  child: SettingsScreen(),
+                  child: Settings(),
                 ),
-              ],*/
+              ],
             ),
         Settings.id: (context) => Settings(),
         ResetPasswordScreen.id: (context) => ResetPasswordScreen(),

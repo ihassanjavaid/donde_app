@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,9 +13,14 @@ class LocationService {
   LocationService({this.searchRadius = 10000});
 
   Future<LatLng> getCurrentLocation() async {
-    Position pos = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    return LatLng(pos.latitude, pos.longitude);
+    PermissionStatus permissionStatus = await Permission.location.request();
+    if (permissionStatus.isGranted) {
+      Position pos = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      return LatLng(pos.latitude, pos.longitude);
+    } else {
+      _handleInvalidPermissions(permissionStatus);
+    }
   }
 
   Future<List> getNearbyPlaces() async {
@@ -32,5 +38,19 @@ class LocationService {
     }
 
     return _placesList;
+  }
+
+  void _handleInvalidPermissions(PermissionStatus permissionStatus) {
+    if (permissionStatus == PermissionStatus.denied) {
+      throw new PlatformException(
+          code: "PERMISSION_DENIED",
+          message: "Access to location denied",
+          details: null);
+    } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
+      throw new PlatformException(
+          code: "PERMISSION_DISABLED",
+          message: "Location is not available on device",
+          details: null);
+    }
   }
 }

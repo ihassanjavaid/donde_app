@@ -7,9 +7,6 @@ import 'package:donde_app/services/location_service.dart';
 
 class Explore extends StatefulWidget {
   static const String id = 'explore_tab';
-  final List<PlacesSearchResult> places;
-
-  Explore({this.places});
 
   @override
   _ExploreState createState() => _ExploreState();
@@ -19,6 +16,7 @@ class _ExploreState extends State<Explore> {
   // Attributes
   Completer<GoogleMapController> _controller = Completer();
   List placeMarkers = [];
+  List<PlacesSearchResult> places;
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
@@ -29,6 +27,13 @@ class _ExploreState extends State<Explore> {
     super.initState();
     _setupMap();
     //showAdOnExploreScreen();
+  }
+
+  Future<void> getNearByPlaces() async {
+    final temp = await LocationService().getNearbyPlaces();
+    setState(() {
+      this.places = temp;
+    });
   }
 
   void _setupMap() async {
@@ -45,6 +50,7 @@ class _ExploreState extends State<Explore> {
 
     controller.animateCamera(CameraUpdate.newCameraPosition(currentPosition));
 
+    await getNearByPlaces();
     _setMarkers();
   }
 
@@ -52,7 +58,7 @@ class _ExploreState extends State<Explore> {
     List markers = [];
     //final places = await this.locationBrain.getNearbyPlaces();
 
-    for (PlacesSearchResult place in widget.places) {
+    for (PlacesSearchResult place in this.places) {
       markers.add(
         Marker(
           markerId: MarkerId(place.id),

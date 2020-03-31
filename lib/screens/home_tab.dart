@@ -1,16 +1,15 @@
+import 'package:donde_app/services/location_service.dart';
 import 'package:flutter/material.dart';
 import 'package:donde_app/utilities/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'dart:math';
 
 import '../services/firestore_service.dart';
 
 class Home extends StatefulWidget {
   static const String id = 'home_tab';
-  final List places;
-
-  Home({this.places});
 
   @override
   _HomeState createState() => _HomeState();
@@ -22,6 +21,7 @@ class _HomeState extends State<Home> {
   String ratingStars;
   String photoRef;
   int counter = 0;
+  List<PlacesSearchResult> places;
 
   @override
   void initState() {
@@ -29,14 +29,22 @@ class _HomeState extends State<Home> {
     updateRestaurant();
   }
 
-  void updateRestaurant() {
+  Future<void> getNearByPlaces() async {
+    final temp = await LocationService().getNearbyPlaces();
+    setState(() {
+      this.places = temp;
+    });
+  }
+
+  void updateRestaurant() async {
+    await getNearByPlaces();
     try {
-      final int randomIndex = Random().nextInt(widget.places.length - 1);
+      final int randomIndex = Random().nextInt(this.places.length - 1);
       setState(() {
-        this.restaurantName = widget.places.elementAt(randomIndex).name;
+        this.restaurantName = this.places.elementAt(randomIndex).name;
         this.ratingStars = getRatingStars(
-            widget.places.elementAt(randomIndex).rating.toDouble());
-        widget.places.elementAt(randomIndex).photos.forEach((photo) {
+            this.places.elementAt(randomIndex).rating.toDouble());
+        this.places.elementAt(randomIndex).photos.forEach((photo) {
           this.photoRef = photo.photoReference;
           return;
         });
@@ -55,10 +63,10 @@ class _HomeState extends State<Home> {
       try {
         if (preference == "disliked_restaurants") {
           // Remove all instances of the disliked restaurants
-          widget.places.forEach(
+          this.places.forEach(
             (restaurant) {
               if (restaurant.name == this.restaurantName) {
-                widget.places.remove(restaurant);
+                this.places.remove(restaurant);
               }
             },
           );
