@@ -38,6 +38,7 @@ class _ExploreState extends State<Explore> {
 
   void _setupMap() async {
     final GoogleMapController controller = await _controller.future;
+    await getNearByPlaces();
 
     LatLng position = await LocationService().getCurrentLocation();
 
@@ -50,7 +51,6 @@ class _ExploreState extends State<Explore> {
 
     controller.animateCamera(CameraUpdate.newCameraPosition(currentPosition));
 
-    await getNearByPlaces();
     _setMarkers();
   }
 
@@ -91,7 +91,7 @@ class _ExploreState extends State<Explore> {
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
           /*PageStorage.of(context).writeState(context, this,
-                identifier: ValueKey(this.widget.key));*/
+                  identifier: ValueKey(this.widget.key));*/
         },
         initialCameraPosition: _kGooglePlex,
         myLocationEnabled: true,

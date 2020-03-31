@@ -155,6 +155,27 @@ class _HomeState extends State<Home> {
     );
   }
 
+  getImage() {
+    try {
+      final photo = Image.network(
+        'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoRef&key=AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U',
+        width: double.maxFinite,
+        height: double.maxFinite,
+        fit: BoxFit.fill,
+      );
+      return photo;
+    } catch (e) {
+      print(e);
+      final photo = Image.network(
+        'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&key=AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U',
+        width: double.maxFinite,
+        height: double.maxFinite,
+        fit: BoxFit.fill,
+      );
+      return photo;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,7 +236,7 @@ class _HomeState extends State<Home> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     borderOnForeground: true,
-                    elevation: 58.0,
+                    elevation: 3.5,
                     child: Column(
                       children: <Widget>[
                         Expanded(
@@ -224,12 +245,7 @@ class _HomeState extends State<Home> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: Image.network(
-                              'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoRef&key=AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U',
-                              width: double.maxFinite,
-                              height: double.maxFinite,
-                              fit: BoxFit.fill,
-                            ),
+                            child: getImage(),
                           ),
                         ),
                         Expanded(
@@ -254,7 +270,9 @@ class _HomeState extends State<Home> {
                               Expanded(
                                 flex: 1,
                                 child: Text(
-                                  ratingStars,
+                                  ratingStars != null
+                                      ? this.ratingStars
+                                      : 'No Rating Available',
                                   style: TextStyle(
                                     fontStyle: FontStyle.normal,
                                     color: Color(0xffebca46),
@@ -308,7 +326,7 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
