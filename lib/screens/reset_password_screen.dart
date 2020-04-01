@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:donde_app/services/auth_service.dart';
 import 'package:donde_app/utilities/constants.dart';
 import 'package:donde_app/utilities/user_data.dart';
 import 'package:flutter/material.dart';
@@ -28,19 +29,63 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return this.newPassword1 == this.newPassword2;
   }
 
-  Future<void> _authenticatePassword() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String phoneNumber = prefs.getString('phoneNumber');
-
-    setState(() {
-      this.showSpinner = true;
-    });
-
+  Future<void> _authenticateAndUpdatePassword() async {
     if (_ifPasswordsMatch()) {
       print("passwords match yay!");
       print(this.newPassword2);
 
-      QuerySnapshot docs = await FirestoreService()
+      setState(() {
+        this.showSpinner = true;
+      });
+      final updateStatus = await Auth().updateUserPassword(newPassword1);
+      if (updateStatus) {
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Success!",
+          desc: "Your password has been changed successfully.",
+          buttons: [
+            DialogButton(
+              color: Colors.redAccent,
+              child: Text(
+                "Great",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              width: 120,
+            )
+          ],
+        ).show();
+      } else {
+        Alert(
+          context: context,
+          type: AlertType.error,
+          title: "Error!",
+          desc:
+              "Unable to update the password\nKindly logout and then login again to update the password",
+          buttons: [
+            DialogButton(
+              color: Colors.redAccent,
+              child: Text(
+                "Ok",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              width: 120,
+            )
+          ],
+        ).show();
+      }
+      setState(() {
+        this.showSpinner = false;
+      });
+      /*QuerySnapshot docs = await FirestoreService()
           .authenticatePhoneWithPassword(phoneNumber, this.oldPassword);
       setState(() {
         this.showSpinner = false;
@@ -101,7 +146,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             )
           ],
         ).show();
-      }
+      }*/
     } else {
       Alert(
         context: context,
@@ -161,15 +206,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               height: 30,
             ),
             CustomTextField(
-                placeholder: 'Old password',
-                isPassword: true,
-                onChanged: (value) {
-                  this.oldPassword = value;
-                }),
-            SizedBox(
-              height: 25,
-            ),
-            CustomTextField(
                 placeholder: 'New password',
                 isPassword: true,
                 onChanged: (value) {
@@ -195,7 +231,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   color: Colors.redAccent,
                   child: Text(' Reset '),
                   onPressed: () {
-                    _authenticatePassword();
+                    _authenticateAndUpdatePassword();
                   },
                 )),
           ],
