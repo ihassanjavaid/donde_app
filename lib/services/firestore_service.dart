@@ -1,17 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donde_app/utilities/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:connectivity/connectivity.dart';
 
 class FirestoreService {
   final _firestore = Firestore();
 
   Future<bool> userExists(String phoneNumber) async {
-    var userData = await _firestore
-        .collection('users')
-        .where('phoneNumber', isEqualTo: phoneNumber)
-        .getDocuments();
+    final ConnectivityResult connectivityStatus =
+        await (Connectivity().checkConnectivity());
+    if (connectivityStatus != ConnectivityResult.none) {
+      var userData = await _firestore
+          .collection('users')
+          .where('phoneNumber', isEqualTo: phoneNumber)
+          .getDocuments();
 
-    return userData.documents.length > 0;
+      return userData.documents.length > 0;
+    } else {
+      throw 'Are you sure you are connected to internet';
+    }
   }
 
   Future<QuerySnapshot> getUserDocuments(String phoneNo) {
