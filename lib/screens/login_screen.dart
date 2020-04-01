@@ -76,10 +76,12 @@ class _LoginScreenState extends State<LoginScreen>
             DialogButton(
               color: Colors.redAccent,
               child: Text(
-                "Logout",
+                "Okay",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               width: 120,
             )
           ],
