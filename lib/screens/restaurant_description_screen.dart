@@ -22,17 +22,22 @@ class _RestaurantDescriptionScreenState
   String openStatus;
   List<String> openingDetail;
 
-
   getPlaceDetails() async {
-    final placeDetails = await GoogleMapsPlaces().getDetailsByPlaceId(widget.place.placeId);
-    setState(() {
-      openingDetail =  placeDetails.result.openingHours.weekdayText;
-    });
+    try {
+      final PlacesDetailsResponse placeDetails =
+          await GoogleMapsPlaces().getDetailsByPlaceId(widget.place.id);
+      setState(() {
+        openingDetail = placeDetails.result.openingHours.weekdayText;
+      });
+      print(openingDetail);
+    } catch (e) {
+      print(e);
+    }
   }
 
-  getOpenCloseStatus(bool isClosed){
+  getOpenCloseStatus(bool isClosed) {
     if (isClosed == null) return "No status found!";
-    if (isClosed ) return "Permanently Closed";
+    if (isClosed) return "Permanently Closed";
     return "Open!";
   }
 
@@ -91,7 +96,7 @@ class _RestaurantDescriptionScreenState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Expanded(
+                    Flexible(
                       flex: 1,
                       child: Tab(
                         icon: Padding(
@@ -116,7 +121,7 @@ class _RestaurantDescriptionScreenState
 //                      width: 10.0,
 //                    ),
 //                  ),
-                    Expanded(
+                    Flexible(
                       flex: 5,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -142,7 +147,7 @@ class _RestaurantDescriptionScreenState
                 onTap: () {},
                 child: Column(
                   children: <Widget>[
-                    Expanded(
+                    Flexible(
                       flex: 3,
                       child: Container(
                         child: Padding(
@@ -163,106 +168,114 @@ class _RestaurantDescriptionScreenState
                         child: Container(
                           child: Column(
                             children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Text(
-                                      "Rating: ",
-                                      style: kResDescriptionTextStyle,
-                                    ),
-                                    Text(
-                                      ratingStars != null
-                                          ? this.ratingStars
-                                          : 'No Rating Available',
-                                      style: kResDescriptionTextStyle.copyWith(
-                                          color: Color(0xffebca46)),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Text(
-                                      "Price Level: ",
-                                      style: kResDescriptionTextStyle,
-                                    ),
-                                    Text(
-                                      priceDollars != null
-                                          ? this.priceDollars
-                                          : 'No Price information Available',
-                                      style: kResDescriptionTextStyle.copyWith(
-                                        color: Color(0xff35852c),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Text(
-                                      "Status: ",
-                                      style: kResDescriptionTextStyle,
-                                    ),
-                                    Text(
-                                      openStatus,
-                                      style: kResDescriptionTextStyle.copyWith(
-                                        color: Colors.black45,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      flex: 3,
-                                      child: AutoSizeText(
-                                        "Opening Hours: ",
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Rating: ",
                                         style: kResDescriptionTextStyle,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.clip,
                                       ),
-                                    ),
-                                    Expanded(
-                                      flex: 3,
-                                      child: AutoSizeText(
-                                        openingDetail != null ?
-                                            openingDetail[0] : "No details",
-                                        maxLines: 2,
-                                        maxFontSize: 15,
-                                        minFontSize: 2,
-                                        overflow: TextOverflow.clip,
-                                        style: kResDescriptionTextStyle.copyWith(
-                                            color: Colors.black38, fontSize: 15
+                                      Text(
+                                        ratingStars != null
+                                            ? this.ratingStars
+                                            : 'No Rating Available',
+                                        style: kResDescriptionTextStyle
+                                            .copyWith(color: Color(0xffebca46)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Price Level: ",
+                                        style: kResDescriptionTextStyle,
+                                      ),
+                                      Text(
+                                        priceDollars != null
+                                            ? this.priceDollars
+                                            : 'No Price information Available',
+                                        style:
+                                            kResDescriptionTextStyle.copyWith(
+                                          color: Color(0xff35852c),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      flex: 2,
-                                      child: AutoSizeText(
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Status: ",
+                                        style: kResDescriptionTextStyle,
+                                      ),
+                                      Text(
+                                        openStatus,
+                                        style:
+                                            kResDescriptionTextStyle.copyWith(
+                                          color: Colors.black45,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        flex: 3,
+                                        child: AutoSizeText(
+                                          "Opening Hours: ",
+                                          style: kResDescriptionTextStyle,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 3,
+                                        child: AutoSizeText(
+                                          openingDetail != null
+                                              ? openingDetail[0]
+                                              : "No details",
+                                          maxLines: 2,
+                                          maxFontSize: 15,
+                                          minFontSize: 2,
+                                          overflow: TextOverflow.clip,
+                                          style:
+                                              kResDescriptionTextStyle.copyWith(
+                                                  color: Colors.black38,
+                                                  fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      AutoSizeText(
                                         "Vicinity: ",
                                         style: kResDescriptionTextStyle,
                                         maxLines: 1,
                                         overflow: TextOverflow.clip,
                                       ),
-                                    ),
-                                    Expanded(
-                                      flex: 5,
-                                      child: AutoSizeText(
+                                      AutoSizeText(
                                         widget.place.vicinity != null
                                             ? this.widget.place.vicinity
                                             : 'No Vicinity information Available',
@@ -270,12 +283,13 @@ class _RestaurantDescriptionScreenState
                                         maxFontSize: 15,
                                         minFontSize: 2,
                                         overflow: TextOverflow.clip,
-                                        style: kResDescriptionTextStyle.copyWith(
-                                            color: Colors.black38, fontSize: 15
-                                        ),
+                                        style:
+                                            kResDescriptionTextStyle.copyWith(
+                                                color: Colors.black38,
+                                                fontSize: 15),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
