@@ -17,23 +17,68 @@ class RestaurantDescriptionScreen extends StatefulWidget {
 class _RestaurantDescriptionScreenState
     extends State<RestaurantDescriptionScreen> {
   String photoRef;
+  String ratingStars;
+  String priceDollars;
+  String openStatus;
+  List<String> openingDetail;
+
+
+  getPlaceDetails() async {
+    final placeDetails = await GoogleMapsPlaces().getDetailsByPlaceId(widget.place.placeId);
+    setState(() {
+      openingDetail =  placeDetails.result.openingHours.weekdayText;
+    });
+  }
+
+  getOpenCloseStatus(bool isClosed){
+    if (isClosed == null) return "No status found!";
+    if (isClosed ) return "Permanently Closed";
+    return "Open!";
+  }
+
+  getPriceDollars(PriceLevel priceLevel) {
+    if (priceLevel == PriceLevel.free) return "Free";
+    if (priceLevel == PriceLevel.inexpensive) return "\$";
+    if (priceLevel == PriceLevel.moderate) return "\$\$";
+    if (priceLevel == PriceLevel.expensive) return "\$\$\$";
+    if (priceLevel == PriceLevel.veryExpensive) return "\$\$\$\$";
+  }
+
+  getRatingStars(double ratingDouble) {
+    if (ratingDouble <= 0.0) return "No Ratings yet!";
+    if (ratingDouble < 2.0) return "★";
+    if (ratingDouble < 3.0) return "★★";
+    if (ratingDouble < 4.0) return "★★★";
+    if (ratingDouble < 4.9)
+      return "★★★★";
+    else
+      return "★★★★★";
+  }
 
   @override
   Widget build(BuildContext context) {
+    getPlaceDetails();
     if (widget.place != null) {
       photoRef = widget.place.photos[0].photoReference;
-      print(widget.place.photos[0].photoReference);
+      ratingStars = getRatingStars(widget.place.rating.toDouble());
+      priceDollars = getPriceDollars(widget.place.priceLevel);
+      openStatus = getOpenCloseStatus(widget.place.permanentlyClosed);
+      print(openingDetail);
     }
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.redAccent,
+        ),
         title: AutoSizeText(
           'Donde',
           overflow: TextOverflow.clip,
           maxLines: 1,
-          style: kTitleTextStyle.copyWith(color: Colors.white),
+          style: kTitleTextStyle.copyWith(
+              color: Colors.redAccent, fontStyle: FontStyle.normal),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.redAccent,
+        centerTitle: false,
+        backgroundColor: Colors.white,
       ),
       body: SafeArea(
         child: Column(
@@ -42,23 +87,26 @@ class _RestaurantDescriptionScreenState
             Flexible(
               flex: 1,
               child: Container(
-                padding: EdgeInsets.all(20.0),
+                padding: EdgeInsets.fromLTRB(20, 10, 10, 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Expanded(
                       flex: 1,
                       child: Tab(
-                        icon: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Image(
-                            image: AssetImage(
-                              'images/logo.png',
+                        icon: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Image(
+                              image: AssetImage(
+                                'images/logo.png',
+                              ),
+                              fit: BoxFit.cover,
                             ),
-                            fit: BoxFit.cover,
-                          ),
 //                        height: 45,
 //                        width: 45,
+                          ),
                         ),
                       ),
                     ),
@@ -70,13 +118,16 @@ class _RestaurantDescriptionScreenState
 //                  ),
                     Expanded(
                       flex: 5,
-                      child: AutoSizeText(
-                        widget.place != null
-                            ? this.widget.place.name
-                            : "Restaurant Name",
-                        style: kTitleTextStyle,
-                        maxLines: 1,
-                        overflow: TextOverflow.clip,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                        child: AutoSizeText(
+                          widget.place != null
+                              ? this.widget.place.name
+                              : "Restaurant Name",
+                          style: kTitleTextStyle,
+                          maxLines: 1,
+                          overflow: TextOverflow.clip,
+                        ),
                       ),
                     ),
                   ],
@@ -86,29 +137,153 @@ class _RestaurantDescriptionScreenState
 
             // Restaurant card
             Flexible(
-              flex: 2,
+              flex: 6,
               child: GestureDetector(
                 onTap: () {},
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  borderOnForeground: true,
-                  elevation: 18.0,
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 3,
-                        child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: Image.network(
                             'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoRef&key=AIzaSyA-uiBKbMxCqyMR6JqbfB-VnDAHL8tFx6U',
                             width: double.maxFinite,
                             height: double.maxFinite,
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Flexible(
+                      flex: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      "Rating: ",
+                                      style: kResDescriptionTextStyle,
+                                    ),
+                                    Text(
+                                      ratingStars != null
+                                          ? this.ratingStars
+                                          : 'No Rating Available',
+                                      style: kResDescriptionTextStyle.copyWith(
+                                          color: Color(0xffebca46)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      "Price Level: ",
+                                      style: kResDescriptionTextStyle,
+                                    ),
+                                    Text(
+                                      priceDollars != null
+                                          ? this.priceDollars
+                                          : 'No Price information Available',
+                                      style: kResDescriptionTextStyle.copyWith(
+                                        color: Color(0xff35852c),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      "Status: ",
+                                      style: kResDescriptionTextStyle,
+                                    ),
+                                    Text(
+                                      openStatus,
+                                      style: kResDescriptionTextStyle.copyWith(
+                                        color: Colors.black45,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 3,
+                                      child: AutoSizeText(
+                                        "Opening Hours: ",
+                                        style: kResDescriptionTextStyle,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: AutoSizeText(
+                                        openingDetail != null ?
+                                            openingDetail[0] : "No details",
+                                        maxLines: 2,
+                                        maxFontSize: 15,
+                                        minFontSize: 2,
+                                        overflow: TextOverflow.clip,
+                                        style: kResDescriptionTextStyle.copyWith(
+                                            color: Colors.black38, fontSize: 15
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 2,
+                                      child: AutoSizeText(
+                                        "Vicinity: ",
+                                        style: kResDescriptionTextStyle,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 5,
+                                      child: AutoSizeText(
+                                        widget.place.vicinity != null
+                                            ? this.widget.place.vicinity
+                                            : 'No Vicinity information Available',
+                                        maxLines: 2,
+                                        maxFontSize: 15,
+                                        minFontSize: 2,
+                                        overflow: TextOverflow.clip,
+                                        style: kResDescriptionTextStyle.copyWith(
+                                            color: Colors.black38, fontSize: 15
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

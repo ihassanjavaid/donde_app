@@ -78,3 +78,9 @@ const Icon kSettingsIcon = Icon(
   size: 30,
   color: Colors.redAccent,
 );
+
+const kResDescriptionTextStyle = TextStyle(
+  color: Colors.black,
+  fontWeight: FontWeight.normal,
+  fontSize: 28.0,
+);
