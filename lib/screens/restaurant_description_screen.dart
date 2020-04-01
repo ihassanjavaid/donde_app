@@ -57,17 +57,9 @@ class _RestaurantDescriptionScreenState
                             ),
                             fit: BoxFit.cover,
                           ),
-//                        height: 45,
-//                        width: 45,
                         ),
                       ),
                     ),
-//                  Expanded(
-//                    flex: 1,
-//                    child: SizedBox(
-//                      width: 10.0,
-//                    ),
-//                  ),
                     Expanded(
                       flex: 5,
                       child: AutoSizeText(
